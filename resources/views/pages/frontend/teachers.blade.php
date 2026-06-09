@@ -194,16 +194,6 @@
         border-color: rgba(219, 165, 45, 0.30);
     }
 
-    .teacher-card::before {
-        content: "";
-        position: absolute;
-        inset: 0 0 auto 0;
-        height: 112px;
-        background:
-            radial-gradient(circle at 20% 18%, rgba(219, 165, 45, 0.20), transparent 28%),
-            linear-gradient(135deg, #09284d 0%, #061b36 100%);
-    }
-
     .teacher-card::after {
         content: "";
         position: absolute;
@@ -219,22 +209,29 @@
         transform: scaleX(1);
     }
 
-    .teacher-card-inner {
+    .teacher-card-top {
+        height: 112px;
+        background:
+            radial-gradient(circle at 20% 18%, rgba(219, 165, 45, 0.20), transparent 28%),
+            linear-gradient(135deg, #09284d 0%, #061b36 100%);
+    }
+
+    .teacher-card-body {
         position: relative;
         z-index: 2;
         display: flex;
         flex-direction: column;
         align-items: center;
-        height: 100%;
-        padding: 38px 24px 28px;
+        min-height: 270px;
+        padding: 0 24px 28px;
         text-align: center;
     }
 
     .teacher-photo-wrap {
-        width: 154px;
-        height: 154px;
+        width: 142px;
+        height: 142px;
         position: relative;
-        margin-bottom: 24px;
+        margin: -72px auto 28px;
         border-radius: 999px;
         display: grid;
         place-items: center;
@@ -243,6 +240,7 @@
         box-shadow:
             0 18px 36px rgba(6, 27, 54, 0.18),
             0 0 0 1px rgba(219, 165, 45, 0.20);
+        flex-shrink: 0;
     }
 
     .teacher-photo-wrap::after {
@@ -279,20 +277,26 @@
             radial-gradient(circle at 30% 20%, rgba(219, 165, 45, 0.28), transparent 32%),
             linear-gradient(135deg, #0b2b52 0%, #061b36 100%);
         font-family: Georgia, 'Times New Roman', serif;
-        font-size: 58px;
+        font-size: 54px;
         line-height: 1;
         font-weight: 700;
         text-transform: uppercase;
     }
 
     .teacher-name {
+        position: relative;
+        z-index: 3;
         margin: 0 0 12px;
         color: var(--teacher-navy);
         font-family: Georgia, 'Times New Roman', serif;
-        font-size: 25px;
+        font-size: 24px;
         line-height: 1.18;
         font-weight: 700;
         letter-spacing: -0.35px;
+        min-height: 58px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .teacher-line {
@@ -314,11 +318,11 @@
         color: var(--teacher-navy);
         background: rgba(219, 165, 45, 0.11);
         border: 1px solid rgba(219, 165, 45, 0.24);
-        font-size: 13.5px;
+        font-size: 13px;
         line-height: 1.35;
         font-weight: 900;
         text-transform: uppercase;
-        letter-spacing: 0.6px;
+        letter-spacing: 0.4px;
     }
 
     .teacher-subject svg {
@@ -434,13 +438,9 @@
             gap: 24px;
         }
 
-        .teacher-card-inner {
-            padding: 34px 22px 26px;
-        }
-
-        .teacher-photo-wrap {
-            width: 142px;
-            height: 142px;
+        .teacher-card-body {
+            min-height: auto;
+            padding: 0 22px 26px;
         }
     }
 
@@ -453,14 +453,15 @@
             border-radius: 22px;
         }
 
-        .teacher-card-inner {
-            padding: 30px 18px 24px;
+        .teacher-card-top {
+            height: 98px;
         }
 
         .teacher-photo-wrap {
             width: 124px;
             height: 124px;
-            margin-bottom: 20px;
+            margin-top: -62px;
+            margin-bottom: 24px;
         }
 
         .teacher-avatar-fallback {
@@ -469,10 +470,11 @@
 
         .teacher-name {
             font-size: 22px;
+            min-height: auto;
         }
 
         .teacher-subject {
-            font-size: 12.5px;
+            font-size: 12px;
             padding: 0 13px;
         }
     }
@@ -492,9 +494,7 @@
 
             <p class="teachers-kicker">Tenaga Pendidik</p>
 
-            <h1 class="teachers-title">
-                Dewan Guru
-            </h1>
+            <h1 class="teachers-title">Dewan Guru</h1>
 
             <div class="teachers-divider"></div>
 
@@ -517,7 +517,9 @@
             <div class="teachers-grid">
                 @foreach ($teachers as $teacher)
                     <article class="teacher-card">
-                        <div class="teacher-card-inner">
+                        <div class="teacher-card-top"></div>
+
+                        <div class="teacher-card-body">
                             <div class="teacher-photo-wrap">
                                 @if(optional($teacher->user)->profile_photo_path)
                                     <img src="{{ asset('storage/' . $teacher->user->profile_photo_path) }}"
@@ -544,7 +546,7 @@
 
                             <div class="teacher-subject">
                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13"></path>
                                 </svg>
                                 {{ $teacher->mapel ?? 'Mata Pelajaran' }}
                             </div>
@@ -560,7 +562,7 @@
             <div class="teachers-empty">
                 <div class="teachers-empty-icon">
                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13"></path>
                     </svg>
                 </div>
 

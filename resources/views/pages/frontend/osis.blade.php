@@ -199,16 +199,6 @@
         border-color: rgba(219, 165, 45, 0.30);
     }
 
-    .osis-card::before {
-        content: "";
-        position: absolute;
-        inset: 0 0 auto 0;
-        height: 96px;
-        background:
-            radial-gradient(circle at 20% 18%, rgba(219, 165, 45, 0.20), transparent 28%),
-            linear-gradient(135deg, #09284d 0%, #061b36 100%);
-    }
-
     .osis-card::after {
         content: "";
         position: absolute;
@@ -224,22 +214,29 @@
         transform: scaleX(1);
     }
 
-    .osis-card-inner {
+    .osis-card-top {
+        height: 106px;
+        background:
+            radial-gradient(circle at 20% 18%, rgba(219, 165, 45, 0.20), transparent 28%),
+            linear-gradient(135deg, #09284d 0%, #061b36 100%);
+    }
+
+    .osis-card-body {
         position: relative;
         z-index: 2;
-        min-height: 315px;
+        min-height: 245px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 32px 22px 26px;
+        padding: 0 22px 26px;
         text-align: center;
     }
 
     .osis-photo-wrap {
-        width: 138px;
-        height: 138px;
+        width: 132px;
+        height: 132px;
         position: relative;
-        margin-bottom: 22px;
+        margin: -66px auto 26px;
         border-radius: 999px;
         display: grid;
         place-items: center;
@@ -248,6 +245,7 @@
         box-shadow:
             0 18px 36px rgba(6, 27, 54, 0.18),
             0 0 0 1px rgba(219, 165, 45, 0.20);
+        flex-shrink: 0;
     }
 
     .osis-photo-wrap::after {
@@ -284,13 +282,15 @@
             radial-gradient(circle at 30% 20%, rgba(219, 165, 45, 0.28), transparent 32%),
             linear-gradient(135deg, #0b2b52 0%, #061b36 100%);
         font-family: Georgia, 'Times New Roman', serif;
-        font-size: 52px;
+        font-size: 50px;
         line-height: 1;
         font-weight: 700;
         text-transform: uppercase;
     }
 
     .osis-position {
+        position: relative;
+        z-index: 4;
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -317,6 +317,8 @@
     }
 
     .osis-name {
+        position: relative;
+        z-index: 4;
         margin: 0;
         color: var(--osis-navy);
         font-family: Georgia, 'Times New Roman', serif;
@@ -324,6 +326,10 @@
         line-height: 1.18;
         font-weight: 700;
         letter-spacing: -0.35px;
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .osis-line {
@@ -505,6 +511,10 @@
             font-size: 15px;
             letter-spacing: 1.4px;
         }
+
+        .osis-card-body {
+            min-height: auto;
+        }
     }
 
     @media (max-width: 480px) {
@@ -516,19 +526,19 @@
             border-radius: 22px;
         }
 
-        .osis-card-inner {
-            min-height: 292px;
-            padding: 28px 18px 24px;
+        .osis-card-top {
+            height: 96px;
         }
 
         .osis-photo-wrap {
-            width: 122px;
-            height: 122px;
-            margin-bottom: 20px;
+            width: 118px;
+            height: 118px;
+            margin-top: -59px;
+            margin-bottom: 24px;
         }
 
         .osis-avatar-fallback {
-            font-size: 46px;
+            font-size: 44px;
         }
 
         .osis-position {
@@ -538,6 +548,7 @@
 
         .osis-name {
             font-size: 22px;
+            min-height: auto;
         }
     }
 </style>
@@ -555,12 +566,6 @@
         ->merge($osisMembers->where('position', 'Wakil Bendahara'));
 
     $sekbidMembers = $osisMembers->filter(fn($m) => str_starts_with($m->position, 'Sekbid'));
-
-    $renderOsisCard = function ($member) {
-        $photoPath = $member->photo_path ?? null;
-        $photoUrl = $photoPath ? asset('storage/' . $photoPath) : null;
-        $initial = strtoupper(substr($member->name ?? 'O', 0, 1));
-    };
 @endphp
 
 @section('content')
@@ -602,7 +607,9 @@
                     <div class="osis-row">
                         @foreach($leaderMembers as $member)
                             <article class="osis-card">
-                                <div class="osis-card-inner">
+                                <div class="osis-card-top"></div>
+
+                                <div class="osis-card-body">
                                     <div class="osis-photo-wrap">
                                         @if($member->photo_path)
                                             <img src="{{ asset('storage/' . $member->photo_path) }}"
@@ -643,7 +650,9 @@
                     <div class="osis-row">
                         @foreach($adminMembers as $member)
                             <article class="osis-card">
-                                <div class="osis-card-inner">
+                                <div class="osis-card-top"></div>
+
+                                <div class="osis-card-body">
                                     <div class="osis-photo-wrap">
                                         @if($member->photo_path)
                                             <img src="{{ asset('storage/' . $member->photo_path) }}"
@@ -695,7 +704,9 @@
                     <div class="osis-sekbid-grid">
                         @foreach($sekbidMembers as $member)
                             <article class="osis-card">
-                                <div class="osis-card-inner">
+                                <div class="osis-card-top"></div>
+
+                                <div class="osis-card-body">
                                     <div class="osis-photo-wrap">
                                         @if($member->photo_path)
                                             <img src="{{ asset('storage/' . $member->photo_path) }}"
