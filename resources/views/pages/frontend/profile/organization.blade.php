@@ -267,7 +267,7 @@
     .org-card {
         position: relative;
         width: min(100%, 285px);
-        min-height: 420px;
+        min-height: 410px;
         overflow: hidden;
         border-radius: 26px;
         background: #ffffff;
@@ -298,11 +298,37 @@
         transform: scaleX(1);
     }
 
-    .org-card-top {
-        height: 78px;
+    .org-card-header {
+        min-height: 82px;
+        padding: 16px 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
         background:
             radial-gradient(circle at 20% 18%, rgba(219, 165, 45, 0.20), transparent 28%),
             linear-gradient(135deg, #09284d 0%, #061b36 100%);
+    }
+
+    .org-position {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        color: #ffffff;
+        font-size: 12px;
+        line-height: 1.35;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.75px;
+        text-align: center;
+    }
+
+    .org-position svg {
+        width: 15px;
+        height: 15px;
+        color: var(--org-gold-2);
+        flex-shrink: 0;
     }
 
     .org-card-body {
@@ -311,45 +337,15 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 26px 22px 30px;
+        padding: 30px 22px 30px;
         text-align: center;
-    }
-
-    .org-position {
-        position: relative;
-        z-index: 4;
-        min-height: 38px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        padding: 0 15px;
-        margin: 0 auto 20px;
-        border-radius: 999px;
-        color: var(--org-navy);
-        background: rgba(219, 165, 45, 0.11);
-        border: 1px solid rgba(219, 165, 45, 0.24);
-        font-size: 11.5px;
-        line-height: 1.35;
-        font-weight: 900;
-        text-transform: uppercase;
-        letter-spacing: 0.55px;
-        max-width: 100%;
-        text-align: center;
-    }
-
-    .org-position svg {
-        width: 15px;
-        height: 15px;
-        color: var(--org-gold);
-        flex-shrink: 0;
     }
 
     .org-avatar-wrap {
         width: 138px;
         height: 138px;
         position: relative;
-        margin: 0 auto 22px;
+        margin: 0 auto 24px;
         border-radius: 999px;
         display: grid;
         place-items: center;
@@ -545,18 +541,19 @@
             border-radius: 22px;
         }
 
-        .org-card-top {
-            height: 68px;
+        .org-card-header {
+            min-height: 74px;
+            padding: 14px 16px;
         }
 
         .org-card-body {
-            padding: 24px 18px 28px;
+            padding: 26px 18px 28px;
         }
 
         .org-avatar-wrap {
             width: 118px;
             height: 118px;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         .org-avatar-fallback {
@@ -564,8 +561,7 @@
         }
 
         .org-position {
-            font-size: 10.5px;
-            padding: 0 12px;
+            font-size: 11px;
         }
 
         .org-name {
@@ -652,16 +648,16 @@
                             <div class="org-level leader">
                                 @foreach($organization[$groupName] as $member)
                                     <article class="org-card">
-                                        <div class="org-card-top"></div>
-
-                                        <div class="org-card-body">
+                                        <div class="org-card-header">
                                             <div class="org-position">
                                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                                 </svg>
                                                 {{ $member->position ?? $groupName }}
                                             </div>
+                                        </div>
 
+                                        <div class="org-card-body">
                                             <div class="org-avatar-wrap">
                                                 @if($member->photo_path)
                                                     <img src="{{ asset('storage/' . $member->photo_path) }}"
@@ -708,16 +704,16 @@
                                 @if(isset($organization[$groupName]) && collect($organization[$groupName])->count() > 0)
                                     @foreach($organization[$groupName] as $member)
                                         <article class="org-card">
-                                            <div class="org-card-top"></div>
-
-                                            <div class="org-card-body">
+                                            <div class="org-card-header">
                                                 <div class="org-position">
                                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                                     </svg>
                                                     {{ $member->position ?? $groupName }}
                                                 </div>
+                                            </div>
 
+                                            <div class="org-card-body">
                                                 <div class="org-avatar-wrap">
                                                     @if($member->photo_path)
                                                         <img src="{{ asset('storage/' . $member->photo_path) }}"
@@ -765,16 +761,16 @@
                                 @if(isset($organization[$groupName]) && collect($organization[$groupName])->count() > 0)
                                     @foreach($organization[$groupName] as $member)
                                         <article class="org-card">
-                                            <div class="org-card-top"></div>
-
-                                            <div class="org-card-body">
+                                            <div class="org-card-header">
                                                 <div class="org-position">
                                                     <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                                     </svg>
                                                     {{ $member->position ?? $groupName }}
                                                 </div>
+                                            </div>
 
+                                            <div class="org-card-body">
                                                 <div class="org-avatar-wrap">
                                                     @if($member->photo_path)
                                                         <img src="{{ asset('storage/' . $member->photo_path) }}"
@@ -817,16 +813,16 @@
                             <div class="org-level small">
                                 @foreach($organization[$groupName] as $member)
                                     <article class="org-card">
-                                        <div class="org-card-top"></div>
-
-                                        <div class="org-card-body">
+                                        <div class="org-card-header">
                                             <div class="org-position">
                                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"></path>
                                                 </svg>
                                                 {{ $member->position ?? $groupName }}
                                             </div>
+                                        </div>
 
+                                        <div class="org-card-body">
                                             <div class="org-avatar-wrap">
                                                 @if($member->photo_path)
                                                     <img src="{{ asset('storage/' . $member->photo_path) }}"
