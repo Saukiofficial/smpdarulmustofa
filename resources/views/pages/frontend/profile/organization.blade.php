@@ -263,7 +263,6 @@
         flex-shrink: 0;
     }
 
-    /* CARD 3 BAGIAN: TITLE - FOTO - NAMA */
     .org-card {
         width: min(100%, 285px);
         display: flex;
@@ -271,7 +270,7 @@
         gap: 12px;
         padding: 12px;
         border-radius: 28px;
-        background: rgba(255, 255, 255, 0.72);
+        background: rgba(255, 255, 255, 0.76);
         border: 1px solid rgba(6, 27, 54, 0.07);
         box-shadow: var(--org-shadow);
         transition: 0.28s ease;
@@ -296,6 +295,7 @@
             linear-gradient(135deg, #09284d 0%, #061b36 100%);
         border: 1px solid rgba(219, 165, 45, 0.34);
         text-align: center;
+        overflow: hidden;
     }
 
     .org-position {
@@ -320,30 +320,38 @@
     }
 
     .org-photo-card {
-        min-height: 196px;
-        padding: 22px 18px;
+        width: 100%;
+        height: 190px;
+        min-height: 190px;
+        max-height: 190px;
+        padding: 16px;
+        overflow: hidden;
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 22px;
         background: #ffffff;
-        border: 1px solid rgba(6, 27, 54, 0.06);
+        border: 1px solid rgba(6, 27, 54, 0.08);
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
     }
 
     .org-avatar-wrap {
-        width: 144px;
-        height: 144px;
+        width: 132px;
+        height: 132px;
+        min-width: 132px;
+        min-height: 132px;
+        max-width: 132px;
+        max-height: 132px;
         position: relative;
+        overflow: hidden;
         border-radius: 999px;
-        display: grid;
-        place-items: center;
+        display: block;
         background: #ffffff;
         border: 4px solid #ffffff;
         box-shadow:
-            0 18px 36px rgba(6, 27, 54, 0.16),
+            0 14px 28px rgba(6, 27, 54, 0.16),
             0 0 0 1px rgba(219, 165, 45, 0.22);
-        flex-shrink: 0;
+        flex: 0 0 132px;
     }
 
     .org-avatar-wrap::after {
@@ -351,8 +359,9 @@
         position: absolute;
         right: 7px;
         bottom: 8px;
-        width: 26px;
-        height: 26px;
+        z-index: 5;
+        width: 22px;
+        height: 22px;
         border-radius: 999px;
         background: linear-gradient(180deg, var(--org-gold-2), var(--org-gold));
         border: 3px solid #ffffff;
@@ -362,10 +371,14 @@
     .org-avatar {
         width: 100%;
         height: 100%;
+        max-width: 100%;
+        max-height: 100%;
         display: block;
-        border-radius: 999px;
         object-fit: cover;
         object-position: center top;
+        border-radius: 999px;
+        margin: 0;
+        padding: 0;
         background: var(--org-soft-2);
     }
 
@@ -387,15 +400,16 @@
     }
 
     .org-name-card {
-        min-height: 108px;
+        min-height: 104px;
         padding: 18px 16px;
+        overflow: hidden;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         border-radius: 22px;
         background: #ffffff;
-        border: 1px solid rgba(6, 27, 54, 0.06);
+        border: 1px solid rgba(6, 27, 54, 0.08);
         text-align: center;
     }
 
@@ -407,6 +421,8 @@
         line-height: 1.18;
         font-weight: 700;
         letter-spacing: -0.35px;
+        position: static;
+        z-index: auto;
     }
 
     .org-line {
@@ -539,13 +555,27 @@
         }
 
         .org-photo-card {
-            min-height: 172px;
-            padding: 18px 14px;
+            height: 170px;
+            min-height: 170px;
+            max-height: 170px;
+            padding: 14px;
         }
 
         .org-avatar-wrap {
-            width: 122px;
-            height: 122px;
+            width: 116px;
+            height: 116px;
+            min-width: 116px;
+            min-height: 116px;
+            max-width: 116px;
+            max-height: 116px;
+            flex-basis: 116px;
+        }
+
+        .org-avatar-wrap::after {
+            width: 20px;
+            height: 20px;
+            right: 6px;
+            bottom: 7px;
         }
 
         .org-avatar-fallback {
@@ -700,7 +730,6 @@
                             <div class="org-level {{ $level['class'] }}">
                                 @foreach($levelMembers as $member)
                                     <article class="org-card">
-                                        {{-- CARD ATAS: JABATAN --}}
                                         <div class="org-title-card">
                                             <div class="org-position">
                                                 <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -710,7 +739,6 @@
                                             </div>
                                         </div>
 
-                                        {{-- CARD TENGAH: FOTO --}}
                                         <div class="org-photo-card">
                                             <div class="org-avatar-wrap">
                                                 @if($member->photo_path)
@@ -731,7 +759,6 @@
                                             </div>
                                         </div>
 
-                                        {{-- CARD BAWAH: NAMA --}}
                                         <div class="org-name-card">
                                             <h2 class="org-name">
                                                 {{ $member->name ?? 'Nama Pengurus' }}
