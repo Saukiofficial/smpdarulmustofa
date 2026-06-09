@@ -36,7 +36,7 @@
         position: absolute;
         width: 520px;
         height: 520px;
-        opacity: 0.38;
+        opacity: 0.34;
         pointer-events: none;
         background-image:
             linear-gradient(rgba(6, 27, 54, 0.055) 1px, transparent 1px),
@@ -177,79 +177,105 @@
         align-items: stretch;
     }
 
+    /* CARD 3 BAGIAN: MAPEL - FOTO - NAMA */
     .teacher-card {
-        position: relative;
-        height: 100%;
-        overflow: hidden;
-        border-radius: 26px;
-        background: #ffffff;
-        border: 1px solid var(--teacher-border);
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding: 12px;
+        border-radius: 28px;
+        background: rgba(255, 255, 255, 0.76);
+        border: 1px solid rgba(6, 27, 54, 0.07);
         box-shadow: var(--teacher-shadow);
         transition: 0.28s ease;
     }
 
     .teacher-card:hover {
-        transform: translateY(-9px);
+        transform: translateY(-8px);
         box-shadow: var(--teacher-shadow-hover);
         border-color: rgba(219, 165, 45, 0.30);
     }
 
-    .teacher-card::after {
-        content: "";
-        position: absolute;
-        inset: auto 0 0 0;
-        height: 5px;
-        background: linear-gradient(90deg, var(--teacher-gold), var(--teacher-gold-2));
-        transform: scaleX(0);
-        transform-origin: left;
-        transition: 0.28s ease;
-    }
-
-    .teacher-card:hover::after {
-        transform: scaleX(1);
-    }
-
-    .teacher-card-top {
-        height: 112px;
+    .teacher-title-card {
+        min-height: 72px;
+        padding: 14px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 20px;
         background:
             radial-gradient(circle at 20% 18%, rgba(219, 165, 45, 0.20), transparent 28%),
             linear-gradient(135deg, #09284d 0%, #061b36 100%);
+        border: 1px solid rgba(219, 165, 45, 0.34);
+        text-align: center;
+        overflow: hidden;
     }
 
-    .teacher-card-body {
-        position: relative;
-        z-index: 2;
-        display: flex;
-        flex-direction: column;
+    .teacher-subject {
+        display: inline-flex;
         align-items: center;
-        min-height: 270px;
-        padding: 0 24px 28px;
+        justify-content: center;
+        gap: 8px;
+        color: #ffffff;
+        font-size: 12px;
+        line-height: 1.35;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.75px;
         text-align: center;
     }
 
+    .teacher-subject svg {
+        width: 15px;
+        height: 15px;
+        color: var(--teacher-gold-2);
+        flex-shrink: 0;
+    }
+
+    .teacher-photo-card {
+        width: 100%;
+        height: 190px;
+        min-height: 190px;
+        max-height: 190px;
+        padding: 16px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 22px;
+        background: #ffffff;
+        border: 1px solid rgba(6, 27, 54, 0.08);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+    }
+
     .teacher-photo-wrap {
-        width: 142px;
-        height: 142px;
+        width: 132px;
+        height: 132px;
+        min-width: 132px;
+        min-height: 132px;
+        max-width: 132px;
+        max-height: 132px;
         position: relative;
-        margin: -72px auto 28px;
+        overflow: hidden;
         border-radius: 999px;
-        display: grid;
-        place-items: center;
+        display: block;
         background: #ffffff;
         border: 4px solid #ffffff;
         box-shadow:
-            0 18px 36px rgba(6, 27, 54, 0.18),
-            0 0 0 1px rgba(219, 165, 45, 0.20);
-        flex-shrink: 0;
+            0 14px 28px rgba(6, 27, 54, 0.16),
+            0 0 0 1px rgba(219, 165, 45, 0.22);
+        flex: 0 0 132px;
     }
 
     .teacher-photo-wrap::after {
         content: "";
         position: absolute;
-        right: 8px;
-        bottom: 9px;
-        width: 28px;
-        height: 28px;
+        right: 7px;
+        bottom: 8px;
+        z-index: 5;
+        width: 22px;
+        height: 22px;
         border-radius: 999px;
         background: linear-gradient(180deg, var(--teacher-gold-2), var(--teacher-gold));
         border: 3px solid #ffffff;
@@ -259,10 +285,14 @@
     .teacher-photo {
         width: 100%;
         height: 100%;
+        max-width: 100%;
+        max-height: 100%;
         display: block;
-        border-radius: 999px;
         object-fit: cover;
         object-position: center top;
+        border-radius: 999px;
+        margin: 0;
+        padding: 0;
         background: var(--teacher-soft-2);
     }
 
@@ -277,26 +307,36 @@
             radial-gradient(circle at 30% 20%, rgba(219, 165, 45, 0.28), transparent 32%),
             linear-gradient(135deg, #0b2b52 0%, #061b36 100%);
         font-family: Georgia, 'Times New Roman', serif;
-        font-size: 54px;
+        font-size: 50px;
         line-height: 1;
         font-weight: 700;
         text-transform: uppercase;
     }
 
+    .teacher-name-card {
+        min-height: 124px;
+        padding: 18px 16px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 22px;
+        background: #ffffff;
+        border: 1px solid rgba(6, 27, 54, 0.08);
+        text-align: center;
+    }
+
     .teacher-name {
-        position: relative;
-        z-index: 3;
-        margin: 0 0 12px;
+        margin: 0;
         color: var(--teacher-navy);
         font-family: Georgia, 'Times New Roman', serif;
-        font-size: 24px;
+        font-size: 23px;
         line-height: 1.18;
         font-weight: 700;
         letter-spacing: -0.35px;
-        min-height: 58px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        position: static;
+        z-index: auto;
     }
 
     .teacher-line {
@@ -304,43 +344,15 @@
         height: 2px;
         border-radius: 999px;
         background: var(--teacher-gold);
-        margin-bottom: 16px;
-    }
-
-    .teacher-subject {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 9px;
-        min-height: 42px;
-        padding: 0 16px;
-        border-radius: 999px;
-        color: var(--teacher-navy);
-        background: rgba(219, 165, 45, 0.11);
-        border: 1px solid rgba(219, 165, 45, 0.24);
-        font-size: 13px;
-        line-height: 1.35;
-        font-weight: 900;
-        text-transform: uppercase;
-        letter-spacing: 0.4px;
-    }
-
-    .teacher-subject svg {
-        width: 16px;
-        height: 16px;
-        color: var(--teacher-gold);
-        flex-shrink: 0;
+        margin: 14px auto 0;
     }
 
     .teacher-meta {
-        margin-top: 18px;
-        padding-top: 18px;
-        width: 100%;
-        border-top: 1px solid rgba(6, 27, 54, 0.07);
+        margin: 12px 0 0;
         color: var(--teacher-muted);
-        font-size: 13.5px;
-        line-height: 1.6;
-        font-weight: 600;
+        font-size: 13px;
+        line-height: 1.5;
+        font-weight: 700;
     }
 
     .teachers-empty {
@@ -389,10 +401,6 @@
             grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 24px;
         }
-
-        .teacher-name {
-            font-size: 23px;
-        }
     }
 
     @media (max-width: 992px) {
@@ -437,11 +445,6 @@
             grid-template-columns: 1fr;
             gap: 24px;
         }
-
-        .teacher-card-body {
-            min-height: auto;
-            padding: 0 22px 26px;
-        }
     }
 
     @media (max-width: 480px) {
@@ -451,31 +454,53 @@
 
         .teacher-card {
             border-radius: 22px;
+            padding: 10px;
         }
 
-        .teacher-card-top {
-            height: 98px;
+        .teacher-title-card {
+            min-height: 66px;
+            border-radius: 18px;
+        }
+
+        .teacher-photo-card {
+            height: 170px;
+            min-height: 170px;
+            max-height: 170px;
+            padding: 14px;
         }
 
         .teacher-photo-wrap {
-            width: 124px;
-            height: 124px;
-            margin-top: -62px;
-            margin-bottom: 24px;
+            width: 116px;
+            height: 116px;
+            min-width: 116px;
+            min-height: 116px;
+            max-width: 116px;
+            max-height: 116px;
+            flex-basis: 116px;
+        }
+
+        .teacher-photo-wrap::after {
+            width: 20px;
+            height: 20px;
+            right: 6px;
+            bottom: 7px;
         }
 
         .teacher-avatar-fallback {
-            font-size: 46px;
+            font-size: 44px;
+        }
+
+        .teacher-subject {
+            font-size: 11px;
+        }
+
+        .teacher-name-card {
+            min-height: 104px;
+            padding: 16px 14px;
         }
 
         .teacher-name {
             font-size: 22px;
-            min-height: auto;
-        }
-
-        .teacher-subject {
-            font-size: 12px;
-            padding: 0 13px;
         }
     }
 </style>
@@ -517,9 +542,16 @@
             <div class="teachers-grid">
                 @foreach ($teachers as $teacher)
                     <article class="teacher-card">
-                        <div class="teacher-card-top"></div>
+                        <div class="teacher-title-card">
+                            <div class="teacher-subject">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13"></path>
+                                </svg>
+                                {{ $teacher->mapel ?? 'Mata Pelajaran' }}
+                            </div>
+                        </div>
 
-                        <div class="teacher-card-body">
+                        <div class="teacher-photo-card">
                             <div class="teacher-photo-wrap">
                                 @if(optional($teacher->user)->profile_photo_path)
                                     <img src="{{ asset('storage/' . $teacher->user->profile_photo_path) }}"
@@ -537,23 +569,18 @@
                                     </div>
                                 @endif
                             </div>
+                        </div>
 
+                        <div class="teacher-name-card">
                             <h2 class="teacher-name">
                                 {{ optional($teacher->user)->name ?? 'Nama Guru' }}
                             </h2>
 
                             <div class="teacher-line"></div>
 
-                            <div class="teacher-subject">
-                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13"></path>
-                                </svg>
-                                {{ $teacher->mapel ?? 'Mata Pelajaran' }}
-                            </div>
-
-                            <div class="teacher-meta">
+                            <p class="teacher-meta">
                                 Pendidik SMP Darul Mustofa
-                            </div>
+                            </p>
                         </div>
                     </article>
                 @endforeach
