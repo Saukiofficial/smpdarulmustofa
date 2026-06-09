@@ -4,795 +4,1427 @@
 
 @push('styles')
 <style>
-    /* ========================================
-       MODERN INTERNATIONAL SCHOOL DESIGN
-       Professional & Clean UI
-    ======================================== */
+    /* =========================================================
+       SMP DARUL MUSTOFA - RESPONSIVE ELITE HOMEPAGE
+       Navy, Gold, White - Desktop tidak kepotong
+    ========================================================= */
 
     :root {
-        --primary: #1e40af;
-        --primary-dark: #1e3a8a;
-        --secondary: #059669;
-        --accent: #f59e0b;
-        --text-primary: #1f2937;
-        --text-secondary: #6b7280;
-        --bg-light: #f9fafb;
-        --bg-white: #ffffff;
-        --border-color: #e5e7eb;
+        --dm-navy: #061b36;
+        --dm-navy-2: #09284d;
+        --dm-gold: #dba52d;
+        --dm-gold-2: #f0c45a;
+        --dm-white: #ffffff;
+        --dm-soft: #f6f8fb;
+        --dm-text: #0d1b2f;
+        --dm-muted: #68758a;
+        --dm-border: rgba(219, 165, 45, 0.35);
+        --dm-radius: 22px;
     }
 
     * {
-        margin: 0;
-        padding: 0;
         box-sizing: border-box;
     }
 
-    html, body {
-        height: 100%;
+    html,
+    body {
         overflow-x: hidden;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-    }
-
-    /* ========================================
-       HERO SECTION - Background Image Only
-    ======================================== */
-    .luxury-hero {
-        position: relative;
-        min-height: 85vh;
-        background-image: url('{{ asset('images/gedung-sekolah.jpg') }}');
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        display: flex;
-        align-items: center;
-        overflow: hidden;
-    }
-
-    .hero-bg-overlay {
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.3) 100%);
-    }
-
-    .hero-particles {
-        position: absolute;
-        inset: 0;
-        background:
-            radial-gradient(circle at 10% 20%, rgba(255,255,255,0.05) 0%, transparent 50%),
-            radial-gradient(circle at 90% 80%, rgba(255,255,255,0.03) 0%, transparent 50%);
-    }
-
-    .hero-content {
-        position: relative;
-        z-index: 10;
-    }
-
-    .hero-title {
-        font-size: clamp(2.5rem, 5vw, 4.5rem);
-        font-weight: 800;
-        color: #ffffff;
-        line-height: 1.15;
-        margin-bottom: 1.5rem;
-        letter-spacing: -0.02em;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    }
-
-    .hero-title .highlight-text {
-        background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        display: inline-block;
-    }
-
-    .hero-subtitle {
-        font-size: clamp(1.1rem, 2vw, 1.35rem);
-        color: rgba(255, 255, 255, 0.95);
-        line-height: 1.7;
-        margin-bottom: 2.5rem;
-        max-width: 600px;
-        font-weight: 400;
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
-    }
-
-    .hero-buttons {
-        display: flex;
-        gap: 1rem;
-        flex-wrap: wrap;
-    }
-
-    .btn-primary {
-        background: #ffffff;
-        color: #1e40af;
-        font-weight: 600;
-        padding: 1.1rem 2.5rem;
-        border-radius: 12px;
-        transition: all 0.3s ease;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-        border: none;
-        font-size: 1rem;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .btn-primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
-        background: #f8fafc;
-    }
-
-    .btn-secondary {
-        background: transparent;
-        color: #ffffff;
-        font-weight: 600;
-        padding: 1.1rem 2.5rem;
-        border-radius: 12px;
-        border: 2px solid rgba(255, 255, 255, 0.8);
-        transition: all 0.3s ease;
-        font-size: 1rem;
-        backdrop-filter: blur(10px);
-    }
-
-    .btn-secondary:hover {
-        background: rgba(255, 255, 255, 0.2);
-        border-color: rgba(255, 255, 255, 1);
-        transform: translateY(-2px);
-    }
-
-    .hero-character {
-        position: relative;
-        animation: floatAnimation 6s ease-in-out infinite;
-        max-width: 700px;
-        width: 100%;
-        filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
-    }
-
-    @keyframes floatAnimation {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-20px); }
-    }
-
-    /* Mobile Hero Optimization */
-    @media (max-width: 768px) {
-        .luxury-hero {
-            min-height: auto;
-            padding: 3rem 0 2rem;
-        }
-
-        .hero-bg-overlay {
-            background: rgba(0, 0, 0, 0.6);
-        }
-
-        .hero-title {
-            font-size: 2rem;
-            text-align: center;
-        }
-
-        .hero-subtitle {
-            font-size: 1rem;
-            text-align: center;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .hero-buttons {
-            justify-content: center;
-            flex-direction: column;
-        }
-
-        .btn-primary, .btn-secondary {
-            width: 100%;
-            justify-content: center;
-            max-width: 300px;
-            margin: 0 auto;
-        }
-
-        .hero-character {
-            max-width: 280px;
-            margin: 2rem auto 0;
-            display: block;
-        }
-    }
-
-    /* ========================================
-       STATISTICS SECTION - Clean & Professional
-    ======================================== */
-    .stats-section {
-        background: #ffffff;
-        padding: 5rem 0;
-        border-bottom: 1px solid var(--border-color);
-    }
-
-    .stat-card {
-        background: #ffffff;
-        border-radius: 16px;
-        padding: 2.5rem 2rem;
-        text-align: center;
-        transition: all 0.3s ease;
-        border: 1px solid var(--border-color);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .stat-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, #1e40af, #3b82f6);
-    }
-
-    .stat-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-        border-color: #3b82f6;
-    }
-
-    .stat-number {
-        font-size: 3.5rem;
-        font-weight: 800;
-        color: #1e40af;
-        margin-bottom: 0.5rem;
-        line-height: 1;
-    }
-
-    .stat-label {
-        color: var(--text-secondary);
-        font-weight: 500;
-        font-size: 1rem;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    @media (max-width: 768px) {
-        .stats-section {
-            padding: 3rem 0;
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-        }
-    }
-
-    /* ========================================
-       PRINCIPAL SECTION - Executive Style
-    ======================================== */
-    .principal-section {
-        background: var(--bg-light);
-        padding: 6rem 0;
-    }
-
-    .principal-card {
-        background: #ffffff;
-        border-radius: 5px;
-        padding: 0;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
-        overflow: hidden;
-        border: 1px solid var(--border-color);
-    }
-
-    .principal-image {
-        width: 100%;
-        height: auto;
-        display: block;
-        object-fit: cover;
-    }
-
-    .principal-content {
-        padding: 3rem;
-    }
-
-    .section-badge {
-        background: #eff6ff;
-        color: #1e40af;
-        font-weight: 600;
-        padding: 0.5rem 1.25rem;
-        border-radius: 50px;
-        font-size: 0.875rem;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
-        display: inline-block;
-        margin-bottom: 1.5rem;
-    }
-
-    .section-title {
-        font-size: clamp(1.75rem, 4vw, 2.5rem);
-        font-weight: 800;
-        color: var(--text-primary);
-        margin-bottom: 1.5rem;
-        line-height: 1.3;
-    }
-
-    .principal-quote {
-        font-size: 1.125rem;
-        line-height: 1.8;
-        color: var(--text-secondary);
-        margin-bottom: 2rem;
-        font-style: italic;
-        position: relative;
-        padding-left: 1.5rem;
-        border-left: 4px solid #1e40af;
-    }
-
-    .principal-info {
-        background: var(--bg-light);
-        padding: 1.5rem;
-        border-radius: 12px;
-        border-left: 4px solid #059669;
-    }
-
-    .principal-name {
-        font-weight: 700;
-        font-size: 1.25rem;
-        color: var(--text-primary);
-        margin-bottom: 0.25rem;
-    }
-
-    .principal-title {
-        color: var(--text-secondary);
-        font-size: 0.95rem;
-    }
-
-    @media (max-width: 768px) {
-        .principal-section {
-            padding: 4rem 0;
-        }
-
-        .principal-content {
-            padding: 2rem;
-        }
-    }
-
-    /* ========================================
-       NEWS SECTION - Magazine Style
-    ======================================== */
-    .news-section {
-        background: #ffffff;
-        padding: 6rem 0;
-    }
-
-    .section-header {
-        text-align: center;
-        margin-bottom: 4rem;
-    }
-
-    .section-subtitle {
-        color: var(--text-secondary);
-        font-size: 1.1rem;
-        max-width: 700px;
-        margin: 1rem auto 0;
-        line-height: 1.7;
-    }
-
-    .news-card {
-        background: #ffffff;
-        border-radius: 16px;
-        overflow: hidden;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-        transition: all 0.3s ease;
-        border: 1px solid var(--border-color);
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .news-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    }
-
-    .news-image-container {
-        overflow: hidden;
-        height: 240px;
-        background: var(--bg-light);
-    }
-
-    .news-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.5s ease;
-    }
-
-    .news-card:hover .news-image {
-        transform: scale(1.08);
-    }
-
-    .news-content {
-        padding: 2rem;
-        flex-grow: 1;
-        display: flex;
-        flex-direction: column;
-    }
-
-    .news-date {
-        color: var(--secondary);
-        font-weight: 600;
-        font-size: 0.875rem;
-        margin-bottom: 0.75rem;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .news-title {
-        font-weight: 700;
-        font-size: 1.25rem;
-        color: var(--text-primary);
-        margin-bottom: 1rem;
-        line-height: 1.4;
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    .news-card:hover .news-title {
-        color: #1e40af;
-    }
-
-    .news-excerpt {
-        color: var(--text-secondary);
-        line-height: 1.6;
-        margin-bottom: 1.5rem;
-        flex-grow: 1;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-    }
-
-    .news-link {
-        color: #1e40af;
-        font-weight: 600;
-        font-size: 0.95rem;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.5rem;
-        transition: all 0.3s ease;
-    }
-
-    .news-link:hover {
-        gap: 0.75rem;
-        color: #1e3a8a;
-    }
-
-    .news-link i {
-        transition: transform 0.3s ease;
-    }
-
-    .news-card:hover .news-link i {
-        transform: translateX(4px);
-    }
-
-    .empty-state {
-        text-align: center;
-        padding: 4rem 2rem;
-        background: var(--bg-light);
-        border-radius: 16px;
-        border: 2px dashed var(--border-color);
-    }
-
-    .empty-state i {
-        font-size: 4rem;
-        color: #cbd5e1;
-        margin-bottom: 1.5rem;
-    }
-
-    .empty-state-title {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--text-primary);
-        margin-bottom: 0.5rem;
-    }
-
-    .empty-state-text {
-        color: var(--text-secondary);
-        font-size: 1rem;
-    }
-
-    .view-all-btn {
-        background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-        color: #ffffff;
-        font-weight: 600;
-        padding: 1.1rem 3rem;
-        border-radius: 12px;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.75rem;
-        transition: all 0.3s ease;
-        box-shadow: 0 10px 30px rgba(30, 64, 175, 0.2);
-        font-size: 1rem;
-    }
-
-    .view-all-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 15px 40px rgba(30, 64, 175, 0.3);
-    }
-
-    .view-all-btn i {
-        transition: transform 0.3s ease;
-    }
-
-    .view-all-btn:hover i {
-        transform: translateX(4px);
-    }
-
-    @media (max-width: 768px) {
-        .news-section {
-            padding: 4rem 0;
-        }
-
-        .section-header {
-            margin-bottom: 3rem;
-        }
-
-        .news-content {
-            padding: 1.5rem;
-        }
-    }
-
-    /* ========================================
-       UTILITY CLASSES
-    ======================================== */
-    .container {
-        max-width: 1280px;
-        margin: 0 auto;
-        padding: 0 2rem;
-    }
-
-    @media (max-width: 768px) {
-        .container {
-            padding: 0 1.5rem;
-        }
-    }
-
-    /* Grid System */
-    .grid {
-        display: grid;
-        gap: 2rem;
-    }
-
-    .grid-cols-1 {
-        grid-template-columns: repeat(1, 1fr);
-    }
-
-    @media (min-width: 768px) {
-        .grid-cols-2 {
-            grid-template-columns: repeat(2, 1fr);
-        }
-    }
-
-    @media (min-width: 1024px) {
-        .grid-cols-3 {
-            grid-template-columns: repeat(3, 1fr);
-        }
-
-        .grid-cols-4 {
-            grid-template-columns: repeat(4, 1fr);
-        }
-    }
-
-    /* Smooth Scrolling */
-    html {
         scroll-behavior: smooth;
     }
 
-    /* Focus Styles for Accessibility */
-    a:focus, button:focus {
-        outline: 2px solid #3b82f6;
-        outline-offset: 2px;
+    body {
+        color: var(--dm-text);
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .dm-container {
+        width: min(100% - 36px, 1500px);
+        margin-inline: auto;
+    }
+
+    /* =========================================================
+       HERO SECTION
+    ========================================================= */
+
+    .dm-hero {
+        position: relative;
+        overflow: hidden;
+        isolation: isolate;
+        background:
+            linear-gradient(
+                90deg,
+                rgba(3, 18, 38, 0.98) 0%,
+                rgba(6, 27, 54, 0.92) 34%,
+                rgba(6, 27, 54, 0.62) 61%,
+                rgba(6, 27, 54, 0.34) 100%
+            ),
+            url('{{ asset('images/gedung-sekolah.jpg') }}') center / cover no-repeat;
+    }
+
+    .dm-hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -2;
+        background:
+            radial-gradient(circle at 14% 32%, rgba(219, 165, 45, 0.20), transparent 28%),
+            radial-gradient(circle at 86% 18%, rgba(255, 255, 255, 0.11), transparent 27%),
+            linear-gradient(180deg, rgba(0, 0, 0, 0.04), rgba(0, 0, 0, 0.20));
+        pointer-events: none;
+    }
+
+    .dm-hero::after {
+        content: "";
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 170px;
+        z-index: -1;
+        background: linear-gradient(180deg, transparent, rgba(3, 18, 38, 0.74));
+        pointer-events: none;
+    }
+
+    .dm-hero-inner {
+        position: relative;
+        min-height: clamp(620px, calc(100vh - 128px), 790px);
+        display: grid;
+        grid-template-columns: minmax(0, 0.95fr) minmax(420px, 1.05fr);
+        align-items: end;
+        gap: clamp(18px, 3vw, 52px);
+        padding: clamp(44px, 5vw, 72px) 0 clamp(26px, 3.5vw, 52px);
+    }
+
+    .dm-hero-content {
+        position: relative;
+        z-index: 5;
+        align-self: center;
+        max-width: 780px;
+        padding-bottom: 8px;
+    }
+
+    .dm-badge {
+        width: fit-content;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 20px;
+        border: 1px solid var(--dm-border);
+        border-radius: 10px;
+        background: rgba(6, 27, 54, 0.58);
+        color: #eef5ff;
+        font-size: 15px;
+        line-height: 1;
+        backdrop-filter: blur(16px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+        margin-bottom: 24px;
+    }
+
+    .dm-badge i {
+        color: var(--dm-gold);
+        font-size: 20px;
+    }
+
+    .dm-hero-title {
+        margin: 0;
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: clamp(48px, 5.2vw, 86px);
+        font-weight: 700;
+        line-height: 0.98;
+        letter-spacing: -2.6px;
+        color: #ffffff;
+        text-shadow: 0 12px 34px rgba(0, 0, 0, 0.36);
+    }
+
+    .dm-hero-title .gold {
+        color: var(--dm-gold);
+        text-shadow: 0 8px 30px rgba(219, 165, 45, 0.28);
+    }
+
+    .dm-title-line {
+        width: 300px;
+        height: 4px;
+        border-radius: 999px;
+        margin: 24px 0 22px;
+        background: linear-gradient(90deg, var(--dm-gold), rgba(219, 165, 45, 0));
+    }
+
+    .dm-hero-subtitle {
+        max-width: 670px;
+        margin: 0 0 28px;
+        color: rgba(255, 255, 255, 0.88);
+        font-size: clamp(16px, 1.15vw, 19px);
+        line-height: 1.72;
+        text-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
+    }
+
+    .dm-hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 18px;
+        margin-bottom: 28px;
+    }
+
+    .dm-btn {
+        min-height: 58px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 0 32px;
+        border-radius: 10px;
+        font-size: 17px;
+        font-weight: 700;
+        transition: 0.28s ease;
+        border: 1px solid transparent;
+        white-space: nowrap;
+    }
+
+    .dm-btn-primary {
+        color: #ffffff;
+        background: linear-gradient(135deg, #c99118, #e2b33c);
+        box-shadow: 0 18px 38px rgba(219, 165, 45, 0.28);
+    }
+
+    .dm-btn-primary:hover {
+        color: #ffffff;
+        transform: translateY(-4px);
+        box-shadow: 0 24px 48px rgba(219, 165, 45, 0.36);
+    }
+
+    .dm-btn-outline {
+        color: #ffffff;
+        background: rgba(6, 27, 54, 0.34);
+        border-color: rgba(219, 165, 45, 0.55);
+        backdrop-filter: blur(12px);
+    }
+
+    .dm-btn-outline:hover {
+        color: #ffffff;
+        border-color: var(--dm-gold);
+        background: rgba(219, 165, 45, 0.12);
+        transform: translateY(-4px);
+    }
+
+    .dm-feature-strip {
+        width: min(100%, 875px);
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 0;
+        border: 1px solid rgba(255, 255, 255, 0.20);
+        border-radius: 18px;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.08);
+        backdrop-filter: blur(18px);
+        box-shadow: 0 20px 55px rgba(0, 0, 0, 0.18);
+    }
+
+    .dm-feature-item {
+        display: grid;
+        grid-template-columns: 42px 1fr;
+        gap: 12px;
+        align-items: center;
+        padding: 20px 18px;
+        color: #ffffff;
+        position: relative;
+        min-width: 0;
+    }
+
+    .dm-feature-item:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 24%;
+        width: 1px;
+        height: 52%;
+        background: rgba(255, 255, 255, 0.26);
+    }
+
+    .dm-feature-icon {
+        width: 40px;
+        height: 40px;
+        display: grid;
+        place-items: center;
+        color: var(--dm-gold);
+        font-size: 24px;
+    }
+
+    .dm-feature-title {
+        display: block;
+        margin-bottom: 4px;
+        color: #ffffff;
+        font-size: clamp(13px, 0.9vw, 16px);
+        font-weight: 800;
+        line-height: 1.18;
+    }
+
+    .dm-feature-text {
+        display: block;
+        color: rgba(255, 255, 255, 0.72);
+        font-size: clamp(11px, 0.76vw, 13px);
+        line-height: 1.35;
+    }
+
+    .dm-hero-visual {
+        position: relative;
+        z-index: 4;
+        align-self: end;
+        min-width: 0;
+        width: 100%;
+        display: flex;
+        align-items: flex-end;
+        justify-content: flex-end;
+        padding-top: 20px;
+    }
+
+    .dm-students {
+        display: block;
+        width: min(100%, 850px);
+        height: auto;
+        max-height: clamp(490px, 72vh, 720px);
+        object-fit: contain;
+        object-position: bottom right;
+        filter: drop-shadow(0 26px 48px rgba(0, 0, 0, 0.32));
+        transform: translateX(18px);
+        animation: dmFloat 6s ease-in-out infinite;
+    }
+
+    .dm-floating-card {
+        position: absolute;
+        right: 18px;
+        bottom: 26px;
+        width: min(430px, 78%);
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 18px 24px;
+        border-radius: 16px;
+        border: 1px solid rgba(219, 165, 45, 0.75);
+        background: rgba(6, 27, 54, 0.86);
+        color: #ffffff;
+        backdrop-filter: blur(18px);
+        box-shadow: 0 20px 45px rgba(0, 0, 0, 0.28);
+        z-index: 8;
+    }
+
+    .dm-floating-card i {
+        color: var(--dm-gold);
+        font-size: 42px;
+    }
+
+    .dm-floating-card strong {
+        display: block;
+        color: var(--dm-gold-2);
+        font-size: 22px;
+        line-height: 1.1;
+        margin-bottom: 5px;
+    }
+
+    .dm-floating-card span {
+        color: #ffffff;
+        font-size: 17px;
+    }
+
+    @keyframes dmFloat {
+        0%, 100% {
+            transform: translateX(18px) translateY(0);
+        }
+
+        50% {
+            transform: translateX(18px) translateY(-12px);
+        }
+    }
+
+    /* =========================================================
+       STATS SECTION
+    ========================================================= */
+
+    .dm-stats {
+        position: relative;
+        padding: 80px 0;
+        background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+    }
+
+    .dm-stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+    }
+
+    .dm-stat-card {
+        position: relative;
+        overflow: hidden;
+        min-height: 190px;
+        padding: 30px 28px;
+        border-radius: var(--dm-radius);
+        background: #ffffff;
+        border: 1px solid rgba(6, 27, 54, 0.08);
+        box-shadow: 0 18px 45px rgba(6, 27, 54, 0.08);
+        transition: 0.28s ease;
+    }
+
+    .dm-stat-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(circle at top right, rgba(219, 165, 45, 0.18), transparent 34%),
+            linear-gradient(135deg, rgba(6, 27, 54, 0.04), transparent);
+        opacity: 0;
+        transition: 0.28s ease;
+    }
+
+    .dm-stat-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 24px 58px rgba(6, 27, 54, 0.14);
+        border-color: rgba(219, 165, 45, 0.30);
+    }
+
+    .dm-stat-card:hover::before {
+        opacity: 1;
+    }
+
+    .dm-stat-icon {
+        width: 54px;
+        height: 54px;
+        display: grid;
+        place-items: center;
+        border-radius: 16px;
+        background: rgba(219, 165, 45, 0.12);
+        color: var(--dm-gold);
+        font-size: 26px;
+        margin-bottom: 22px;
+        position: relative;
+    }
+
+    .dm-stat-number {
+        position: relative;
+        font-size: 46px;
+        line-height: 1;
+        font-weight: 900;
+        color: var(--dm-navy);
+        letter-spacing: -1px;
+        margin-bottom: 10px;
+    }
+
+    .dm-stat-label {
+        position: relative;
+        color: var(--dm-muted);
+        font-size: 15px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* =========================================================
+       PRINCIPAL SECTION
+    ========================================================= */
+
+    .dm-principal {
+        padding: 95px 0;
+        background:
+            linear-gradient(135deg, rgba(6, 27, 54, 0.96), rgba(9, 40, 77, 0.94)),
+            url('{{ asset('images/gedung-sekolah.jpg') }}') center / cover fixed;
+        color: #ffffff;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .dm-principal::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+            radial-gradient(circle at 12% 18%, rgba(219, 165, 45, 0.18), transparent 32%),
+            radial-gradient(circle at 88% 72%, rgba(255, 255, 255, 0.08), transparent 30%);
+    }
+
+    .dm-principal-grid {
+        position: relative;
+        display: grid;
+        grid-template-columns: 0.82fr 1.18fr;
+        gap: 58px;
+        align-items: center;
+    }
+
+    .dm-principal-photo-wrap {
+        position: relative;
+    }
+
+    .dm-principal-photo-wrap::before {
+        content: "";
+        position: absolute;
+        inset: 24px -20px -20px 24px;
+        border-radius: 24px;
+        border: 1px solid rgba(219, 165, 45, 0.65);
+    }
+
+    .dm-principal-photo {
+        position: relative;
+        width: 100%;
+        display: block;
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.24);
+        box-shadow: 0 28px 70px rgba(0, 0, 0, 0.32);
+        object-fit: cover;
+    }
+
+    .dm-section-kicker {
+        width: fit-content;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 16px;
+        border-radius: 999px;
+        color: var(--dm-gold-2);
+        background: rgba(219, 165, 45, 0.12);
+        border: 1px solid rgba(219, 165, 45, 0.30);
+        font-weight: 800;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin-bottom: 18px;
+    }
+
+    .dm-section-title {
+        margin: 0 0 18px;
+        font-size: clamp(30px, 3.3vw, 52px);
+        line-height: 1.12;
+        font-weight: 900;
+        letter-spacing: -1.2px;
+    }
+
+    .dm-section-title.dark {
+        color: var(--dm-navy);
+    }
+
+    .dm-principal-quote {
+        position: relative;
+        margin: 26px 0 28px;
+        padding: 26px 28px;
+        border-left: 4px solid var(--dm-gold);
+        border-radius: 0 18px 18px 0;
+        background: rgba(255, 255, 255, 0.08);
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 18px;
+        line-height: 1.85;
+        backdrop-filter: blur(14px);
+    }
+
+    .dm-principal-info {
+        display: inline-block;
+        padding: 18px 24px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.10);
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        backdrop-filter: blur(14px);
+    }
+
+    .dm-principal-name {
+        margin: 0 0 5px;
+        color: #ffffff;
+        font-size: 20px;
+        font-weight: 900;
+    }
+
+    .dm-principal-role {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.68);
+        font-size: 15px;
+    }
+
+    /* =========================================================
+       NEWS SECTION
+    ========================================================= */
+
+    .dm-news {
+        padding: 95px 0;
+        background: #ffffff;
+    }
+
+    .dm-section-head {
+        max-width: 800px;
+        margin: 0 auto 48px;
+        text-align: center;
+    }
+
+    .dm-section-head .dm-section-kicker {
+        margin-inline: auto;
+    }
+
+    .dm-section-subtitle {
+        max-width: 720px;
+        margin: 14px auto 0;
+        color: var(--dm-muted);
+        font-size: 17px;
+        line-height: 1.75;
+    }
+
+    .dm-news-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 28px;
+    }
+
+    .dm-news-card {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        border-radius: 24px;
+        background: #ffffff;
+        border: 1px solid rgba(6, 27, 54, 0.08);
+        box-shadow: 0 18px 45px rgba(6, 27, 54, 0.08);
+        transition: 0.28s ease;
+    }
+
+    .dm-news-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 28px 70px rgba(6, 27, 54, 0.14);
+        border-color: rgba(219, 165, 45, 0.32);
+    }
+
+    .dm-news-img-link {
+        display: block;
+        height: 250px;
+        overflow: hidden;
+        background: #eef2f7;
+    }
+
+    .dm-news-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: 0.48s ease;
+    }
+
+    .dm-news-card:hover .dm-news-img {
+        transform: scale(1.08);
+    }
+
+    .dm-news-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 26px;
+    }
+
+    .dm-news-date {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--dm-gold);
+        font-size: 14px;
+        font-weight: 800;
+        margin-bottom: 12px;
+    }
+
+    .dm-news-title {
+        margin: 0 0 12px;
+        font-size: 22px;
+        line-height: 1.35;
+        font-weight: 900;
+        letter-spacing: -0.3px;
+    }
+
+    .dm-news-title a {
+        color: var(--dm-navy);
+        transition: 0.25s ease;
+    }
+
+    .dm-news-card:hover .dm-news-title a {
+        color: var(--dm-gold);
+    }
+
+    .dm-news-excerpt {
+        flex: 1;
+        color: var(--dm-muted);
+        font-size: 15.5px;
+        line-height: 1.75;
+        margin: 0 0 22px;
+    }
+
+    .dm-news-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--dm-navy);
+        font-weight: 900;
+        transition: 0.25s ease;
+    }
+
+    .dm-news-link:hover {
+        color: var(--dm-gold);
+        gap: 14px;
+    }
+
+    .dm-view-all {
+        text-align: center;
+        margin-top: 46px;
+    }
+
+    .dm-empty {
+        max-width: 760px;
+        margin: 0 auto;
+        padding: 60px 30px;
+        text-align: center;
+        border-radius: 24px;
+        background: var(--dm-soft);
+        border: 1px dashed rgba(6, 27, 54, 0.18);
+    }
+
+    .dm-empty i {
+        font-size: 58px;
+        color: rgba(6, 27, 54, 0.22);
+        margin-bottom: 18px;
+    }
+
+    .dm-empty-title {
+        margin: 0 0 8px;
+        color: var(--dm-navy);
+        font-size: 24px;
+        font-weight: 900;
+    }
+
+    .dm-empty-text {
+        margin: 0;
+        color: var(--dm-muted);
+        font-size: 16px;
+    }
+
+    /* =========================================================
+       RESPONSIVE DESKTOP
+    ========================================================= */
+
+    @media (max-width: 1440px) {
+        .dm-hero-inner {
+            grid-template-columns: minmax(0, 0.98fr) minmax(390px, 1.02fr);
+            min-height: clamp(600px, calc(100vh - 128px), 760px);
+            padding-top: 50px;
+            padding-bottom: 36px;
+        }
+
+        .dm-hero-title {
+            font-size: clamp(46px, 5vw, 76px);
+        }
+
+        .dm-students {
+            width: min(100%, 780px);
+            max-height: clamp(470px, 68vh, 660px);
+        }
+
+        .dm-floating-card {
+            right: 8px;
+            bottom: 22px;
+        }
+    }
+
+    @media (max-width: 1280px) {
+        .dm-container {
+            width: min(100% - 32px, 1240px);
+        }
+
+        .dm-hero-inner {
+            grid-template-columns: minmax(0, 1fr) minmax(360px, 0.94fr);
+            gap: 22px;
+            min-height: auto;
+            padding-top: 46px;
+            padding-bottom: 34px;
+        }
+
+        .dm-hero-title {
+            font-size: clamp(42px, 5vw, 66px);
+            letter-spacing: -2px;
+        }
+
+        .dm-hero-subtitle {
+            font-size: 16px;
+            line-height: 1.65;
+            max-width: 610px;
+        }
+
+        .dm-feature-strip {
+            grid-template-columns: repeat(2, 1fr);
+            max-width: 620px;
+        }
+
+        .dm-feature-item:nth-child(2)::after {
+            display: none;
+        }
+
+        .dm-students {
+            width: min(100%, 700px);
+            max-height: clamp(430px, 62vh, 610px);
+            transform: translateX(10px);
+        }
+
+        @keyframes dmFloat {
+            0%, 100% {
+                transform: translateX(10px) translateY(0);
+            }
+
+            50% {
+                transform: translateX(10px) translateY(-10px);
+            }
+        }
+
+        .dm-floating-card {
+            width: min(390px, 88%);
+            padding: 16px 20px;
+        }
+
+        .dm-floating-card strong {
+            font-size: 19px;
+        }
+
+        .dm-floating-card span {
+            font-size: 15px;
+        }
+    }
+
+    @media (max-width: 1100px) {
+        .dm-hero-inner {
+            grid-template-columns: 1fr;
+            text-align: center;
+            padding-top: 48px;
+            padding-bottom: 0;
+        }
+
+        .dm-hero-content {
+            max-width: 900px;
+            margin-inline: auto;
+        }
+
+        .dm-badge,
+        .dm-title-line,
+        .dm-feature-strip {
+            margin-inline: auto;
+        }
+
+        .dm-hero-subtitle {
+            margin-inline: auto;
+        }
+
+        .dm-hero-actions {
+            justify-content: center;
+        }
+
+        .dm-hero-visual {
+            justify-content: center;
+            margin-top: 16px;
+        }
+
+        .dm-students {
+            width: min(92vw, 720px);
+            max-height: none;
+            transform: none;
+            animation: none;
+        }
+
+        .dm-floating-card {
+            left: 50%;
+            right: auto;
+            transform: translateX(-50%);
+            bottom: 26px;
+            width: min(430px, 90%);
+            text-align: left;
+        }
+    }
+
+    /* =========================================================
+       FIX HERO UNTUK DESKTOP / LAPTOP PENDEK
+       Agar hero tidak kepotong di layar MacBook / laptop
+    ========================================================= */
+
+    @media (min-width: 1101px) and (max-height: 850px) {
+        .dm-hero-inner {
+            min-height: auto !important;
+            grid-template-columns: minmax(0, 0.96fr) minmax(390px, 1.04fr) !important;
+            align-items: end !important;
+            padding-top: 34px !important;
+            padding-bottom: 22px !important;
+            gap: 22px !important;
+        }
+
+        .dm-badge {
+            margin-bottom: 18px !important;
+            padding: 10px 16px !important;
+            font-size: 14px !important;
+        }
+
+        .dm-hero-title {
+            font-size: clamp(42px, 4.45vw, 68px) !important;
+            line-height: 0.96 !important;
+            letter-spacing: -2px !important;
+        }
+
+        .dm-title-line {
+            margin: 18px 0 16px !important;
+            width: 245px !important;
+        }
+
+        .dm-hero-subtitle {
+            max-width: 640px !important;
+            margin-bottom: 20px !important;
+            font-size: 15.5px !important;
+            line-height: 1.55 !important;
+        }
+
+        .dm-hero-actions {
+            margin-bottom: 20px !important;
+            gap: 14px !important;
+        }
+
+        .dm-btn {
+            min-height: 50px !important;
+            padding: 0 26px !important;
+            font-size: 15px !important;
+        }
+
+        .dm-feature-strip {
+            max-width: 720px !important;
+            grid-template-columns: repeat(4, 1fr) !important;
+            border-radius: 16px !important;
+        }
+
+        .dm-feature-item {
+            padding: 14px 14px !important;
+            grid-template-columns: 34px 1fr !important;
+            gap: 9px !important;
+        }
+
+        .dm-feature-icon {
+            width: 32px !important;
+            height: 32px !important;
+            font-size: 20px !important;
+        }
+
+        .dm-feature-title {
+            font-size: 13px !important;
+            line-height: 1.15 !important;
+        }
+
+        .dm-feature-text {
+            font-size: 11px !important;
+            line-height: 1.2 !important;
+        }
+
+        .dm-students {
+            width: min(100%, 690px) !important;
+            max-height: 520px !important;
+            transform: translateX(8px) !important;
+            animation: none !important;
+        }
+
+        .dm-floating-card {
+            right: 8px !important;
+            bottom: 18px !important;
+            width: min(360px, 82%) !important;
+            padding: 14px 18px !important;
+            gap: 14px !important;
+        }
+
+        .dm-floating-card i {
+            font-size: 34px !important;
+        }
+
+        .dm-floating-card strong {
+            font-size: 18px !important;
+            margin-bottom: 3px !important;
+        }
+
+        .dm-floating-card span {
+            font-size: 14px !important;
+        }
+    }
+
+    @media (min-width: 1101px) and (max-height: 740px) {
+        .dm-hero-inner {
+            padding-top: 26px !important;
+            padding-bottom: 18px !important;
+        }
+
+        .dm-badge {
+            margin-bottom: 14px !important;
+        }
+
+        .dm-hero-title {
+            font-size: clamp(38px, 4vw, 60px) !important;
+        }
+
+        .dm-title-line {
+            margin: 14px 0 13px !important;
+        }
+
+        .dm-hero-subtitle {
+            margin-bottom: 16px !important;
+            font-size: 14.5px !important;
+            line-height: 1.45 !important;
+        }
+
+        .dm-hero-actions {
+            margin-bottom: 16px !important;
+        }
+
+        .dm-feature-item {
+            padding: 12px 12px !important;
+        }
+
+        .dm-students {
+            max-height: 455px !important;
+        }
+
+        .dm-floating-card {
+            bottom: 14px !important;
+        }
+    }
+
+    /* =========================================================
+       TABLET & MOBILE
+    ========================================================= */
+
+    @media (max-width: 992px) {
+        .dm-hero {
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(3, 18, 38, 0.98) 0%,
+                    rgba(6, 27, 54, 0.91) 52%,
+                    rgba(6, 27, 54, 0.64) 100%
+                ),
+                url('{{ asset('images/gedung-sekolah.jpg') }}') center / cover no-repeat;
+        }
+
+        .dm-stats-grid,
+        .dm-news-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .dm-principal-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .dm-principal-photo-wrap {
+            max-width: 520px;
+            margin-inline: auto;
+        }
+
+        .dm-principal-content {
+            text-align: center;
+        }
+
+        .dm-principal-quote {
+            text-align: left;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .dm-container {
+            width: min(100% - 24px, 1500px);
+        }
+
+        .dm-hero-inner {
+            padding-top: 42px;
+        }
+
+        .dm-badge {
+            font-size: 13px;
+            padding: 10px 14px;
+            line-height: 1.35;
+        }
+
+        .dm-hero-title {
+            font-size: clamp(38px, 12vw, 58px);
+            line-height: 1.02;
+            letter-spacing: -1.3px;
+        }
+
+        .dm-title-line {
+            width: 210px;
+        }
+
+        .dm-hero-actions {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .dm-btn {
+            width: 100%;
+        }
+
+        .dm-feature-strip {
+            grid-template-columns: 1fr;
+        }
+
+        .dm-feature-item {
+            grid-template-columns: 42px 1fr;
+            padding: 18px 20px;
+            text-align: left;
+        }
+
+        .dm-feature-item::after {
+            display: none !important;
+        }
+
+        .dm-hero-visual {
+            margin-top: 14px;
+        }
+
+        .dm-students {
+            width: min(108vw, 560px);
+        }
+
+        .dm-floating-card {
+            width: calc(100% - 24px);
+            padding: 15px 18px;
+            gap: 14px;
+            bottom: 18px;
+        }
+
+        .dm-floating-card i {
+            font-size: 34px;
+        }
+
+        .dm-floating-card strong {
+            font-size: 18px;
+        }
+
+        .dm-floating-card span {
+            font-size: 14px;
+        }
+
+        .dm-stats,
+        .dm-principal,
+        .dm-news {
+            padding: 64px 0;
+        }
+
+        .dm-stats-grid,
+        .dm-news-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .dm-stat-card {
+            min-height: auto;
+        }
+
+        .dm-section-title {
+            font-size: 32px;
+        }
+
+        .dm-news-img-link {
+            height: 220px;
+        }
+    }
+
+    @media (max-width: 420px) {
+        .dm-hero-title {
+            font-size: 37px;
+        }
+
+        .dm-hero-subtitle {
+            font-size: 15px;
+        }
+
+        .dm-students {
+            width: 118vw;
+        }
     }
 </style>
 @endpush
 
 @section('content')
-    <!-- Hero Section -->
-    <section class="luxury-hero">
-        <div class="hero-bg-overlay"></div>
-        <div class="hero-particles"></div>
 
-        <div class="container">
-            <div class="grid grid-cols-1 md:grid-cols-2" style="align-items: center;">
-                <!-- Content -->
-                <div class="hero-content">
-                    <h1 class="hero-title">
-                        Iman, Ilmu, dan <span class="highlight-text">Ahlak</span><br>
-                        Untuk Membentuk Karakter Generasi Emas
+    {{-- HERO SECTION --}}
+    <section class="dm-hero">
+        <div class="dm-container">
+            <div class="dm-hero-inner">
+
+                <div class="dm-hero-content">
+                    <div class="dm-badge">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Sekolah Islam Terpercaya & Berprestasi</span>
+                    </div>
+
+                    <h1 class="dm-hero-title">
+                        Iman, Ilmu, dan
+                        <span class="gold">Akhlak</span> untuk
+                        Membentuk Generasi Emas
                     </h1>
-                    <p class="hero-subtitle">
-                        Membangun generasi unggul melalui pendidikan berkualitas yang mengintegrasikan nilai-nilai islami dengan pembelajaran modern.
+
+                    <div class="dm-title-line"></div>
+
+                    <p class="dm-hero-subtitle">
+                        Membangun generasi unggul melalui pendidikan berkualitas yang
+                        mengintegrasikan nilai-nilai islami dengan pembelajaran modern
+                        untuk masa depan yang gemilang.
                     </p>
-                    <div class="hero-buttons">
-                        <a href="{{ route('admission.index') }}" class="btn-primary">
+
+                    <div class="dm-hero-actions">
+                        <a href="{{ route('admission.index') }}" class="dm-btn dm-btn-primary">
+                            <i class="far fa-user"></i>
                             <span>Daftar Sekarang</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
-                        <a href="{{ route('profile.vision-mission') }}" class="btn-secondary">
-                            Tentang Kami
+
+                        <a href="{{ route('profile.vision-mission') }}" class="dm-btn dm-btn-outline">
+                            <i class="fas fa-university"></i>
+                            <span>Tentang Kami</span>
                         </a>
                     </div>
+
+                    <div class="dm-feature-strip">
+                        <div class="dm-feature-item">
+                            <div class="dm-feature-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div>
+                                <span class="dm-feature-title">Pendidikan Berkualitas</span>
+                                <span class="dm-feature-text">Kurikulum Terintegrasi</span>
+                            </div>
+                        </div>
+
+                        <div class="dm-feature-item">
+                            <div class="dm-feature-icon">
+                                <i class="far fa-star"></i>
+                            </div>
+                            <div>
+                                <span class="dm-feature-title">Nilai Islami Kuat</span>
+                                <span class="dm-feature-text">Akhlak Mulia</span>
+                            </div>
+                        </div>
+
+                        <div class="dm-feature-item">
+                            <div class="dm-feature-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div>
+                                <span class="dm-feature-title">Generasi Berprestasi</span>
+                                <span class="dm-feature-text">Berkarakter Unggul</span>
+                            </div>
+                        </div>
+
+                        <div class="dm-feature-item">
+                            <div class="dm-feature-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div>
+                                <span class="dm-feature-title">Prestasi & Kompetisi</span>
+                                <span class="dm-feature-text">Tingkat Nasional</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Character Image -->
-                <div style="justify-content: center; display: flex;">
+                <div class="dm-hero-visual">
                     <img src="{{ asset('images/siswasiswi.png') }}"
                          alt="Siswa SMP Darul Mustofa"
-                         class="hero-character">
-                </div>
-            </div>
-        </div>
-    </section>
+                         class="dm-students">
 
-    <!-- Statistics Section -->
-    <section class="stats-section">
-        <div class="container">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
-                <div class="stat-card">
-                    <div class="stat-number counter" data-target="{{ $studentCount ?? 0 }}">0</div>
-                    <p class="stat-label">Siswa Aktif</p>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number counter" data-target="{{ $teacherCount ?? 0 }}">0</div>
-                    <p class="stat-label">Tenaga Pendidik</p>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number counter" data-target="{{ $extracurricularCount ?? 0 }}">0</div>
-                    <p class="stat-label">Ekstrakurikuler</p>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number counter" data-target="98">0%</div>
-                    <p class="stat-label">Tingkat Kelulusan</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Principal Message Section -->
-    <section class="principal-section">
-        <div class="container">
-            <div class="grid grid-cols-1 md:grid-cols-2" style="gap: 3rem; align-items: center;">
-                <!-- Image -->
-                <div>
-                    <div class="principal-card">
-                        <img src="{{ asset('images/kepalasekolah.jpg') }}"
-                             alt="Kepala Sekolah SMP Darul Mustofa"
-                             class="principal-image">
+                    <div class="dm-floating-card">
+                        <i class="fas fa-book-reader"></i>
+                        <div>
+                            <strong>Iman • Ilmu • Akhlak</strong>
+                            <span>Kunci Masa Depan Gemilang</span>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Content -->
-                <div class="principal-content" style="padding: 0;">
-                    <span class="section-badge">Sambutan Kepala Sekolah</span>
-                    <h2 class="section-title">Visi Kepemimpinan untuk Pendidikan Berkualitas</h2>
+            </div>
+        </div>
+    </section>
 
-                    <p class="principal-quote">
-                        Mewujudkan generasi berkarakter unggul, melek teknologi, mandiri, dan berwawasan global, yang dilandasi nilai-nilai luhur dan lingkungan, untuk siap menghadapi tantangan masa depan.
+    {{-- STATISTICS SECTION --}}
+    <section class="dm-stats">
+        <div class="dm-container">
+            <div class="dm-stats-grid">
+
+                <div class="dm-stat-card">
+                    <div class="dm-stat-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div class="dm-stat-number counter" data-target="{{ $studentCount ?? 0 }}">0</div>
+                    <p class="dm-stat-label">Siswa Aktif</p>
+                </div>
+
+                <div class="dm-stat-card">
+                    <div class="dm-stat-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <div class="dm-stat-number counter" data-target="{{ $teacherCount ?? 0 }}">0</div>
+                    <p class="dm-stat-label">Tenaga Pendidik</p>
+                </div>
+
+                <div class="dm-stat-card">
+                    <div class="dm-stat-icon">
+                        <i class="fas fa-running"></i>
+                    </div>
+                    <div class="dm-stat-number counter" data-target="{{ $extracurricularCount ?? 0 }}">0</div>
+                    <p class="dm-stat-label">Ekstrakurikuler</p>
+                </div>
+
+                <div class="dm-stat-card">
+                    <div class="dm-stat-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="dm-stat-number counter" data-target="98">0%</div>
+                    <p class="dm-stat-label">Tingkat Kelulusan</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    {{-- PRINCIPAL MESSAGE SECTION --}}
+    <section class="dm-principal">
+        <div class="dm-container">
+            <div class="dm-principal-grid">
+
+                <div class="dm-principal-photo-wrap">
+                    <img src="{{ asset('images/kepalasekolah.jpg') }}"
+                         alt="Kepala Sekolah SMP Darul Mustofa"
+                         class="dm-principal-photo">
+                </div>
+
+                <div class="dm-principal-content">
+                    <div class="dm-section-kicker">
+                        <i class="fas fa-quote-left"></i>
+                        Sambutan Kepala Sekolah
+                    </div>
+
+                    <h2 class="dm-section-title">
+                        Visi Kepemimpinan untuk Pendidikan Berkualitas
+                    </h2>
+
+                    <p class="dm-principal-quote">
+                        Mewujudkan generasi berkarakter unggul, melek teknologi,
+                        mandiri, dan berwawasan global, yang dilandasi nilai-nilai
+                        luhur dan lingkungan, untuk siap menghadapi tantangan masa depan.
                     </p>
 
-                    <div class="principal-info">
-                        <p class="principal-name">WIWIN WIDIYA WATI, S.Pd</p>
-                        <p class="principal-title">Kepala Sekolah SMP Darul Mustofa</p>
+                    <div class="dm-principal-info">
+                        <p class="dm-principal-name">WIWIN WIDIYA WATI, S.Pd</p>
+                        <p class="dm-principal-role">Kepala Sekolah SMP Darul Mustofa</p>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
 
-    <!-- News Section -->
-    <section class="news-section">
-        <div class="container">
-            <div class="section-header">
-                <span class="section-badge">Berita & Informasi</span>
-                <h2 class="section-title">Kabar Terbaru dari Sekolah</h2>
-                <p class="section-subtitle">
-                    Ikuti perkembangan kegiatan, prestasi, dan informasi terkini dari SMP Darul Mustofa
+    {{-- NEWS SECTION --}}
+    <section class="dm-news">
+        <div class="dm-container">
+            <div class="dm-section-head">
+                <div class="dm-section-kicker">
+                    <i class="far fa-newspaper"></i>
+                    Berita & Informasi
+                </div>
+
+                <h2 class="dm-section-title dark">
+                    Kabar Terbaru dari Sekolah
+                </h2>
+
+                <p class="dm-section-subtitle">
+                    Ikuti perkembangan kegiatan, prestasi, dan informasi terkini
+                    dari SMP Darul Mustofa.
                 </p>
             </div>
 
             @if($latestPosts->count() > 0)
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                <div class="dm-news-grid">
                     @foreach ($latestPosts as $post)
-                    <article class="news-card">
-                        <a href="{{ route('posts.show', $post->slug) }}" class="news-image-container">
-                            <img src="{{ $post->featured_image_path ? asset('storage/' . $post->featured_image_path) : 'https://placehold.co/600x400/e5e7eb/1e40af?text=SMP+Darul+Mustofa' }}"
-                                 alt="{{ $post->title }}"
-                                 class="news-image">
-                        </a>
-                        <div class="news-content">
-                            <time class="news-date">
-                                <i class="far fa-calendar"></i>
-                                {{ \Carbon\Carbon::parse($post->published_at)->locale('id')->isoFormat('D MMMM YYYY') }}
-                            </time>
-                            <h3 class="news-title">
-                                <a href="{{ route('posts.show', $post->slug) }}">{{ $post->title }}</a>
-                            </h3>
-                            <p class="news-excerpt">
-                                {{ \Illuminate\Support\Str::limit(strip_tags($post->content), 120) }}
-                            </p>
-                            <a href="{{ route('posts.show', $post->slug) }}" class="news-link">
-                                Baca Selengkapnya
-                                <i class="fas fa-arrow-right"></i>
+                        <article class="dm-news-card">
+                            <a href="{{ route('posts.show', $post->slug) }}" class="dm-news-img-link">
+                                <img src="{{ $post->featured_image_path ? asset('storage/' . $post->featured_image_path) : 'https://placehold.co/600x400/e5e7eb/061b36?text=SMP+Darul+Mustofa' }}"
+                                     alt="{{ $post->title }}"
+                                     class="dm-news-img">
                             </a>
-                        </div>
-                    </article>
+
+                            <div class="dm-news-body">
+                                <time class="dm-news-date">
+                                    <i class="far fa-calendar"></i>
+                                    {{ \Carbon\Carbon::parse($post->published_at)->locale('id')->isoFormat('D MMMM YYYY') }}
+                                </time>
+
+                                <h3 class="dm-news-title">
+                                    <a href="{{ route('posts.show', $post->slug) }}">
+                                        {{ $post->title }}
+                                    </a>
+                                </h3>
+
+                                <p class="dm-news-excerpt">
+                                    {{ \Illuminate\Support\Str::limit(strip_tags($post->content), 120) }}
+                                </p>
+
+                                <a href="{{ route('posts.show', $post->slug) }}" class="dm-news-link">
+                                    Baca Selengkapnya
+                                    <i class="fas fa-arrow-right"></i>
+                                </a>
+                            </div>
+                        </article>
                     @endforeach
                 </div>
 
-                <div style="text-align: center; margin-top: 3rem;">
-                    <a href="{{ route('posts.index') }}" class="view-all-btn">
+                <div class="dm-view-all">
+                    <a href="{{ route('posts.index') }}" class="dm-btn dm-btn-primary">
                         Lihat Semua Berita
                         <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             @else
-                <div class="empty-state">
+                <div class="dm-empty">
                     <i class="far fa-newspaper"></i>
-                    <p class="empty-state-title">Belum Ada Berita</p>
-                    <p class="empty-state-text">Informasi terbaru akan segera hadir di sini</p>
+                    <p class="dm-empty-title">Belum Ada Berita</p>
+                    <p class="dm-empty-text">Informasi terbaru akan segera hadir di sini.</p>
                 </div>
             @endif
         </div>
     </section>
+
 @endsection
 
 @push('scripts')
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        // Counter Animation
+    document.addEventListener("DOMContentLoaded", function () {
         const counters = document.querySelectorAll('.counter');
-        const speed = 100;
 
         const animateCounter = (counter) => {
-            const target = +counter.getAttribute('data-target');
-            const isPercent = counter.innerText.includes('%');
-            let count = 0;
+            const target = Number(counter.getAttribute('data-target')) || 0;
+            const isPercent = counter.textContent.includes('%');
+            const duration = 1200;
+            const startTime = performance.now();
 
-            const updateCount = () => {
-                const increment = target / speed;
-                count += increment;
+            const update = (currentTime) => {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const value = Math.floor(progress * target);
 
-                if (count < target) {
-                    counter.innerText = Math.ceil(count) + (isPercent ? '%' : '');
-                    requestAnimationFrame(updateCount);
+                counter.textContent = value + (isPercent ? '%' : '');
+
+                if (progress < 1) {
+                    requestAnimationFrame(update);
                 } else {
-                    counter.innerText = target + (isPercent ? '%' : '');
+                    counter.textContent = target + (isPercent ? '%' : '');
                 }
             };
-            updateCount();
+
+            requestAnimationFrame(update);
         };
 
-        const observer = new IntersectionObserver((entries, observer) => {
+        const observer = new IntersectionObserver((entries, obs) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     animateCounter(entry.target);
-                    observer.unobserve(entry.target);
+                    obs.unobserve(entry.target);
                 }
             });
         }, {
-            threshold: 0.5
+            threshold: 0.35
         });
 
-        counters.forEach(counter => {
-            observer.observe(counter);
-        });
-
-        // Smooth scroll untuk semua anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
+        counters.forEach(counter => observer.observe(counter));
     });
 </script>
 @endpush
