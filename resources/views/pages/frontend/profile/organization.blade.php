@@ -267,7 +267,7 @@
     .org-card {
         position: relative;
         width: min(100%, 285px);
-        min-height: 405px;
+        min-height: 420px;
         overflow: hidden;
         border-radius: 26px;
         background: #ffffff;
@@ -299,7 +299,7 @@
     }
 
     .org-card-top {
-        height: 82px;
+        height: 78px;
         background:
             radial-gradient(circle at 20% 18%, rgba(219, 165, 45, 0.20), transparent 28%),
             linear-gradient(135deg, #09284d 0%, #061b36 100%);
@@ -311,8 +311,38 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 28px 22px 30px;
+        padding: 26px 22px 30px;
         text-align: center;
+    }
+
+    .org-position {
+        position: relative;
+        z-index: 4;
+        min-height: 38px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 0 15px;
+        margin: 0 auto 20px;
+        border-radius: 999px;
+        color: var(--org-navy);
+        background: rgba(219, 165, 45, 0.11);
+        border: 1px solid rgba(219, 165, 45, 0.24);
+        font-size: 11.5px;
+        line-height: 1.35;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.55px;
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .org-position svg {
+        width: 15px;
+        height: 15px;
+        color: var(--org-gold);
+        flex-shrink: 0;
     }
 
     .org-avatar-wrap {
@@ -369,36 +399,6 @@
         line-height: 1;
         font-weight: 700;
         text-transform: uppercase;
-    }
-
-    .org-position {
-        position: relative;
-        z-index: 4;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        min-height: 38px;
-        padding: 0 15px;
-        margin-bottom: 16px;
-        border-radius: 999px;
-        color: var(--org-navy);
-        background: rgba(219, 165, 45, 0.11);
-        border: 1px solid rgba(219, 165, 45, 0.24);
-        font-size: 11.5px;
-        line-height: 1.35;
-        font-weight: 900;
-        text-transform: uppercase;
-        letter-spacing: 0.55px;
-        max-width: 100%;
-        text-align: center;
-    }
-
-    .org-position svg {
-        width: 15px;
-        height: 15px;
-        color: var(--org-gold);
-        flex-shrink: 0;
     }
 
     .org-name {
@@ -546,7 +546,7 @@
         }
 
         .org-card-top {
-            height: 70px;
+            height: 68px;
         }
 
         .org-card-body {
@@ -640,7 +640,6 @@
         @if($totalMembers > 0)
             <div class="org-chart-wrap">
                 <div class="org-chart">
-                    {{-- LEVEL 1: KEPALA SEKOLAH --}}
                     @foreach($leaderGroups as $groupName)
                         @if(isset($organization[$groupName]) && collect($organization[$groupName])->count() > 0)
                             <div class="org-level-title">
@@ -656,6 +655,13 @@
                                         <div class="org-card-top"></div>
 
                                         <div class="org-card-body">
+                                            <div class="org-position">
+                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                </svg>
+                                                {{ $member->position ?? $groupName }}
+                                            </div>
+
                                             <div class="org-avatar-wrap">
                                                 @if($member->photo_path)
                                                     <img src="{{ asset('storage/' . $member->photo_path) }}"
@@ -674,13 +680,6 @@
                                                 @endif
                                             </div>
 
-                                            <div class="org-position">
-                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                                </svg>
-                                                {{ $member->position ?? $groupName }}
-                                            </div>
-
                                             <h2 class="org-name">{{ $member->name ?? 'Nama Pengurus' }}</h2>
                                             <div class="org-line"></div>
                                         </div>
@@ -692,7 +691,6 @@
                         @endif
                     @endforeach
 
-                    {{-- LEVEL 2: WAKIL / KOMITE / TU --}}
                     @php
                         $hasSecondLevel = collect($secondGroups)->contains(fn($groupName) => isset($organization[$groupName]) && collect($organization[$groupName])->count() > 0);
                     @endphp
@@ -713,6 +711,13 @@
                                             <div class="org-card-top"></div>
 
                                             <div class="org-card-body">
+                                                <div class="org-position">
+                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                    </svg>
+                                                    {{ $member->position ?? $groupName }}
+                                                </div>
+
                                                 <div class="org-avatar-wrap">
                                                     @if($member->photo_path)
                                                         <img src="{{ asset('storage/' . $member->photo_path) }}"
@@ -731,13 +736,6 @@
                                                     @endif
                                                 </div>
 
-                                                <div class="org-position">
-                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                                    </svg>
-                                                    {{ $member->position ?? $groupName }}
-                                                </div>
-
                                                 <h2 class="org-name">{{ $member->name ?? 'Nama Pengurus' }}</h2>
                                                 <div class="org-line"></div>
                                             </div>
@@ -750,7 +748,6 @@
                         <div class="org-connector"></div>
                     @endif
 
-                    {{-- LEVEL 3: WAKA --}}
                     @php
                         $hasWakaLevel = collect($wakaGroups)->contains(fn($groupName) => isset($organization[$groupName]) && collect($organization[$groupName])->count() > 0);
                     @endphp
@@ -771,6 +768,13 @@
                                             <div class="org-card-top"></div>
 
                                             <div class="org-card-body">
+                                                <div class="org-position">
+                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                    </svg>
+                                                    {{ $member->position ?? $groupName }}
+                                                </div>
+
                                                 <div class="org-avatar-wrap">
                                                     @if($member->photo_path)
                                                         <img src="{{ asset('storage/' . $member->photo_path) }}"
@@ -789,13 +793,6 @@
                                                     @endif
                                                 </div>
 
-                                                <div class="org-position">
-                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                                    </svg>
-                                                    {{ $member->position ?? $groupName }}
-                                                </div>
-
                                                 <h2 class="org-name">{{ $member->name ?? 'Nama Pengurus' }}</h2>
                                                 <div class="org-line"></div>
                                             </div>
@@ -806,7 +803,6 @@
                         </div>
                     @endif
 
-                    {{-- LEVEL LAINNYA --}}
                     @foreach($otherGroups as $groupName)
                         @if(isset($organization[$groupName]) && collect($organization[$groupName])->count() > 0)
                             <div class="org-connector"></div>
@@ -824,6 +820,13 @@
                                         <div class="org-card-top"></div>
 
                                         <div class="org-card-body">
+                                            <div class="org-position">
+                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                </svg>
+                                                {{ $member->position ?? $groupName }}
+                                            </div>
+
                                             <div class="org-avatar-wrap">
                                                 @if($member->photo_path)
                                                     <img src="{{ asset('storage/' . $member->photo_path) }}"
@@ -840,13 +843,6 @@
                                                         {{ strtoupper(substr($member->name ?? 'O', 0, 1)) }}
                                                     </div>
                                                 @endif
-                                            </div>
-
-                                            <div class="org-position">
-                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                                </svg>
-                                                {{ $member->position ?? $groupName }}
                                             </div>
 
                                             <h2 class="org-name">{{ $member->name ?? 'Nama Pengurus' }}</h2>
