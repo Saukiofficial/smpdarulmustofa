@@ -267,7 +267,7 @@
     .org-card {
         position: relative;
         width: min(100%, 285px);
-        min-height: 360px;
+        min-height: 405px;
         overflow: hidden;
         border-radius: 26px;
         background: #ffffff;
@@ -299,7 +299,7 @@
     }
 
     .org-card-top {
-        height: 110px;
+        height: 82px;
         background:
             radial-gradient(circle at 20% 18%, rgba(219, 165, 45, 0.20), transparent 28%),
             linear-gradient(135deg, #09284d 0%, #061b36 100%);
@@ -311,15 +311,15 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 0 22px 28px;
+        padding: 28px 22px 30px;
         text-align: center;
     }
 
     .org-avatar-wrap {
-        width: 132px;
-        height: 132px;
+        width: 138px;
+        height: 138px;
         position: relative;
-        margin: -66px auto 26px;
+        margin: 0 auto 22px;
         border-radius: 999px;
         display: grid;
         place-items: center;
@@ -380,7 +380,7 @@
         gap: 8px;
         min-height: 38px;
         padding: 0 15px;
-        margin-bottom: 14px;
+        margin-bottom: 16px;
         border-radius: 999px;
         color: var(--org-navy);
         background: rgba(219, 165, 45, 0.11);
@@ -391,6 +391,7 @@
         text-transform: uppercase;
         letter-spacing: 0.55px;
         max-width: 100%;
+        text-align: center;
     }
 
     .org-position svg {
@@ -545,14 +546,17 @@
         }
 
         .org-card-top {
-            height: 96px;
+            height: 70px;
+        }
+
+        .org-card-body {
+            padding: 24px 18px 28px;
         }
 
         .org-avatar-wrap {
             width: 118px;
             height: 118px;
-            margin-top: -59px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
 
         .org-avatar-fallback {
@@ -602,13 +606,6 @@
     $otherGroups = $organizationCollection->keys()
         ->filter(fn ($group) => !in_array(strtoupper($group), $usedGroups))
         ->values();
-
-    $renderMemberCard = function ($member, $fallbackPosition = null) {
-        $name = $member->name ?? 'Nama Pengurus';
-        $position = $member->position ?? $fallbackPosition ?? 'Jabatan';
-        $photoPath = $member->photo_path ?? null;
-        $initial = strtoupper(substr($name, 0, 1));
-    };
 @endphp
 
 @section('content')
