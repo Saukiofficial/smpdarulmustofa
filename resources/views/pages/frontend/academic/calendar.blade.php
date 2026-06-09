@@ -4,350 +4,748 @@
 
 @push('styles')
 <style>
-    .calendar-hero {
-        background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 50%, #581c87 100%);
+    :root {
+        --cal-navy: #061b36;
+        --cal-navy-2: #0b2b52;
+        --cal-gold: #dba52d;
+        --cal-gold-2: #f0c45a;
+        --cal-white: #ffffff;
+        --cal-soft: #f7f9fc;
+        --cal-soft-2: #eef3f8;
+        --cal-text: #142844;
+        --cal-muted: #6c7788;
+        --cal-border: rgba(6, 27, 54, 0.08);
+        --cal-shadow: 0 18px 45px rgba(6, 27, 54, 0.08);
+        --cal-shadow-hover: 0 28px 70px rgba(6, 27, 54, 0.15);
+    }
+
+    .calendar-page {
         position: relative;
+        min-height: 100vh;
         overflow: hidden;
+        background:
+            radial-gradient(circle at 16% 8%, rgba(219, 165, 45, 0.10), transparent 28%),
+            radial-gradient(circle at 88% 14%, rgba(6, 27, 54, 0.06), transparent 30%),
+            linear-gradient(180deg, #ffffff 0%, #f7f9fc 52%, #ffffff 100%);
+        padding-bottom: 90px;
     }
 
-    .calendar-hero::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.15"/><circle cx="20" cy="80" r="0.5" fill="white" opacity="0.15"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-        animation: float 20s ease-in-out infinite;
-    }
-
-    @keyframes float {
-        0%, 100% { transform: translateX(0) translateY(0); }
-        25% { transform: translateX(-20px) translateY(-10px); }
-        50% { transform: translateX(20px) translateY(-20px); }
-        75% { transform: translateX(-10px) translateY(10px); }
-    }
-
-    .hero-content {
+    .calendar-container {
+        width: min(100% - 36px, 1320px);
+        margin-inline: auto;
         position: relative;
         z-index: 2;
     }
 
-    .stats-container {
-        background: white;
-        border-radius: 24px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    .calendar-hero {
         position: relative;
         overflow: hidden;
-        margin-top: -60px;
-        z-index: 10;
+        isolation: isolate;
+        min-height: 355px;
+        background:
+            radial-gradient(circle at 18% 22%, rgba(219, 165, 45, 0.12), transparent 28%),
+            linear-gradient(135deg, #061b36 0%, #082447 48%, #061b36 100%);
+        border-bottom: 4px solid var(--cal-gold);
     }
 
-    .stats-container::before {
-        content: '';
+    .calendar-hero::before,
+    .calendar-hero::after {
+        content: "";
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899, #f59e0b);
+        pointer-events: none;
+        opacity: 0.35;
     }
 
-    .stat-item {
-        position: relative;
-        padding: 2rem;
+    .calendar-hero::before {
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(219, 165, 45, 0.055) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(219, 165, 45, 0.055) 1px, transparent 1px);
+        background-size: 42px 42px;
+        mask-image: radial-gradient(circle at 20% 30%, #000 0%, transparent 54%);
+        -webkit-mask-image: radial-gradient(circle at 20% 30%, #000 0%, transparent 54%);
+    }
+
+    .calendar-hero::after {
+        right: -40px;
+        top: 34px;
+        width: 410px;
+        height: 240px;
+        border: 2px solid rgba(219, 165, 45, 0.18);
+        border-radius: 28px;
+        transform: rotate(-8deg);
+    }
+
+    .calendar-hero-inner {
+        min-height: 355px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         text-align: center;
-        transition: all 0.3s ease;
+        color: #ffffff;
+        padding: 64px 0 92px;
+        position: relative;
+        z-index: 2;
     }
 
-    .stat-item:not(:last-child)::after {
-        content: '';
+    .calendar-emblem {
+        width: 76px;
+        height: 76px;
+        margin: 0 auto 16px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        color: var(--cal-gold-2);
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(219, 165, 45, 0.36);
+        box-shadow: 0 16px 34px rgba(0, 0, 0, 0.18);
+    }
+
+    .calendar-emblem svg {
+        width: 44px;
+        height: 44px;
+    }
+
+    .calendar-title-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 22px;
+    }
+
+    .calendar-title-row::before,
+    .calendar-title-row::after {
+        content: "";
+        width: min(120px, 16vw);
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--cal-gold));
+    }
+
+    .calendar-title-row::after {
+        background: linear-gradient(90deg, var(--cal-gold), transparent);
+    }
+
+    .calendar-title {
+        margin: 0;
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: clamp(42px, 5vw, 70px);
+        line-height: 1.08;
+        font-weight: 700;
+        letter-spacing: -1.4px;
+        text-shadow: 0 14px 34px rgba(0, 0, 0, 0.30);
+    }
+
+    .calendar-subtitle {
+        margin: 12px 0 0;
+        color: var(--cal-gold-2);
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: clamp(20px, 2vw, 30px);
+        line-height: 1.35;
+        font-weight: 600;
+    }
+
+    .stats-section {
+        position: relative;
+        margin-top: -82px;
+        z-index: 5;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+        max-width: 1040px;
+        margin-inline: auto;
+    }
+
+    .stat-card {
+        min-height: 170px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 28px 20px;
+        border-radius: 18px;
+        background: #ffffff;
+        border: 1px solid rgba(6, 27, 54, 0.08);
+        box-shadow: 0 18px 42px rgba(6, 27, 54, 0.12);
+        transition: 0.25s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .stat-card::after {
+        content: "";
         position: absolute;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 1px;
-        height: 60px;
-        background: linear-gradient(to bottom, transparent, #e5e7eb, transparent);
+        left: 50%;
+        bottom: 20px;
+        width: 28px;
+        height: 2px;
+        border-radius: 999px;
+        background: var(--cal-gold);
+        transform: translateX(-50%);
     }
 
-    .stat-item:hover {
-        transform: scale(1.02);
-        background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-        border-radius: 16px;
+    .stat-card:hover {
+        transform: translateY(-7px);
+        box-shadow: 0 28px 60px rgba(6, 27, 54, 0.17);
+        border-color: rgba(219, 165, 45, 0.32);
+    }
+
+    .stat-icon {
+        width: 38px;
+        height: 38px;
+        display: grid;
+        place-items: center;
+        color: #b98217;
+        margin-bottom: 2px;
+    }
+
+    .stat-icon svg {
+        width: 32px;
+        height: 32px;
     }
 
     .stat-number {
-        font-size: 2.75rem;
-        font-weight: 800;
-        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
+        color: var(--cal-navy);
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: 54px;
         line-height: 1;
-        margin-bottom: 0.5rem;
+        font-weight: 700;
+        letter-spacing: -1px;
     }
 
     .stat-label {
-        color: #64748b;
-        font-size: 0.875rem;
-        font-weight: 600;
+        margin: 0;
+        color: var(--cal-navy);
+        font-size: 13px;
+        line-height: 1.3;
+        font-weight: 900;
         text-transform: uppercase;
-        letter-spacing: 0.05em;
+        letter-spacing: 2px;
+        text-align: center;
+    }
+
+    .events-section {
+        position: relative;
+        padding-top: 62px;
+    }
+
+    .events-heading {
+        max-width: 760px;
+        margin: 0 auto 30px;
+        text-align: center;
+    }
+
+    .events-heading-icon {
+        width: 52px;
+        height: 24px;
+        margin: 0 auto 8px;
+        position: relative;
+        color: var(--cal-gold);
+        display: grid;
+        place-items: center;
+    }
+
+    .events-heading-icon::before,
+    .events-heading-icon::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: 90px;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--cal-gold));
+    }
+
+    .events-heading-icon::before {
+        right: 100%;
+    }
+
+    .events-heading-icon::after {
+        left: 100%;
+        background: linear-gradient(90deg, var(--cal-gold), transparent);
+    }
+
+    .events-heading-icon svg {
+        width: 25px;
+        height: 25px;
+    }
+
+    .events-title {
+        margin: 0;
+        color: var(--cal-navy);
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: clamp(30px, 3vw, 42px);
+        line-height: 1.12;
+        font-weight: 700;
+        letter-spacing: -0.6px;
+    }
+
+    .events-subtitle {
+        margin: 10px 0 0;
+        color: var(--cal-muted);
+        font-size: 15.5px;
+        line-height: 1.7;
     }
 
     .events-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-        gap: 1.5rem;
-        margin-top: 2rem;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
     }
 
     .event-card {
-        background: white;
-        border-radius: 20px;
-        padding: 1.5rem;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-        border: 1px solid rgba(0,0,0,0.04);
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        display: grid;
+        grid-template-columns: 76px 1fr;
+        gap: 18px;
+        align-items: center;
+        min-height: 96px;
+        padding: 14px 18px;
+        border-radius: 13px;
+        background: #ffffff;
+        border: 1px solid rgba(6, 27, 54, 0.07);
+        box-shadow: 0 14px 34px rgba(6, 27, 54, 0.08);
+        transition: 0.24s ease;
         position: relative;
         overflow: hidden;
     }
 
     .event-card::before {
-        content: '';
+        content: "";
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-        transform: scaleX(0);
-        transition: transform 0.3s ease;
+        inset: 0 auto 0 0;
+        width: 4px;
+        background: linear-gradient(180deg, var(--cal-gold), var(--cal-gold-2));
+        transform: scaleY(0);
+        transform-origin: top;
+        transition: 0.24s ease;
     }
 
     .event-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 20px 40px rgba(0,0,0,0.12);
+        transform: translateY(-5px);
+        box-shadow: var(--cal-shadow-hover);
+        border-color: rgba(219, 165, 45, 0.26);
     }
 
     .event-card:hover::before {
-        transform: scaleX(1);
-    }
-
-    .date-display {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        margin-bottom: 1rem;
+        transform: scaleY(1);
     }
 
     .date-badge {
-        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-        color: white;
-        border-radius: 16px;
-        padding: 1rem;
-        text-align: center;
-        min-width: 80px;
-        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.3);
+        width: 66px;
+        height: 66px;
+        border-radius: 9px;
+        display: grid;
+        place-items: center;
+        color: #ffffff;
+        background: linear-gradient(180deg, #09284d 0%, #061b36 100%);
+        border: 1px solid rgba(219, 165, 45, 0.85);
+        box-shadow:
+            0 10px 24px rgba(6, 27, 54, 0.22),
+            inset 0 1px 0 rgba(255, 255, 255, 0.12);
+        flex-shrink: 0;
     }
 
     .date-number {
-        font-size: 1.75rem;
-        font-weight: 800;
-        line-height: 1;
+        display: block;
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: 30px;
+        line-height: 0.95;
+        font-weight: 700;
+        letter-spacing: -0.4px;
+        text-align: center;
     }
 
     .date-month {
-        font-size: 0.75rem;
-        font-weight: 600;
+        display: block;
+        margin-top: 5px;
+        color: var(--cal-gold-2);
+        font-size: 11px;
+        line-height: 1;
+        font-weight: 900;
         text-transform: uppercase;
-        letter-spacing: 0.05em;
-        opacity: 0.9;
-    }
-
-    .event-content {
-        flex: 1;
+        letter-spacing: 0.7px;
+        text-align: center;
     }
 
     .event-title {
-        font-size: 1.125rem;
+        margin: 0 0 9px;
+        color: var(--cal-navy);
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: 17px;
+        line-height: 1.25;
         font-weight: 700;
-        color: #1e293b;
-        line-height: 1.4;
-        margin-bottom: 0.5rem;
     }
 
-    .event-meta {
+    .event-date {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        color: #64748b;
-        font-size: 0.875rem;
-        font-weight: 500;
+        gap: 8px;
+        color: #607087;
+        font-size: 13.5px;
+        line-height: 1.4;
+        font-weight: 600;
     }
 
-    .event-meta i {
-        color: #3b82f6;
+    .event-date svg {
+        width: 14px;
+        height: 14px;
+        color: #b98217;
+        flex-shrink: 0;
     }
 
     .empty-state {
         grid-column: 1 / -1;
         text-align: center;
-        padding: 4rem 2rem;
-        background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-        border-radius: 20px;
-        border: 2px dashed #cbd5e1;
+        padding: 62px 24px;
+        border-radius: 22px;
+        background: #ffffff;
+        border: 1px dashed rgba(6, 27, 54, 0.16);
+        box-shadow: var(--cal-shadow);
     }
 
-    .empty-icon {
-        font-size: 3rem;
-        color: #94a3b8;
-        margin-bottom: 1rem;
+    .empty-state svg {
+        width: 66px;
+        height: 66px;
+        display: block;
+        margin: 0 auto 16px;
+        color: rgba(6, 27, 54, 0.25);
+    }
+
+    .empty-title {
+        margin: 0 0 8px;
+        color: var(--cal-navy);
+        font-size: 24px;
+        font-weight: 900;
+    }
+
+    .empty-text {
+        margin: 0;
+        color: var(--cal-muted);
+        font-size: 15px;
+        line-height: 1.7;
     }
 
     .scroll-top-btn {
         position: fixed;
-        bottom: 2rem;
-        right: 2rem;
-        width: 56px;
-        height: 56px;
-        background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 1.25rem;
+        right: 26px;
+        bottom: 26px;
+        width: 54px;
+        height: 54px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        color: #ffffff;
+        background: linear-gradient(180deg, var(--cal-navy-2), var(--cal-navy));
+        border: 1px solid rgba(219, 165, 45, 0.76);
+        box-shadow: 0 16px 34px rgba(6, 27, 54, 0.25);
         cursor: pointer;
-        box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
-        transition: all 0.3s ease;
-        z-index: 1000;
+        z-index: 60;
+        transition: 0.24s ease;
     }
 
     .scroll-top-btn:hover {
-        transform: scale(1.1) translateY(-2px);
-        box-shadow: 0 12px 35px rgba(59, 130, 246, 0.5);
+        transform: translateY(-4px);
+        box-shadow: 0 22px 44px rgba(6, 27, 54, 0.32);
     }
 
-    .section-title {
-        font-size: 2rem;
-        font-weight: 800;
-        color: #1e293b;
-        margin-bottom: 0.5rem;
-        text-align: center;
+    .scroll-top-btn svg {
+        width: 22px;
+        height: 22px;
+        color: var(--cal-gold-2);
     }
 
-    .section-subtitle {
-        color: #64748b;
-        text-align: center;
-        margin-bottom: 2rem;
+    @media (max-width: 1180px) {
+        .events-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .stats-grid {
+            max-width: 900px;
+        }
+    }
+
+    @media (max-width: 900px) {
+        .calendar-hero,
+        .calendar-hero-inner {
+            min-height: 320px;
+        }
+
+        .calendar-hero-inner {
+            padding: 52px 0 86px;
+        }
+
+        .stats-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .stat-card {
+            min-height: 150px;
+        }
+
+        .stat-number {
+            font-size: 46px;
+        }
     }
 
     @media (max-width: 768px) {
+        .calendar-container {
+            width: min(100% - 22px, 1320px);
+        }
+
+        .calendar-title-row {
+            gap: 12px;
+        }
+
+        .calendar-title-row::before,
+        .calendar-title-row::after {
+            width: 44px;
+        }
+
+        .calendar-title {
+            font-size: clamp(36px, 11vw, 52px);
+        }
+
+        .calendar-subtitle {
+            font-size: 19px;
+        }
+
+        .calendar-emblem {
+            width: 66px;
+            height: 66px;
+        }
+
+        .stats-section {
+            margin-top: -70px;
+        }
+
+        .events-section {
+            padding-top: 48px;
+        }
+
+        .events-heading-icon::before,
+        .events-heading-icon::after {
+            width: 54px;
+        }
+
         .events-grid {
             grid-template-columns: 1fr;
-            gap: 1rem;
         }
 
-        .stat-item:not(:last-child)::after {
-            display: none;
+        .event-card {
+            grid-template-columns: 72px 1fr;
+            gap: 14px;
+            padding: 13px 14px;
         }
 
-        .stats-container {
-            margin-top: -40px;
+        .scroll-top-btn {
+            width: 48px;
+            height: 48px;
+            right: 18px;
+            bottom: 18px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .calendar-hero,
+        .calendar-hero-inner {
+            min-height: 300px;
         }
 
-        .hero-content {
-            padding: 3rem 0;
+        .calendar-hero-inner {
+            padding: 46px 0 82px;
+        }
+
+        .stats-grid {
+            gap: 12px;
+        }
+
+        .stat-card {
+            min-height: 138px;
+            padding: 22px 12px;
+            border-radius: 14px;
+        }
+
+        .stat-icon svg {
+            width: 27px;
+            height: 27px;
+        }
+
+        .stat-number {
+            font-size: 40px;
+        }
+
+        .stat-label {
+            font-size: 10.5px;
+            letter-spacing: 1.2px;
+        }
+
+        .event-card {
+            grid-template-columns: 64px 1fr;
+        }
+
+        .date-badge {
+            width: 60px;
+            height: 60px;
+        }
+
+        .date-number {
+            font-size: 26px;
+        }
+
+        .event-title {
+            font-size: 15.5px;
+        }
+
+        .event-date {
+            font-size: 12.5px;
         }
     }
 </style>
 @endpush
 
 @section('content')
-<!-- Hero Section -->
-<div class="calendar-hero">
-    <div class="hero-content py-20">
-        <div class="container mx-auto px-6 text-center text-white">
-            <h1 class="text-5xl md:text-6xl font-bold mb-4">
-                Kalender Akademik
-            </h1>
-            <p class="text-xl md:text-2xl opacity-90 font-light">
-                SMK Siding Puri - Tahun Ajaran 2025/2026
-            </p>
-        </div>
-    </div>
-</div>
+<section class="calendar-page">
+    {{-- Hero Section --}}
+    <div class="calendar-hero">
+        <div class="calendar-container">
+            <div class="calendar-hero-inner">
+                <div>
+                    <div class="calendar-emblem">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M12 3l2.35 4.76 5.25.76-3.8 3.71.9 5.23L12 15l-4.7 2.46.9-5.23-3.8-3.71 5.25-.76L12 3z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M7 21h10M9 18h6"></path>
+                        </svg>
+                    </div>
 
-<!-- Stats Section -->
-<div class="container mx-auto px-6">
-    <div class="stats-container">
-        <div class="grid grid-cols-2 md:grid-cols-4">
-            <div class="stat-item">
-                <div class="stat-number">{{ $totalEvents }}</div>
-                <div class="stat-label">Total Kegiatan</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">{{ $examCount }}</div>
-                <div class="stat-label">Ujian Semester</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">{{ $nationalDayCount }}</div>
-                <div class="stat-label">Hari Nasional</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">{{ $holidayCount }}</div>
-                <div class="stat-label">Libur Semester</div>
+                    <div class="calendar-title-row">
+                        <h1 class="calendar-title">Kalender Akademik</h1>
+                    </div>
+
+                    <p class="calendar-subtitle">
+                        SMP Darul Mustofa - Tahun Ajaran 2025/2026
+                    </p>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Events Section -->
-<div class="py-16 bg-gradient-to-br from-slate-50 to-blue-50">
-    <div class="container mx-auto px-6">
-        <h2 class="section-title">Daftar Kegiatan</h2>
-        <p class="section-subtitle">
-            Seluruh agenda dan kegiatan akademik yang telah dijadwalkan
-        </p>
+    {{-- Stats Section --}}
+    <div class="stats-section">
+        <div class="calendar-container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-number">{{ $totalEvents }}</div>
+                    <p class="stat-label">Total Kegiatan</p>
+                </div>
 
-        <div class="events-grid">
-            @forelse ($events as $event)
-            <div class="event-card">
-                <div class="date-display">
-                    <div class="date-badge">
-                        <div class="date-number">{{ \Carbon\Carbon::parse($event->start_date)->format('d') }}</div>
-                        <div class="date-month">{{ \Carbon\Carbon::parse($event->start_date)->format('M') }}</div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 14l9-5-9-5-9 5 9 5z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 14l6.16-3.42A12.08 12.08 0 0112 21.5a12.08 12.08 0 01-6.16-10.92L12 14z"></path>
+                        </svg>
                     </div>
-                    <div class="event-content">
-                        <h3 class="event-title">{{ $event->title }}</h3>
-                        <div class="event-meta">
-                            <i class="fas fa-calendar-alt"></i>
-                            <span>{{ \Carbon\Carbon::parse($event->start_date)->locale('id')->isoFormat('dddd, D MMMM YYYY') }}</span>
-                        </div>
+                    <div class="stat-number">{{ $examCount }}</div>
+                    <p class="stat-label">Ujian Semester</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 21V5a2 2 0 012-2h10l1 3h5v11h-6l-1-3H5v7H3z"></path>
+                        </svg>
                     </div>
+                    <div class="stat-number">{{ $nationalDayCount }}</div>
+                    <p class="stat-label">Hari Nasional</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 21h18M7 18a5 5 0 0110 0M12 3v8m0 0l-4-4m4 4l4-4"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-number">{{ $holidayCount }}</div>
+                    <p class="stat-label">Libur Semester</p>
                 </div>
             </div>
-            @empty
-            <div class="empty-state">
-                <div class="empty-icon">
-                    <i class="fas fa-calendar-times"></i>
+        </div>
+    </div>
+
+    {{-- Events Section --}}
+    <div class="events-section">
+        <div class="calendar-container">
+            <div class="events-heading">
+                <div class="events-heading-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M3 21h18M5 21V9l7-4 7 4v12M9 21v-6h6v6M9 10h.01M12 10h.01M15 10h.01"></path>
+                    </svg>
                 </div>
-                <h3 class="text-xl font-semibold text-slate-600 mb-2">
-                    Belum Ada Kegiatan
-                </h3>
-                <p class="text-slate-500">
-                    Belum ada kegiatan akademik yang dijadwalkan untuk saat ini.
+
+                <h2 class="events-title">Daftar Kegiatan</h2>
+                <p class="events-subtitle">
+                    Seluruh agenda dan kegiatan akademik yang telah dijadwalkan
                 </p>
             </div>
-            @endforelse
+
+            <div class="events-grid">
+                @forelse ($events as $event)
+                    <article class="event-card">
+                        <div class="date-badge">
+                            <div>
+                                <span class="date-number">
+                                    {{ \Carbon\Carbon::parse($event->start_date)->format('d') }}
+                                </span>
+                                <span class="date-month">
+                                    {{ \Carbon\Carbon::parse($event->start_date)->locale('id')->isoFormat('MMM') }}
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="event-content">
+                            <h3 class="event-title">{{ $event->title }}</h3>
+
+                            <div class="event-date">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10m-11 9h12a2 2 0 002-2V7a2 2 0 00-2-2H6a2 2 0 00-2 2v11a2 2 0 002 2z"></path>
+                                </svg>
+                                <span>
+                                    {{ \Carbon\Carbon::parse($event->start_date)->locale('id')->isoFormat('dddd, D MMMM YYYY') }}
+                                </span>
+                            </div>
+                        </div>
+                    </article>
+                @empty
+                    <div class="empty-state">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2zm4-6h6"></path>
+                        </svg>
+
+                        <h3 class="empty-title">Belum Ada Kegiatan</h3>
+                        <p class="empty-text">
+                            Belum ada kegiatan akademik yang dijadwalkan untuk saat ini.
+                        </p>
+                    </div>
+                @endforelse
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Scroll to Top Button -->
-<div class="scroll-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">
-    <i class="fas fa-arrow-up"></i>
-</div>
+    {{-- Scroll to Top Button --}}
+    <button type="button"
+            class="scroll-top-btn"
+            onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+            aria-label="Kembali ke atas">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M5 15l7-7 7 7"></path>
+        </svg>
+    </button>
+</section>
 @endsection
