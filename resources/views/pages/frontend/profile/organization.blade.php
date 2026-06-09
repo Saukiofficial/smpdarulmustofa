@@ -36,7 +36,7 @@
         position: absolute;
         width: 520px;
         height: 520px;
-        opacity: 0.38;
+        opacity: 0.34;
         pointer-events: none;
         background-image:
             linear-gradient(rgba(6, 27, 54, 0.055) 1px, transparent 1px),
@@ -167,35 +167,81 @@
         flex-shrink: 0;
     }
 
-    .org-structure {
+    .org-chart-wrap {
         margin-top: 46px;
-        display: grid;
-        gap: 34px;
-    }
-
-    .org-section {
-        position: relative;
-        padding: 30px;
-        border-radius: 30px;
-        background: rgba(255, 255, 255, 0.68);
-        border: 1px solid rgba(255, 255, 255, 0.80);
-        box-shadow: 0 18px 45px rgba(6, 27, 54, 0.06);
+        padding: 42px 34px;
+        border-radius: 34px;
+        background: rgba(255, 255, 255, 0.76);
+        border: 1px solid rgba(255, 255, 255, 0.86);
+        box-shadow: 0 24px 70px rgba(6, 27, 54, 0.08);
         backdrop-filter: blur(14px);
     }
 
-    .org-section-head {
-        max-width: 760px;
-        margin: 0 auto 28px;
-        text-align: center;
+    .org-chart {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
-    .org-section-label {
+    .org-level {
+        width: 100%;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+        flex-wrap: wrap;
+        gap: 28px;
+    }
+
+    .org-level.leader {
+        max-width: 340px;
+    }
+
+    .org-level.small {
+        max-width: 1060px;
+    }
+
+    .org-level.waka {
+        max-width: 1120px;
+    }
+
+    .org-connector {
+        width: 2px;
+        height: 42px;
+        background: linear-gradient(180deg, transparent, rgba(219, 165, 45, 0.95), transparent);
+        position: relative;
+        margin: 4px 0;
+    }
+
+    .org-connector::before,
+    .org-connector::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: var(--org-gold);
+        box-shadow: 0 0 0 5px rgba(219, 165, 45, 0.13);
+        transform: translateX(-50%);
+    }
+
+    .org-connector::before {
+        top: 0;
+    }
+
+    .org-connector::after {
+        bottom: 0;
+    }
+
+    .org-level-title {
+        margin: 4px 0 24px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         gap: 12px;
         min-height: 52px;
-        padding: 0 26px;
+        padding: 0 28px;
         border-radius: 999px;
         color: #ffffff;
         background:
@@ -211,39 +257,28 @@
         text-align: center;
     }
 
-    .org-section-label svg {
+    .org-level-title svg {
         width: 19px;
         height: 19px;
         color: var(--org-gold-2);
         flex-shrink: 0;
     }
 
-    .org-grid {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 26px;
-        align-items: stretch;
-    }
-
-    .org-section.is-leader .org-grid {
-        max-width: 340px;
-        margin-inline: auto;
-        grid-template-columns: 1fr;
-    }
-
     .org-card {
         position: relative;
-        height: 100%;
+        width: min(100%, 285px);
+        min-height: 360px;
         overflow: hidden;
         border-radius: 26px;
         background: #ffffff;
         border: 1px solid var(--org-border);
         box-shadow: var(--org-shadow);
         transition: 0.28s ease;
+        flex: 0 0 285px;
     }
 
     .org-card:hover {
-        transform: translateY(-9px);
+        transform: translateY(-8px);
         box-shadow: var(--org-shadow-hover);
         border-color: rgba(219, 165, 45, 0.30);
     }
@@ -264,7 +299,7 @@
     }
 
     .org-card-top {
-        height: 106px;
+        height: 110px;
         background:
             radial-gradient(circle at 20% 18%, rgba(219, 165, 45, 0.20), transparent 28%),
             linear-gradient(135deg, #09284d 0%, #061b36 100%);
@@ -273,11 +308,10 @@
     .org-card-body {
         position: relative;
         z-index: 2;
-        min-height: 250px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding: 0 22px 26px;
+        padding: 0 22px 28px;
         text-align: center;
     }
 
@@ -351,11 +385,12 @@
         color: var(--org-navy);
         background: rgba(219, 165, 45, 0.11);
         border: 1px solid rgba(219, 165, 45, 0.24);
-        font-size: 12px;
+        font-size: 11.5px;
         line-height: 1.35;
         font-weight: 900;
         text-transform: uppercase;
-        letter-spacing: 0.7px;
+        letter-spacing: 0.55px;
+        max-width: 100%;
     }
 
     .org-position svg {
@@ -371,7 +406,7 @@
         margin: 0;
         color: var(--org-navy);
         font-family: Georgia, 'Times New Roman', serif;
-        font-size: 24px;
+        font-size: 23px;
         line-height: 1.18;
         font-weight: 700;
         letter-spacing: -0.35px;
@@ -430,19 +465,15 @@
         line-height: 1.7;
     }
 
-    @media (max-width: 1280px) {
-        .org-grid {
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-        }
-    }
-
-    @media (max-width: 992px) {
-        .org-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
+    @media (max-width: 1180px) {
+        .org-level.waka,
+        .org-level.small {
+            max-width: 920px;
         }
 
-        .org-section.is-leader .org-grid {
-            max-width: 320px;
+        .org-card {
+            width: min(100%, 275px);
+            flex-basis: 275px;
         }
     }
 
@@ -474,19 +505,32 @@
             min-height: 50px;
         }
 
-        .org-section {
-            padding: 22px;
-            border-radius: 24px;
+        .org-chart-wrap {
+            padding: 28px 18px;
+            border-radius: 26px;
         }
 
-        .org-grid,
-        .org-section.is-leader .org-grid {
-            grid-template-columns: 1fr;
-            max-width: none;
+        .org-level {
+            flex-direction: column;
+            align-items: center;
             gap: 22px;
         }
 
-        .org-card-body {
+        .org-card {
+            width: 100%;
+            max-width: 340px;
+            flex-basis: auto;
+            min-height: auto;
+        }
+
+        .org-level-title {
+            width: 100%;
+            font-size: 12px;
+            letter-spacing: 1px;
+            padding: 0 16px;
+        }
+
+        .org-name {
             min-height: auto;
         }
     }
@@ -494,10 +538,6 @@
     @media (max-width: 480px) {
         .org-page {
             padding-top: 38px;
-        }
-
-        .org-section {
-            padding: 16px;
         }
 
         .org-card {
@@ -520,20 +560,12 @@
         }
 
         .org-position {
-            font-size: 11px;
+            font-size: 10.5px;
             padding: 0 12px;
         }
 
         .org-name {
             font-size: 22px;
-            min-height: auto;
-        }
-
-        .org-section-label {
-            width: 100%;
-            font-size: 12px;
-            letter-spacing: 1px;
-            padding: 0 16px;
         }
     }
 </style>
@@ -542,6 +574,41 @@
 @php
     $organizationCollection = collect($organization ?? []);
     $totalMembers = $organizationCollection->flatten(1)->count();
+
+    $leaderGroups = [
+        'KEPALA SEKOLAH',
+    ];
+
+    $secondGroups = [
+        'WAKIL KEPALA SEKOLAH',
+        'KOMITE SEKOLAH',
+        'KEPALA TATA USAHA',
+        'STAF TATA USAHA',
+    ];
+
+    $wakaGroups = [
+        'WAKA KURIKULUM',
+        'WAKA KESISWAAN',
+        'WAKA SARPRAS',
+        'WAKA HUMAS',
+    ];
+
+    $usedGroups = collect($leaderGroups)
+        ->merge($secondGroups)
+        ->merge($wakaGroups)
+        ->map(fn ($group) => strtoupper($group))
+        ->toArray();
+
+    $otherGroups = $organizationCollection->keys()
+        ->filter(fn ($group) => !in_array(strtoupper($group), $usedGroups))
+        ->values();
+
+    $renderMemberCard = function ($member, $fallbackPosition = null) {
+        $name = $member->name ?? 'Nama Pengurus';
+        $position = $member->position ?? $fallbackPosition ?? 'Jabatan';
+        $photoPath = $member->photo_path ?? null;
+        $initial = strtoupper(substr($name, 0, 1));
+    };
 @endphp
 
 @section('content')
@@ -574,30 +641,20 @@
         </div>
 
         @if($totalMembers > 0)
-            <div class="org-structure">
-                @foreach($organizationCollection as $groupName => $members)
-                    @php
-                        $memberCollection = collect($members);
-                        $isLeader = str_contains(strtoupper($groupName), 'KEPALA SEKOLAH') && !str_contains(strtoupper($groupName), 'WAKIL');
-                    @endphp
-
-                    @if($memberCollection->count() > 0)
-                        <section class="org-section {{ $isLeader ? 'is-leader' : '' }}">
-                            <div class="org-section-head">
-                                <div class="org-section-label">
-                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        @if($isLeader)
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 21h8m-4-4v4m7-17H5v5a7 7 0 0014 0V4z"></path>
-                                        @else
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-4-4h-1M9 20H4v-2a4 4 0 014-4h1m0-4a4 4 0 118 0 4 4 0 01-8 0z"></path>
-                                        @endif
-                                    </svg>
-                                    {{ $groupName }}
-                                </div>
+            <div class="org-chart-wrap">
+                <div class="org-chart">
+                    {{-- LEVEL 1: KEPALA SEKOLAH --}}
+                    @foreach($leaderGroups as $groupName)
+                        @if(isset($organization[$groupName]) && collect($organization[$groupName])->count() > 0)
+                            <div class="org-level-title">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 21h8m-4-4v4m7-17H5v5a7 7 0 0014 0V4z"></path>
+                                </svg>
+                                {{ $groupName }}
                             </div>
 
-                            <div class="org-grid">
-                                @foreach($memberCollection as $member)
+                            <div class="org-level leader">
+                                @foreach($organization[$groupName] as $member)
                                     <article class="org-card">
                                         <div class="org-card-top"></div>
 
@@ -627,18 +684,183 @@
                                                 {{ $member->position ?? $groupName }}
                                             </div>
 
-                                            <h2 class="org-name">
-                                                {{ $member->name ?? 'Nama Pengurus' }}
-                                            </h2>
-
+                                            <h2 class="org-name">{{ $member->name ?? 'Nama Pengurus' }}</h2>
                                             <div class="org-line"></div>
                                         </div>
                                     </article>
                                 @endforeach
                             </div>
-                        </section>
+
+                            <div class="org-connector"></div>
+                        @endif
+                    @endforeach
+
+                    {{-- LEVEL 2: WAKIL / KOMITE / TU --}}
+                    @php
+                        $hasSecondLevel = collect($secondGroups)->contains(fn($groupName) => isset($organization[$groupName]) && collect($organization[$groupName])->count() > 0);
+                    @endphp
+
+                    @if($hasSecondLevel)
+                        <div class="org-level-title">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-4-4h-1M9 20H4v-2a4 4 0 014-4h1m0-4a4 4 0 118 0 4 4 0 01-8 0z"></path>
+                            </svg>
+                            Unsur Pimpinan & Administrasi
+                        </div>
+
+                        <div class="org-level small">
+                            @foreach($secondGroups as $groupName)
+                                @if(isset($organization[$groupName]) && collect($organization[$groupName])->count() > 0)
+                                    @foreach($organization[$groupName] as $member)
+                                        <article class="org-card">
+                                            <div class="org-card-top"></div>
+
+                                            <div class="org-card-body">
+                                                <div class="org-avatar-wrap">
+                                                    @if($member->photo_path)
+                                                        <img src="{{ asset('storage/' . $member->photo_path) }}"
+                                                             alt="Foto {{ $member->name }}"
+                                                             class="org-avatar"
+                                                             loading="lazy"
+                                                             onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
+
+                                                        <div class="org-avatar-fallback" style="display:none;">
+                                                            {{ strtoupper(substr($member->name ?? 'O', 0, 1)) }}
+                                                        </div>
+                                                    @else
+                                                        <div class="org-avatar-fallback">
+                                                            {{ strtoupper(substr($member->name ?? 'O', 0, 1)) }}
+                                                        </div>
+                                                    @endif
+                                                </div>
+
+                                                <div class="org-position">
+                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                    </svg>
+                                                    {{ $member->position ?? $groupName }}
+                                                </div>
+
+                                                <h2 class="org-name">{{ $member->name ?? 'Nama Pengurus' }}</h2>
+                                                <div class="org-line"></div>
+                                            </div>
+                                        </article>
+                                    @endforeach
+                                @endif
+                            @endforeach
+                        </div>
+
+                        <div class="org-connector"></div>
                     @endif
-                @endforeach
+
+                    {{-- LEVEL 3: WAKA --}}
+                    @php
+                        $hasWakaLevel = collect($wakaGroups)->contains(fn($groupName) => isset($organization[$groupName]) && collect($organization[$groupName])->count() > 0);
+                    @endphp
+
+                    @if($hasWakaLevel)
+                        <div class="org-level-title">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6M7 4h10a2 2 0 012 2v14H5V6a2 2 0 012-2z"></path>
+                            </svg>
+                            Wakil Kepala Bidang
+                        </div>
+
+                        <div class="org-level waka">
+                            @foreach($wakaGroups as $groupName)
+                                @if(isset($organization[$groupName]) && collect($organization[$groupName])->count() > 0)
+                                    @foreach($organization[$groupName] as $member)
+                                        <article class="org-card">
+                                            <div class="org-card-top"></div>
+
+                                            <div class="org-card-body">
+                                                <div class="org-avatar-wrap">
+                                                    @if($member->photo_path)
+                                                        <img src="{{ asset('storage/' . $member->photo_path) }}"
+                                                             alt="Foto {{ $member->name }}"
+                                                             class="org-avatar"
+                                                             loading="lazy"
+                                                             onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
+
+                                                        <div class="org-avatar-fallback" style="display:none;">
+                                                            {{ strtoupper(substr($member->name ?? 'O', 0, 1)) }}
+                                                        </div>
+                                                    @else
+                                                        <div class="org-avatar-fallback">
+                                                            {{ strtoupper(substr($member->name ?? 'O', 0, 1)) }}
+                                                        </div>
+                                                    @endif
+                                                </div>
+
+                                                <div class="org-position">
+                                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                    </svg>
+                                                    {{ $member->position ?? $groupName }}
+                                                </div>
+
+                                                <h2 class="org-name">{{ $member->name ?? 'Nama Pengurus' }}</h2>
+                                                <div class="org-line"></div>
+                                            </div>
+                                        </article>
+                                    @endforeach
+                                @endif
+                            @endforeach
+                        </div>
+                    @endif
+
+                    {{-- LEVEL LAINNYA --}}
+                    @foreach($otherGroups as $groupName)
+                        @if(isset($organization[$groupName]) && collect($organization[$groupName])->count() > 0)
+                            <div class="org-connector"></div>
+
+                            <div class="org-level-title">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                                </svg>
+                                {{ $groupName }}
+                            </div>
+
+                            <div class="org-level small">
+                                @foreach($organization[$groupName] as $member)
+                                    <article class="org-card">
+                                        <div class="org-card-top"></div>
+
+                                        <div class="org-card-body">
+                                            <div class="org-avatar-wrap">
+                                                @if($member->photo_path)
+                                                    <img src="{{ asset('storage/' . $member->photo_path) }}"
+                                                         alt="Foto {{ $member->name }}"
+                                                         class="org-avatar"
+                                                         loading="lazy"
+                                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
+
+                                                    <div class="org-avatar-fallback" style="display:none;">
+                                                        {{ strtoupper(substr($member->name ?? 'O', 0, 1)) }}
+                                                    </div>
+                                                @else
+                                                    <div class="org-avatar-fallback">
+                                                        {{ strtoupper(substr($member->name ?? 'O', 0, 1)) }}
+                                                    </div>
+                                                @endif
+                                            </div>
+
+                                            <div class="org-position">
+                                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                                </svg>
+                                                {{ $member->position ?? $groupName }}
+                                            </div>
+
+                                            <h2 class="org-name">{{ $member->name ?? 'Nama Pengurus' }}</h2>
+                                            <div class="org-line"></div>
+                                        </div>
+                                    </article>
+                                @endforeach
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
             </div>
         @else
             <div class="org-empty">
