@@ -46,7 +46,7 @@
     }
 
     /* =========================================================
-       HERO SECTION
+       HERO SECTION - TIDAK DIUBAH
     ========================================================= */
 
     .dm-hero {
@@ -418,56 +418,151 @@
     }
 
     /* =========================================================
-       PRINCIPAL SECTION
+       PRINCIPAL SECTION - REDESIGN
     ========================================================= */
 
     .dm-principal {
-        padding: 95px 0;
-        background:
-            linear-gradient(135deg, rgba(6, 27, 54, 0.96), rgba(9, 40, 77, 0.94)),
-            url('{{ asset('images/gedung-sekolah.jpg') }}') center / cover fixed;
-        color: #ffffff;
         position: relative;
         overflow: hidden;
+        padding: 105px 0;
+        background:
+            radial-gradient(circle at 15% 18%, rgba(219, 165, 45, 0.11), transparent 30%),
+            radial-gradient(circle at 90% 10%, rgba(6, 27, 54, 0.07), transparent 28%),
+            linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+        color: var(--dm-text);
+    }
+
+    .dm-principal::before,
+    .dm-principal::after {
+        content: "";
+        position: absolute;
+        pointer-events: none;
     }
 
     .dm-principal::before {
+        inset: 0;
+        opacity: 0.48;
+        background-image:
+            linear-gradient(rgba(6, 27, 54, 0.045) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(6, 27, 54, 0.045) 1px, transparent 1px);
+        background-size: 36px 36px;
+        mask-image: radial-gradient(circle at 20% 10%, #000 0%, transparent 38%);
+        -webkit-mask-image: radial-gradient(circle at 20% 10%, #000 0%, transparent 38%);
+    }
+
+    .dm-principal::after {
+        right: -130px;
+        bottom: -160px;
+        width: 460px;
+        height: 460px;
+        border-radius: 999px;
+        background: rgba(219, 165, 45, 0.10);
+        filter: blur(4px);
+    }
+
+    .dm-principal-panel {
+        position: relative;
+        z-index: 2;
+        overflow: hidden;
+        border-radius: 34px;
+        background: rgba(255, 255, 255, 0.88);
+        border: 1px solid rgba(6, 27, 54, 0.08);
+        box-shadow: 0 28px 80px rgba(6, 27, 54, 0.10);
+        backdrop-filter: blur(14px);
+    }
+
+    .dm-principal-panel::before {
         content: "";
         position: absolute;
-        inset: 0;
-        background:
-            radial-gradient(circle at 12% 18%, rgba(219, 165, 45, 0.18), transparent 32%),
-            radial-gradient(circle at 88% 72%, rgba(255, 255, 255, 0.08), transparent 30%);
+        inset: 0 0 auto 0;
+        height: 9px;
+        background: linear-gradient(90deg, var(--dm-navy), var(--dm-gold), var(--dm-navy));
     }
 
     .dm-principal-grid {
         position: relative;
         display: grid;
-        grid-template-columns: 0.82fr 1.18fr;
-        gap: 58px;
-        align-items: center;
+        grid-template-columns: 0.88fr 1.12fr;
+        gap: 0;
+        align-items: stretch;
     }
 
-    .dm-principal-photo-wrap {
+    .dm-principal-media {
         position: relative;
+        padding: 36px;
+        background:
+            radial-gradient(circle at 18% 20%, rgba(219, 165, 45, 0.22), transparent 32%),
+            linear-gradient(135deg, #09284d 0%, #061b36 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 560px;
     }
 
-    .dm-principal-photo-wrap::before {
+    .dm-principal-photo-shell {
+        width: min(100%, 430px);
+        position: relative;
+        padding: 16px;
+        border-radius: 30px;
+        background: rgba(255, 255, 255, 0.10);
+        border: 1px solid rgba(219, 165, 45, 0.38);
+        box-shadow: 0 28px 60px rgba(0, 0, 0, 0.22);
+    }
+
+    .dm-principal-photo-shell::before {
         content: "";
         position: absolute;
-        inset: 24px -20px -20px 24px;
-        border-radius: 24px;
+        inset: 28px -16px -16px 28px;
+        border-radius: 30px;
         border: 1px solid rgba(219, 165, 45, 0.65);
+        z-index: -1;
     }
 
     .dm-principal-photo {
-        position: relative;
         width: 100%;
+        aspect-ratio: 4 / 5;
         display: block;
         border-radius: 24px;
-        border: 1px solid rgba(255, 255, 255, 0.24);
-        box-shadow: 0 28px 70px rgba(0, 0, 0, 0.32);
         object-fit: cover;
+        object-position: center top;
+        background: #eef2f7;
+        border: 1px solid rgba(255, 255, 255, 0.26);
+    }
+
+    .dm-principal-mini-card {
+        position: absolute;
+        left: 26px;
+        right: 26px;
+        bottom: 26px;
+        padding: 18px 20px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.94);
+        border: 1px solid rgba(219, 165, 45, 0.28);
+        box-shadow: 0 18px 40px rgba(6, 27, 54, 0.18);
+        text-align: center;
+    }
+
+    .dm-principal-mini-name {
+        margin: 0 0 4px;
+        color: var(--dm-navy);
+        font-size: 18px;
+        font-weight: 900;
+        line-height: 1.25;
+    }
+
+    .dm-principal-mini-role {
+        margin: 0;
+        color: var(--dm-muted);
+        font-size: 13.5px;
+        font-weight: 700;
+    }
+
+    .dm-principal-content {
+        position: relative;
+        padding: clamp(34px, 5vw, 64px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
     .dm-section-kicker {
@@ -477,75 +572,140 @@
         gap: 10px;
         padding: 10px 16px;
         border-radius: 999px;
-        color: var(--dm-gold-2);
-        background: rgba(219, 165, 45, 0.12);
-        border: 1px solid rgba(219, 165, 45, 0.30);
-        font-weight: 800;
-        font-size: 14px;
+        color: var(--dm-gold);
+        background: rgba(219, 165, 45, 0.11);
+        border: 1px solid rgba(219, 165, 45, 0.24);
+        font-weight: 900;
+        font-size: 13px;
         text-transform: uppercase;
-        letter-spacing: 0.8px;
+        letter-spacing: 1px;
         margin-bottom: 18px;
     }
 
     .dm-section-title {
         margin: 0 0 18px;
-        font-size: clamp(30px, 3.3vw, 52px);
-        line-height: 1.12;
-        font-weight: 900;
-        letter-spacing: -1.2px;
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: clamp(34px, 3.6vw, 58px);
+        line-height: 1.08;
+        font-weight: 700;
+        letter-spacing: -1.4px;
+        color: var(--dm-navy);
     }
 
     .dm-section-title.dark {
         color: var(--dm-navy);
     }
 
-    .dm-principal-quote {
+    .dm-principal-quote-box {
         position: relative;
-        margin: 26px 0 28px;
-        padding: 26px 28px;
-        border-left: 4px solid var(--dm-gold);
-        border-radius: 0 18px 18px 0;
-        background: rgba(255, 255, 255, 0.08);
-        color: rgba(255, 255, 255, 0.88);
+        margin-top: 24px;
+        padding: 34px 34px 30px;
+        border-radius: 26px;
+        background:
+            linear-gradient(180deg, #ffffff 0%, #fbfcff 100%);
+        border: 1px solid rgba(6, 27, 54, 0.08);
+        box-shadow: 0 18px 45px rgba(6, 27, 54, 0.07);
+    }
+
+    .dm-principal-quote-icon {
+        width: 58px;
+        height: 58px;
+        display: grid;
+        place-items: center;
+        border-radius: 18px;
+        color: var(--dm-gold);
+        background: rgba(219, 165, 45, 0.12);
+        border: 1px solid rgba(219, 165, 45, 0.25);
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .dm-principal-quote {
+        margin: 0;
+        color: #3e4b5d;
         font-size: 18px;
-        line-height: 1.85;
-        backdrop-filter: blur(14px);
+        line-height: 1.9;
     }
 
-    .dm-principal-info {
-        display: inline-block;
-        padding: 18px 24px;
-        border-radius: 16px;
-        background: rgba(255, 255, 255, 0.10);
-        border: 1px solid rgba(255, 255, 255, 0.16);
-        backdrop-filter: blur(14px);
+    .dm-principal-values {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 14px;
+        margin-top: 26px;
     }
 
-    .dm-principal-name {
-        margin: 0 0 5px;
-        color: #ffffff;
-        font-size: 20px;
+    .dm-principal-value {
+        min-height: 92px;
+        padding: 18px 14px;
+        border-radius: 18px;
+        background: #ffffff;
+        border: 1px solid rgba(6, 27, 54, 0.08);
+        box-shadow: 0 12px 30px rgba(6, 27, 54, 0.05);
+        text-align: center;
+    }
+
+    .dm-principal-value i {
+        display: block;
+        color: var(--dm-gold);
+        font-size: 22px;
+        margin-bottom: 10px;
+    }
+
+    .dm-principal-value span {
+        display: block;
+        color: var(--dm-navy);
+        font-size: 13.5px;
+        line-height: 1.35;
         font-weight: 900;
     }
 
-    .dm-principal-role {
-        margin: 0;
-        color: rgba(255, 255, 255, 0.68);
-        font-size: 15px;
-    }
-
     /* =========================================================
-       NEWS SECTION
+       NEWS SECTION - REDESIGN + GAMBAR FULL TIDAK KEPOTONG
     ========================================================= */
 
     .dm-news {
-        padding: 95px 0;
-        background: #ffffff;
+        position: relative;
+        overflow: hidden;
+        padding: 105px 0;
+        background:
+            radial-gradient(circle at 10% 8%, rgba(219, 165, 45, 0.10), transparent 28%),
+            radial-gradient(circle at 92% 12%, rgba(6, 27, 54, 0.06), transparent 30%),
+            linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+    }
+
+    .dm-news::before,
+    .dm-news::after {
+        content: "";
+        position: absolute;
+        width: 520px;
+        height: 520px;
+        opacity: 0.30;
+        pointer-events: none;
+        background-image:
+            linear-gradient(rgba(6, 27, 54, 0.055) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(6, 27, 54, 0.055) 1px, transparent 1px);
+        background-size: 34px 34px;
+        mask-image: radial-gradient(circle, #000 0%, transparent 72%);
+        -webkit-mask-image: radial-gradient(circle, #000 0%, transparent 72%);
+    }
+
+    .dm-news::before {
+        left: -210px;
+        top: 20px;
+        transform: rotate(14deg);
+    }
+
+    .dm-news::after {
+        right: -220px;
+        bottom: -80px;
+        transform: rotate(-12deg);
     }
 
     .dm-section-head {
-        max-width: 800px;
-        margin: 0 auto 48px;
+        position: relative;
+        z-index: 2;
+        max-width: 820px;
+        margin: 0 auto 52px;
         text-align: center;
     }
 
@@ -562,17 +722,21 @@
     }
 
     .dm-news-grid {
+        position: relative;
+        z-index: 2;
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 28px;
+        align-items: stretch;
     }
 
     .dm-news-card {
+        position: relative;
         height: 100%;
         display: flex;
         flex-direction: column;
         overflow: hidden;
-        border-radius: 24px;
+        border-radius: 28px;
         background: #ffffff;
         border: 1px solid rgba(6, 27, 54, 0.08);
         box-shadow: 0 18px 45px rgba(6, 27, 54, 0.08);
@@ -585,29 +749,63 @@
         border-color: rgba(219, 165, 45, 0.32);
     }
 
+    .dm-news-card::after {
+        content: "";
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 5px;
+        background: linear-gradient(90deg, var(--dm-gold), var(--dm-gold-2));
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: 0.28s ease;
+    }
+
+    .dm-news-card:hover::after {
+        transform: scaleX(1);
+    }
+
     .dm-news-img-link {
-        display: block;
-        height: 250px;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 265px;
+        padding: 16px;
         overflow: hidden;
-        background: #eef2f7;
+        background:
+            linear-gradient(180deg, #f7f9fc 0%, #eef3f8 100%);
+        border-bottom: 1px solid rgba(6, 27, 54, 0.07);
+    }
+
+    .dm-news-img-link::before {
+        content: "";
+        position: absolute;
+        inset: 16px;
+        border-radius: 18px;
+        border: 1px solid rgba(6, 27, 54, 0.06);
+        pointer-events: none;
     }
 
     .dm-news-img {
+        position: relative;
+        z-index: 2;
         width: 100%;
         height: 100%;
-        object-fit: cover;
-        transition: 0.48s ease;
+        object-fit: contain;
+        object-position: center;
+        border-radius: 16px;
+        transition: 0.38s ease;
     }
 
     .dm-news-card:hover .dm-news-img {
-        transform: scale(1.08);
+        transform: scale(1.025);
     }
 
     .dm-news-body {
         flex: 1;
         display: flex;
         flex-direction: column;
-        padding: 26px;
+        padding: 26px 28px 28px;
     }
 
     .dm-news-date {
@@ -616,16 +814,17 @@
         gap: 8px;
         color: var(--dm-gold);
         font-size: 14px;
-        font-weight: 800;
+        font-weight: 900;
         margin-bottom: 12px;
     }
 
     .dm-news-title {
         margin: 0 0 12px;
-        font-size: 22px;
-        line-height: 1.35;
-        font-weight: 900;
-        letter-spacing: -0.3px;
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: 25px;
+        line-height: 1.22;
+        font-weight: 700;
+        letter-spacing: -0.4px;
     }
 
     .dm-news-title a {
@@ -637,6 +836,14 @@
         color: var(--dm-gold);
     }
 
+    .dm-news-small-line {
+        width: 54px;
+        height: 2px;
+        border-radius: 999px;
+        background: var(--dm-gold);
+        margin-bottom: 16px;
+    }
+
     .dm-news-excerpt {
         flex: 1;
         color: var(--dm-muted);
@@ -646,6 +853,7 @@
     }
 
     .dm-news-link {
+        width: fit-content;
         display: inline-flex;
         align-items: center;
         gap: 10px;
@@ -660,18 +868,23 @@
     }
 
     .dm-view-all {
+        position: relative;
+        z-index: 2;
         text-align: center;
         margin-top: 46px;
     }
 
     .dm-empty {
+        position: relative;
+        z-index: 2;
         max-width: 760px;
         margin: 0 auto;
         padding: 60px 30px;
         text-align: center;
         border-radius: 24px;
-        background: var(--dm-soft);
+        background: #ffffff;
         border: 1px dashed rgba(6, 27, 54, 0.18);
+        box-shadow: 0 18px 45px rgba(6, 27, 54, 0.08);
     }
 
     .dm-empty i {
@@ -781,6 +994,18 @@
         .dm-floating-card span {
             font-size: 15px;
         }
+
+        .dm-principal-grid {
+            grid-template-columns: 0.95fr 1.05fr;
+        }
+
+        .dm-principal-media {
+            min-height: 520px;
+        }
+
+        .dm-news-img-link {
+            height: 240px;
+        }
     }
 
     @media (max-width: 1100px) {
@@ -834,7 +1059,6 @@
 
     /* =========================================================
        FIX HERO UNTUK DESKTOP / LAPTOP PENDEK
-       Agar hero tidak kepotong di layar MacBook / laptop
     ========================================================= */
 
     @media (min-width: 1101px) and (max-height: 850px) {
@@ -1005,8 +1229,13 @@
             grid-template-columns: 1fr;
         }
 
-        .dm-principal-photo-wrap {
-            max-width: 520px;
+        .dm-principal-media {
+            min-height: auto;
+            padding: 32px 24px 84px;
+        }
+
+        .dm-principal-photo-shell {
+            max-width: 420px;
             margin-inline: auto;
         }
 
@@ -1014,8 +1243,16 @@
             text-align: center;
         }
 
+        .dm-principal-content .dm-section-kicker {
+            margin-inline: auto;
+        }
+
         .dm-principal-quote {
             text-align: left;
+        }
+
+        .dm-principal-values {
+            grid-template-columns: 1fr;
         }
     }
 
@@ -1110,11 +1347,30 @@
         }
 
         .dm-section-title {
-            font-size: 32px;
+            font-size: 34px;
         }
 
         .dm-news-img-link {
-            height: 220px;
+            height: 230px;
+            padding: 14px;
+        }
+
+        .dm-news-title {
+            font-size: 24px;
+        }
+
+        .dm-principal-panel {
+            border-radius: 26px;
+        }
+
+        .dm-principal-mini-card {
+            left: 18px;
+            right: 18px;
+            bottom: 18px;
+        }
+
+        .dm-principal-quote-box {
+            padding: 28px 22px;
         }
     }
 
@@ -1129,6 +1385,10 @@
 
         .dm-students {
             width: 118vw;
+        }
+
+        .dm-news-img-link {
+            height: 205px;
         }
     }
 </style>
@@ -1279,36 +1539,63 @@
     {{-- PRINCIPAL MESSAGE SECTION --}}
     <section class="dm-principal">
         <div class="dm-container">
-            <div class="dm-principal-grid">
+            <div class="dm-principal-panel">
+                <div class="dm-principal-grid">
 
-                <div class="dm-principal-photo-wrap">
-                    <img src="{{ asset('images/kepalasekolah.jpg') }}"
-                         alt="Kepala Sekolah SMP Darul Mustofa"
-                         class="dm-principal-photo">
-                </div>
+                    <div class="dm-principal-media">
+                        <div class="dm-principal-photo-shell">
+                            <img src="{{ asset('images/kepalasekolah.jpg') }}"
+                                 alt="Kepala Sekolah SMP Darul Mustofa"
+                                 class="dm-principal-photo">
 
-                <div class="dm-principal-content">
-                    <div class="dm-section-kicker">
-                        <i class="fas fa-quote-left"></i>
-                        Sambutan Kepala Sekolah
+                            <div class="dm-principal-mini-card">
+                                <p class="dm-principal-mini-name">WIWIN WIDIYA WATI, S.Pd</p>
+                                <p class="dm-principal-mini-role">Kepala Sekolah SMP Darul Mustofa</p>
+                            </div>
+                        </div>
                     </div>
 
-                    <h2 class="dm-section-title">
-                        Visi Kepemimpinan untuk Pendidikan Berkualitas
-                    </h2>
+                    <div class="dm-principal-content">
+                        <div class="dm-section-kicker">
+                            <i class="fas fa-quote-left"></i>
+                            Sambutan Kepala Sekolah
+                        </div>
 
-                    <p class="dm-principal-quote">
-                        Mewujudkan generasi berkarakter unggul, melek teknologi,
-                        mandiri, dan berwawasan global, yang dilandasi nilai-nilai
-                        luhur dan lingkungan, untuk siap menghadapi tantangan masa depan.
-                    </p>
+                        <h2 class="dm-section-title">
+                            Visi Kepemimpinan untuk Pendidikan Berkualitas
+                        </h2>
 
-                    <div class="dm-principal-info">
-                        <p class="dm-principal-name">WIWIN WIDIYA WATI, S.Pd</p>
-                        <p class="dm-principal-role">Kepala Sekolah SMP Darul Mustofa</p>
+                        <div class="dm-principal-quote-box">
+                            <div class="dm-principal-quote-icon">
+                                <i class="fas fa-quote-left"></i>
+                            </div>
+
+                            <p class="dm-principal-quote">
+                                Mewujudkan generasi berkarakter unggul, melek teknologi,
+                                mandiri, dan berwawasan global, yang dilandasi nilai-nilai
+                                luhur dan lingkungan, untuk siap menghadapi tantangan masa depan.
+                            </p>
+                        </div>
+
+                        <div class="dm-principal-values">
+                            <div class="dm-principal-value">
+                                <i class="fas fa-book-open"></i>
+                                <span>Pendidikan Bermutu</span>
+                            </div>
+
+                            <div class="dm-principal-value">
+                                <i class="fas fa-mosque"></i>
+                                <span>Akhlak Islami</span>
+                            </div>
+
+                            <div class="dm-principal-value">
+                                <i class="fas fa-award"></i>
+                                <span>Prestasi Unggul</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
+                </div>
             </div>
         </div>
     </section>
@@ -1353,6 +1640,8 @@
                                         {{ $post->title }}
                                     </a>
                                 </h3>
+
+                                <div class="dm-news-small-line"></div>
 
                                 <p class="dm-news-excerpt">
                                     {{ \Illuminate\Support\Str::limit(strip_tags($post->content), 120) }}
