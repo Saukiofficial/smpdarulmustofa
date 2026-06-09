@@ -2,659 +2,552 @@
 
 @section('title', 'Fasilitas Sekolah')
 
-@section('content')
+@push('styles')
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
-    * {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    :root {
+        --fac-navy: #061b36;
+        --fac-navy-2: #0b2b52;
+        --fac-gold: #dba52d;
+        --fac-gold-2: #f0c45a;
+        --fac-white: #ffffff;
+        --fac-soft: #f7f9fc;
+        --fac-soft-2: #eef3f8;
+        --fac-text: #142844;
+        --fac-muted: #6c7788;
+        --fac-border: rgba(6, 27, 54, 0.08);
+        --fac-shadow: 0 18px 45px rgba(6, 27, 54, 0.08);
+        --fac-shadow-hover: 0 28px 70px rgba(6, 27, 54, 0.16);
     }
 
-    .premium-bg {
-        background: linear-gradient(-45deg, #0f172a, #1e293b, #334155, #475569);
-        background-size: 400% 400%;
-        animation: gradientShift 20s ease infinite;
+    .fac-page {
         position: relative;
+        min-height: 100vh;
         overflow: hidden;
+        background:
+            radial-gradient(circle at 16% 8%, rgba(219, 165, 45, 0.10), transparent 28%),
+            radial-gradient(circle at 88% 14%, rgba(6, 27, 54, 0.06), transparent 30%),
+            linear-gradient(180deg, #ffffff 0%, #f7f9fc 52%, #ffffff 100%);
+        padding: 72px 0 88px;
     }
 
-    .premium-bg::before {
-        content: '';
+    .fac-page::before,
+    .fac-page::after {
+        content: "";
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(135deg, rgba(59, 130, 246, 0.08) 0%, rgba(147, 51, 234, 0.08) 50%, rgba(236, 72, 153, 0.08) 100%);
-        animation: overlayPulse 15s ease infinite alternate;
-    }
-
-    @keyframes gradientShift {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-
-    @keyframes overlayPulse {
-        0% { opacity: 0.4; }
-        100% { opacity: 0.8; }
-    }
-
-    .facility-particles {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
+        width: 520px;
+        height: 520px;
+        opacity: 0.38;
         pointer-events: none;
+        background-image:
+            linear-gradient(rgba(6, 27, 54, 0.055) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(6, 27, 54, 0.055) 1px, transparent 1px);
+        background-size: 34px 34px;
+        mask-image: radial-gradient(circle, #000 0%, transparent 72%);
+        -webkit-mask-image: radial-gradient(circle, #000 0%, transparent 72%);
     }
 
-    .facility-particle {
-        position: absolute;
-        background: rgba(255, 255, 255, 0.06);
-        border-radius: 50%;
-        animation: facilityFloat 30s infinite linear;
+    .fac-page::before {
+        left: -190px;
+        top: -120px;
+        transform: rotate(16deg);
     }
 
-    .facility-particle:nth-child(1) { width: 4px; height: 4px; left: 10%; animation-delay: 0s; }
-    .facility-particle:nth-child(2) { width: 6px; height: 6px; left: 20%; animation-delay: 4s; }
-    .facility-particle:nth-child(3) { width: 3px; height: 3px; left: 30%; animation-delay: 8s; }
-    .facility-particle:nth-child(4) { width: 8px; height: 8px; left: 40%; animation-delay: 12s; }
-    .facility-particle:nth-child(5) { width: 5px; height: 5px; left: 50%; animation-delay: 16s; }
-    .facility-particle:nth-child(6) { width: 7px; height: 7px; left: 60%; animation-delay: 20s; }
-    .facility-particle:nth-child(7) { width: 4px; height: 4px; left: 70%; animation-delay: 24s; }
-    .facility-particle:nth-child(8) { width: 6px; height: 6px; left: 80%; animation-delay: 28s; }
-    .facility-particle:nth-child(9) { width: 3px; height: 3px; left: 90%; animation-delay: 32s; }
-    .facility-particle:nth-child(10) { width: 5px; height: 5px; left: 95%; animation-delay: 36s; }
-
-    @keyframes facilityFloat {
-        0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-        5% { opacity: 1; }
-        95% { opacity: 1; }
-        100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+    .fac-page::after {
+        right: -190px;
+        top: 18px;
+        transform: rotate(-12deg);
     }
 
-    .gradient-title {
-        background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 25%, #e2e8f0 50%, #cbd5e1 75%, #94a3b8 100%);
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-size: 400% 400%;
-        animation: gradientMove 5s ease infinite;
+    .fac-container {
+        position: relative;
+        z-index: 2;
+        width: min(100% - 36px, 1420px);
+        margin-inline: auto;
+    }
+
+    .fac-header {
+        max-width: 860px;
+        margin: 0 auto 48px;
+        text-align: center;
+    }
+
+    .fac-icon {
+        width: 50px;
+        height: 50px;
+        margin: 0 auto 10px;
+        display: grid;
+        place-items: center;
+        color: var(--fac-gold);
+    }
+
+    .fac-icon svg {
+        width: 46px;
+        height: 46px;
+    }
+
+    .fac-kicker {
+        margin: 0 0 12px;
+        color: var(--fac-gold);
+        font-size: 14px;
+        line-height: 1;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 6px;
+    }
+
+    .fac-title {
+        margin: 0;
+        color: var(--fac-navy);
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: clamp(42px, 5vw, 76px);
+        font-weight: 700;
+        line-height: 1.05;
+        letter-spacing: -1.8px;
+    }
+
+    .fac-divider {
+        width: 112px;
+        height: 18px;
+        margin: 14px auto 12px;
         position: relative;
     }
 
-    @keyframes gradientMove {
-        0%, 100% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-    }
-
-    .facility-card {
-        background: rgba(255, 255, 255, 0.06);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 24px;
-        overflow: hidden;
-        position: relative;
-        transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-        box-shadow:
-            0 8px 32px rgba(0, 0, 0, 0.12),
-            0 2px 16px rgba(0, 0, 0, 0.08),
-            inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        opacity: 0;
-        transform: translateY(40px);
-        animation: cardEnter 0.8s ease-out forwards;
-    }
-
-    .facility-card:nth-child(1) { animation-delay: 0.1s; }
-    .facility-card:nth-child(2) { animation-delay: 0.2s; }
-    .facility-card:nth-child(3) { animation-delay: 0.3s; }
-    .facility-card:nth-child(4) { animation-delay: 0.4s; }
-    .facility-card:nth-child(5) { animation-delay: 0.5s; }
-    .facility-card:nth-child(6) { animation-delay: 0.6s; }
-    .facility-card:nth-child(n+7) { animation-delay: 0.7s; }
-
-    @keyframes cardEnter {
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .facility-card::before {
-        content: '';
+    .fac-divider::before {
+        content: "";
         position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
-        transition: left 0.6s ease;
-        z-index: 1;
-    }
-
-    .facility-card:hover::before {
-        left: 100%;
-    }
-
-    .facility-card:hover {
-        transform: translateY(-12px) scale(1.03);
-        border-color: rgba(255, 255, 255, 0.2);
-        box-shadow:
-            0 32px 64px rgba(0, 0, 0, 0.25),
-            0 16px 32px rgba(0, 0, 0, 0.15),
-            inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    }
-
-    .image-container {
-        position: relative;
-        height: 240px;
-        overflow: hidden;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-    }
-
-    .image-container::after {
-        content: '';
-        position: absolute;
-        top: 0;
+        top: 8px;
         left: 0;
         right: 0;
-        bottom: 0;
-        background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.1) 100%);
-        opacity: 0;
-        transition: opacity 0.4s ease;
-        z-index: 2;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--fac-gold), transparent);
     }
 
-    .facility-card:hover .image-container::after {
-        opacity: 1;
+    .fac-divider::after {
+        content: "";
+        position: absolute;
+        top: 4px;
+        left: 50%;
+        width: 10px;
+        height: 10px;
+        transform: translateX(-50%) rotate(45deg);
+        background: var(--fac-gold);
+        border-radius: 2px;
     }
 
-    .facility-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-        filter: brightness(1.1) contrast(1.05) saturate(1.1);
+    .fac-subtitle {
+        max-width: 780px;
+        margin: 0 auto;
+        color: var(--fac-muted);
+        font-size: 18px;
+        line-height: 1.72;
     }
 
-    .facility-card:hover .facility-image {
-        transform: scale(1.08);
-        filter: brightness(1.2) contrast(1.1) saturate(1.2);
-    }
-
-    .card-content {
-        padding: 24px;
-        position: relative;
-        z-index: 3;
-    }
-
-    .facility-title {
-        color: #ffffff;
-        font-size: 20px;
-        font-weight: 700;
-        margin-bottom: 12px;
-        line-height: 1.3;
-        letter-spacing: -0.01em;
-        transition: all 0.3s ease;
-    }
-
-    .facility-card:hover .facility-title {
-        transform: translateY(-2px);
-        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    }
-
-    .facility-description {
-        color: rgba(255, 255, 255, 0.8);
-        font-size: 15px;
-        line-height: 1.6;
-        font-weight: 400;
-        letter-spacing: 0.01em;
-        transition: all 0.3s ease;
-    }
-
-    .facility-card:hover .facility-description {
-        color: rgba(255, 255, 255, 0.9);
-        transform: translateY(-1px);
-    }
-
-    .empty-state {
-        grid-column: 1 / -1;
-        text-align: center;
-        padding: 80px 20px;
-        color: rgba(255, 255, 255, 0.6);
-        animation: fadeIn 1s ease-out;
-    }
-
-    .empty-state-icon {
-        width: 80px;
-        height: 80px;
-        margin: 0 auto 24px;
-        background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(147, 51, 234, 0.1));
-        border-radius: 24px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(10px);
-    }
-
-    .pagination-container {
-        margin-top: 48px;
+    .fac-toolbar {
         display: flex;
         justify-content: center;
+        margin: 38px auto 46px;
     }
 
-    .pagination-container nav {
-        background: rgba(255, 255, 255, 0.06);
-        backdrop-filter: blur(20px);
-        border-radius: 16px;
-        padding: 12px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .pagination-container a, .pagination-container span {
+    .fac-pill {
+        min-height: 54px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-width: 40px;
-        height: 40px;
-        margin: 0 4px;
-        border-radius: 10px;
+        gap: 12px;
+        padding: 0 28px;
+        border-radius: 999px;
+        color: #ffffff;
+        background: linear-gradient(180deg, #09284d 0%, #061b36 100%);
+        border: 1px solid rgba(219, 165, 45, 0.65);
+        box-shadow: 0 18px 38px rgba(6, 27, 54, 0.20);
+        font-size: 15px;
+        font-weight: 900;
+    }
+
+    .fac-pill svg {
+        width: 20px;
+        height: 20px;
+        color: var(--fac-gold-2);
+    }
+
+    .fac-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 28px;
+        align-items: stretch;
+    }
+
+    .fac-card {
+        position: relative;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        border-radius: 24px;
+        background: #ffffff;
+        border: 1px solid var(--fac-border);
+        box-shadow: var(--fac-shadow);
+        transition: 0.28s ease;
+    }
+
+    .fac-card:hover {
+        transform: translateY(-9px);
+        box-shadow: var(--fac-shadow-hover);
+        border-color: rgba(219, 165, 45, 0.30);
+    }
+
+    .fac-card::after {
+        content: "";
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 5px;
+        background: linear-gradient(90deg, var(--fac-gold), var(--fac-gold-2));
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: 0.28s ease;
+    }
+
+    .fac-card:hover::after {
+        transform: scaleX(1);
+    }
+
+    .fac-media {
+        position: relative;
+        padding: 16px 16px 0;
+    }
+
+    .fac-image-box {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 10;
+        min-height: 245px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        border-radius: 18px;
+        background: linear-gradient(180deg, #fbfcff 0%, #edf2f7 100%);
+        border: 1px solid rgba(6, 27, 54, 0.06);
+        padding: 10px;
+    }
+
+    .fac-image {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: center;
+        display: block;
+        border-radius: 14px;
+        transition: 0.35s ease;
+    }
+
+    .fac-card:hover .fac-image {
+        transform: scale(1.025);
+    }
+
+    .fac-badge {
+        position: absolute;
+        top: 28px;
+        left: 28px;
+        z-index: 3;
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        padding: 11px 17px;
+        border-radius: 12px;
+        color: #ffffff;
+        background: linear-gradient(180deg, rgba(9, 40, 77, 0.96), rgba(6, 27, 54, 0.96));
+        border: 1px solid rgba(219, 165, 45, 0.45);
+        box-shadow: 0 12px 28px rgba(6, 27, 54, 0.20);
         font-size: 14px;
-        font-weight: 500;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        color: rgba(255, 255, 255, 0.7);
+        font-weight: 900;
+        backdrop-filter: blur(10px);
     }
 
-    .pagination-container a:hover {
-        background: rgba(255, 255, 255, 0.1);
-        color: white;
-        transform: translateY(-1px);
+    .fac-badge svg {
+        width: 17px;
+        height: 17px;
+        color: var(--fac-gold-2);
     }
 
-    .pagination-container .current {
-        background: linear-gradient(135deg, #3b82f6, #9333ea);
-        color: white;
-        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    .fac-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 24px 26px 26px;
     }
 
-    .floating-icon {
-        animation: floatingIcon 6s ease-in-out infinite;
+    .fac-card-title {
+        margin: 0 0 12px;
+        color: var(--fac-navy);
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: clamp(25px, 1.6vw, 32px);
+        line-height: 1.16;
+        font-weight: 700;
+        letter-spacing: -0.45px;
     }
 
-    @keyframes floatingIcon {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-8px); }
+    .fac-mini-line {
+        width: 54px;
+        height: 2px;
+        border-radius: 999px;
+        background: var(--fac-gold);
+        margin-bottom: 16px;
     }
 
-    .entrance-animation {
-        opacity: 0;
-        transform: translateY(30px);
-        animation: entranceSlide 1s ease-out forwards;
+    .fac-description {
+        margin: 0;
+        color: var(--fac-muted);
+        font-size: 15.5px;
+        line-height: 1.78;
     }
 
-    .entrance-animation:nth-child(1) { animation-delay: 0.1s; }
-    .entrance-animation:nth-child(2) { animation-delay: 0.3s; }
-
-    @keyframes entranceSlide {
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .fac-empty {
+        max-width: 820px;
+        margin: 0 auto;
+        padding: 68px 24px;
+        text-align: center;
+        background: #ffffff;
+        border: 1px dashed rgba(6, 27, 54, 0.16);
+        border-radius: 28px;
+        box-shadow: var(--fac-shadow);
     }
 
-    @keyframes fadeIn {
-        from { opacity: 0; transform: scale(0.9); }
-        to { opacity: 1; transform: scale(1); }
+    .fac-empty-icon {
+        width: 84px;
+        height: 84px;
+        margin: 0 auto 20px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        color: var(--fac-gold);
+        background: rgba(219, 165, 45, 0.10);
     }
 
-    /* Loading shimmer for images */
-    .image-loading {
-        background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0.1) 50%, rgba(255, 255, 255, 0.05) 75%);
-        background-size: 200% 100%;
-        animation: shimmer 2s infinite;
+    .fac-empty-icon svg {
+        width: 44px;
+        height: 44px;
     }
 
-    @keyframes shimmer {
-        0% { background-position: -200% 0; }
-        100% { background-position: 200% 0; }
+    .fac-empty-title {
+        margin: 0 0 8px;
+        color: var(--fac-navy);
+        font-size: 26px;
+        font-weight: 900;
     }
 
-    /* Responsive Design */
-    @media (max-width: 1024px) {
-        .facility-card {
-            border-radius: 20px;
+    .fac-empty-text {
+        margin: 0;
+        color: var(--fac-muted);
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    .fac-pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 44px;
+    }
+
+    .fac-pagination > div {
+        background: #ffffff;
+        border-radius: 18px;
+        padding: 14px 16px;
+        border: 1px solid var(--fac-border);
+        box-shadow: 0 12px 30px rgba(6, 27, 54, 0.08);
+    }
+
+    .fac-summary {
+        margin-top: 42px;
+        padding: 22px 26px;
+        border-radius: 20px;
+        background: #ffffff;
+        border: 1px solid var(--fac-border);
+        box-shadow: var(--fac-shadow);
+        color: var(--fac-muted);
+        text-align: center;
+        font-weight: 700;
+        line-height: 1.6;
+    }
+
+    .fac-summary strong {
+        color: var(--fac-navy);
+    }
+
+    @media (max-width: 1180px) {
+        .fac-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
         }
     }
 
     @media (max-width: 768px) {
-        .premium-bg {
-            padding-top: 60px;
-            padding-bottom: 60px;
+        .fac-page {
+            padding: 48px 0 70px;
         }
 
-        .facility-card {
+        .fac-container {
+            width: min(100% - 22px, 1420px);
+        }
+
+        .fac-kicker {
+            font-size: 12px;
+            letter-spacing: 4px;
+        }
+
+        .fac-title {
+            font-size: clamp(38px, 12vw, 54px);
+        }
+
+        .fac-subtitle {
+            font-size: 15.5px;
+            line-height: 1.65;
+        }
+
+        .fac-toolbar {
+            margin: 28px auto 34px;
+        }
+
+        .fac-pill {
+            width: 100%;
+            min-height: 50px;
+        }
+
+        .fac-grid {
+            grid-template-columns: 1fr;
+            gap: 24px;
+        }
+
+        .fac-image-box {
+            min-height: 220px;
+        }
+
+        .fac-body {
+            padding: 22px 20px 24px;
+        }
+
+        .fac-card-title {
+            font-size: 27px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .fac-page {
+            padding-top: 38px;
+        }
+
+        .fac-media {
+            padding: 12px 12px 0;
+        }
+
+        .fac-image-box {
+            min-height: 200px;
             border-radius: 16px;
-            margin-bottom: 20px;
         }
 
-        .facility-card:hover {
-            transform: translateY(-6px) scale(1.02);
+        .fac-badge {
+            top: 22px;
+            left: 22px;
+            padding: 9px 13px;
+            font-size: 12px;
         }
 
-        .card-content {
-            padding: 20px;
-        }
-
-        .image-container {
-            height: 200px;
-        }
-    }
-
-    @media (max-width: 640px) {
-        .card-content {
-            padding: 16px;
-        }
-
-        .facility-title {
-            font-size: 18px;
-        }
-
-        .facility-description {
-            font-size: 14px;
-        }
-
-        .image-container {
-            height: 180px;
-        }
-    }
-
-    /* Focus states for accessibility */
-    .facility-card:focus-within {
-        outline: 2px solid rgba(59, 130, 246, 0.5);
-        outline-offset: 2px;
-    }
-
-    /* High contrast mode support */
-    @media (prefers-contrast: high) {
-        .facility-card {
-            border-color: rgba(255, 255, 255, 0.3);
-        }
-
-        .facility-title, .facility-description {
-            color: white;
+        .fac-card-title {
+            font-size: 24px;
         }
     }
 </style>
+@endpush
 
-<div class="premium-bg min-h-screen py-16 px-4 sm:px-6 lg:px-8">
-    <!-- Animated Facility Particles -->
-    <div class="facility-particles">
-        <div class="facility-particle"></div>
-        <div class="facility-particle"></div>
-        <div class="facility-particle"></div>
-        <div class="facility-particle"></div>
-        <div class="facility-particle"></div>
-        <div class="facility-particle"></div>
-        <div class="facility-particle"></div>
-        <div class="facility-particle"></div>
-        <div class="facility-particle"></div>
-        <div class="facility-particle"></div>
-    </div>
-
-    <div class="container mx-auto max-w-7xl relative z-10">
-        <!-- Premium Header Section -->
-        <div class="text-center mb-16 entrance-animation">
-            <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-blue-600/20 to-purple-600/20 backdrop-blur-sm border border-white/10 mb-8 floating-icon">
-                <svg class="w-10 h-10 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+@section('content')
+<section class="fac-page">
+    <div class="fac-container">
+        <div class="fac-header">
+            <div class="fac-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-6h6v6M9 10h.01M12 10h.01M15 10h.01"></path>
                 </svg>
             </div>
 
-            <h1 class="text-5xl md:text-6xl lg:text-7xl font-black mb-6 gradient-title leading-tight">
-                Fasilitas Sekolah
-            </h1>
+            <p class="fac-kicker">Sarana Pendidikan</p>
 
-            <p class="text-xl md:text-2xl text-white/70 font-light max-w-3xl mx-auto leading-relaxed">
-                Fasilitas modern dan lengkap untuk mendukung proses pembelajaran yang optimal dan berkualitas tinggi
+            <h1 class="fac-title">Fasilitas Sekolah</h1>
+
+            <div class="fac-divider"></div>
+
+            <p class="fac-subtitle">
+                Fasilitas sekolah yang mendukung pembelajaran, pembinaan karakter,
+                dan pengembangan potensi siswa SMP Darul Mustofa.
             </p>
         </div>
 
-        <!-- Facilities Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 entrance-animation">
-            @forelse ($facilities as $facility)
-            <div class="facility-card group">
-                <div class="image-container">
-                    <img src="{{ asset('storage/' . $facility->image_path) }}"
-                         alt="{{ $facility->name }}"
-                         class="facility-image"
-                         loading="lazy"
-                         onerror="this.parentElement.classList.add('image-loading'); this.style.display='none';">
-                </div>
+        <div class="fac-toolbar">
+            <div class="fac-pill">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m4 0h1M9 11h1m4 0h1"></path>
+                </svg>
+                Fasilitas Pendukung Pembelajaran
+            </div>
+        </div>
 
-                <div class="card-content">
-                    <h3 class="facility-title">{{ $facility->name }}</h3>
-                    <p class="facility-description">{{ $facility->description }}</p>
+        @if($facilities->count() > 0)
+            <div class="fac-grid">
+                @forelse ($facilities as $facility)
+                    <article class="fac-card">
+                        <div class="fac-media">
+                            <div class="fac-image-box">
+                                <img src="{{ asset('storage/' . $facility->image_path) }}"
+                                     alt="{{ $facility->name }}"
+                                     class="fac-image"
+                                     loading="lazy"
+                                     onerror="this.src='https://placehold.co/900x560/f3f6fa/061b36?text=Fasilitas+Sekolah'">
+                            </div>
 
-                    <!-- Hover indicator -->
-                    <div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-600/20 backdrop-blur-sm border border-white/20 flex items-center justify-center">
-                            <svg class="w-4 h-4 text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                            </svg>
+                            <div class="fac-badge">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M5 21V7l7-4 7 4v14"></path>
+                                </svg>
+                                Fasilitas
+                            </div>
                         </div>
+
+                        <div class="fac-body">
+                            <h2 class="fac-card-title">{{ $facility->name }}</h2>
+                            <div class="fac-mini-line"></div>
+                            <p class="fac-description">{{ $facility->description }}</p>
+                        </div>
+                    </article>
+                @empty
+                @endforelse
+            </div>
+
+            @if($facilities->hasPages())
+                <div class="fac-pagination">
+                    <div>
+                        {{ $facilities->links() }}
                     </div>
                 </div>
+            @endif
+
+            <div class="fac-summary">
+                <strong>{{ $facilities->total() }}</strong> total fasilitas tersedia
+                @if($facilities->hasPages())
+                    — halaman <strong>{{ $facilities->currentPage() }}</strong> dari <strong>{{ $facilities->lastPage() }}</strong>
+                @endif
             </div>
-            @empty
-            <div class="empty-state">
-                <div class="empty-state-icon">
-                    <svg class="w-10 h-10 text-white/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+        @else
+            <div class="fac-empty">
+                <div class="fac-empty-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2"></path>
                     </svg>
                 </div>
 
-                <h3 class="text-2xl font-semibold mb-4 text-white/60">Belum Ada Fasilitas</h3>
-                <p class="text-lg text-white/50 max-w-md mx-auto leading-relaxed">
-                    Data fasilitas belum ditambahkan. Silakan hubungi administrator untuk menambahkan informasi fasilitas sekolah.
+                <h3 class="fac-empty-title">Belum Ada Fasilitas</h3>
+                <p class="fac-empty-text">
+                    Data fasilitas sekolah sedang dalam proses pembaruan.
                 </p>
-
-                <div class="mt-8">
-                    <div class="inline-flex items-center space-x-2 text-white/40 text-sm">
-                        <div class="w-2 h-2 bg-blue-400/30 rounded-full animate-pulse"></div>
-                        <span>Sistem Informasi Sekolah</span>
-                        <div class="w-2 h-2 bg-purple-400/30 rounded-full animate-pulse" style="animation-delay: 0.5s;"></div>
-                    </div>
-                </div>
             </div>
-            @endforelse
-        </div>
-
-        <!-- Enhanced Pagination -->
-        @if($facilities->hasPages())
-        <div class="pagination-container">
-            {{ $facilities->links() }}
-        </div>
-        @endif
-
-        <!-- Bottom Statistics -->
-        @if($facilities->count() > 0)
-        <div class="mt-16 pt-8 border-t border-white/10">
-            <div class="text-center">
-                <div class="inline-flex items-center justify-center space-x-8 text-white/50 text-sm">
-                    <div class="flex items-center space-x-2">
-                        <div class="w-2 h-2 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full animate-pulse"></div>
-                        <span class="font-medium">{{ $facilities->total() }} Total Fasilitas</span>
-                    </div>
-
-                    <div class="w-px h-4 bg-white/20"></div>
-
-                    <div class="flex items-center space-x-2">
-                        <span class="font-medium">Halaman {{ $facilities->currentPage() }} dari {{ $facilities->lastPage() }}</span>
-                        <div class="w-2 h-2 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full animate-pulse" style="animation-delay: 0.5s;"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
         @endif
     </div>
-</div>
-
-<!-- Enhanced JavaScript -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Intersection Observer for entrance animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -30px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.animationPlayState = 'running';
-
-                // Special handling for grid container
-                if (entry.target.classList.contains('entrance-animation')) {
-                    const cards = entry.target.querySelectorAll('.facility-card');
-                    cards.forEach((card, index) => {
-                        setTimeout(() => {
-                            card.style.animationPlayState = 'running';
-                        }, index * 100);
-                    });
-                }
-            }
-        });
-    }, observerOptions);
-
-    // Observe entrance animation elements
-    document.querySelectorAll('.entrance-animation').forEach(el => {
-        observer.observe(el);
-    });
-
-    // Enhanced image loading with error handling
-    document.querySelectorAll('.facility-image').forEach(img => {
-        img.addEventListener('load', function() {
-            this.style.opacity = '0';
-            this.style.transform = 'scale(1.1)';
-            setTimeout(() => {
-                this.style.transition = 'all 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
-                this.style.opacity = '1';
-                this.style.transform = 'scale(1)';
-            }, 100);
-        });
-
-        img.addEventListener('error', function() {
-            const container = this.parentElement;
-            container.innerHTML = `
-                <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-700/50 to-slate-800/50">
-                    <div class="text-center">
-                        <svg class="w-12 h-12 text-white/40 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                        </svg>
-                        <p class="text-white/50 text-sm">Gambar tidak tersedia</p>
-                    </div>
-                </div>
-            `;
-        });
-
-        // Handle cached images
-        if (img.complete && img.naturalHeight !== 0) {
-            img.style.opacity = '1';
-        }
-    });
-
-    // Enhanced card hover effects with 3D tilt
-    document.querySelectorAll('.facility-card').forEach(card => {
-        card.addEventListener('mouseenter', function(e) {
-            const rect = this.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-
-            const rotateX = (y - centerY) / 10;
-            const rotateY = (centerX - x) / 10;
-
-            this.style.transform = `translateY(-12px) scale(1.03) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        });
-
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0) scale(1) rotateX(0deg) rotateY(0deg)';
-        });
-
-        // Touch devices
-        card.addEventListener('touchstart', function() {
-            this.style.transform = 'translateY(-6px) scale(1.02)';
-        });
-
-        card.addEventListener('touchend', function() {
-            this.style.transform = 'translateY(0) scale(1)';
-        });
-    });
-
-    // Smooth parallax scrolling
-    let ticking = false;
-    function updateParallax() {
-        const scrolled = window.pageYOffset;
-        const rate = scrolled * -0.5;
-
-        const bg = document.querySelector('.premium-bg');
-        if (bg) {
-            bg.style.transform = `translate3d(0, ${rate}px, 0)`;
-        }
-
-        ticking = false;
-    }
-
-    function requestTick() {
-        if (!ticking) {
-            requestAnimationFrame(updateParallax);
-            ticking = true;
-        }
-    }
-
-    window.addEventListener('scroll', requestTick, { passive: true });
-
-    // Enhanced pagination styling
-    const paginationLinks = document.querySelectorAll('.pagination-container a');
-    paginationLinks.forEach(link => {
-        link.addEventListener('mouseenter', function() {
-            this.style.boxShadow = '0 4px 12px rgba(59, 130, 246, 0.2)';
-        });
-
-        link.addEventListener('mouseleave', function() {
-            this.style.boxShadow = '';
-        });
-    });
-});
-
-// Performance optimization
-window.addEventListener('load', function() {
-    // Remove any loading states
-    document.querySelectorAll('.image-loading').forEach(el => {
-        el.classList.remove('image-loading');
-    });
-
-    // Preload next page images if pagination exists
-    const nextPageLink = document.querySelector('.pagination-container a[rel="next"]');
-    if (nextPageLink && 'IntersectionObserver' in window) {
-        const preloadObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    // Preload logic could be implemented here
-                    preloadObserver.unobserve(entry.target);
-                }
-            });
-        });
-
-        preloadObserver.observe(nextPageLink);
-    }
-});
-</script>
+</section>
 @endsection

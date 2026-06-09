@@ -2,524 +2,425 @@
 
 @section('title', 'Sejarah Sekolah')
 
-@section('content')
+@push('styles')
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
-    * {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    :root {
+        --hist-navy: #061b36;
+        --hist-navy-2: #0b2b52;
+        --hist-gold: #dba52d;
+        --hist-gold-2: #f0c45a;
+        --hist-white: #ffffff;
+        --hist-soft: #f7f9fc;
+        --hist-soft-2: #eef3f8;
+        --hist-text: #142844;
+        --hist-muted: #6c7788;
+        --hist-border: rgba(6, 27, 54, 0.08);
+        --hist-shadow: 0 18px 45px rgba(6, 27, 54, 0.08);
+        --hist-shadow-hover: 0 28px 70px rgba(6, 27, 54, 0.16);
     }
 
-    .premium-bg {
-        background: linear-gradient(-45deg, #1e293b, #334155, #475569, #64748b);
-        background-size: 400% 400%;
-        animation: gradientShift 18s ease infinite;
+    .hist-page {
         position: relative;
+        min-height: 100vh;
         overflow: hidden;
+        background:
+            radial-gradient(circle at 16% 8%, rgba(219, 165, 45, 0.10), transparent 28%),
+            radial-gradient(circle at 88% 14%, rgba(6, 27, 54, 0.06), transparent 30%),
+            linear-gradient(180deg, #ffffff 0%, #f7f9fc 52%, #ffffff 100%);
+        padding: 72px 0 88px;
     }
 
-    .premium-bg::before {
-        content: '';
+    .hist-page::before,
+    .hist-page::after {
+        content: "";
         position: absolute;
-        top: 0;
+        width: 520px;
+        height: 520px;
+        opacity: 0.38;
+        pointer-events: none;
+        background-image:
+            linear-gradient(rgba(6, 27, 54, 0.055) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(6, 27, 54, 0.055) 1px, transparent 1px);
+        background-size: 34px 34px;
+        mask-image: radial-gradient(circle, #000 0%, transparent 72%);
+        -webkit-mask-image: radial-gradient(circle, #000 0%, transparent 72%);
+    }
+
+    .hist-page::before {
+        left: -190px;
+        top: -120px;
+        transform: rotate(16deg);
+    }
+
+    .hist-page::after {
+        right: -190px;
+        top: 18px;
+        transform: rotate(-12deg);
+    }
+
+    .hist-container {
+        position: relative;
+        z-index: 2;
+        width: min(100% - 36px, 1280px);
+        margin-inline: auto;
+    }
+
+    .hist-header {
+        max-width: 860px;
+        margin: 0 auto 48px;
+        text-align: center;
+    }
+
+    .hist-icon {
+        width: 50px;
+        height: 50px;
+        margin: 0 auto 10px;
+        display: grid;
+        place-items: center;
+        color: var(--hist-gold);
+    }
+
+    .hist-icon svg {
+        width: 46px;
+        height: 46px;
+    }
+
+    .hist-kicker {
+        margin: 0 0 12px;
+        color: var(--hist-gold);
+        font-size: 14px;
+        line-height: 1;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 6px;
+    }
+
+    .hist-title {
+        margin: 0;
+        color: var(--hist-navy);
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: clamp(42px, 5vw, 76px);
+        font-weight: 700;
+        line-height: 1.05;
+        letter-spacing: -1.8px;
+    }
+
+    .hist-divider {
+        width: 112px;
+        height: 18px;
+        margin: 14px auto 12px;
+        position: relative;
+    }
+
+    .hist-divider::before {
+        content: "";
+        position: absolute;
+        top: 8px;
         left: 0;
         right: 0;
-        bottom: 0;
-        background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(124, 58, 237, 0.1) 50%, rgba(236, 72, 153, 0.1) 100%);
-        animation: overlayShift 12s ease infinite alternate;
-    }
-
-    @keyframes gradientShift {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-
-    @keyframes overlayShift {
-        0% { opacity: 0.3; }
-        100% { opacity: 0.7; }
-    }
-
-    .timeline-particles {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        overflow: hidden;
-        pointer-events: none;
-    }
-
-    .timeline-particle {
-        position: absolute;
-        background: rgba(255, 255, 255, 0.08);
-        border-radius: 50%;
-        animation: timelineFloat 25s infinite linear;
-    }
-
-    .timeline-particle:nth-child(1) { width: 3px; height: 3px; left: 15%; animation-delay: 0s; }
-    .timeline-particle:nth-child(2) { width: 5px; height: 5px; left: 25%; animation-delay: 3s; }
-    .timeline-particle:nth-child(3) { width: 4px; height: 4px; left: 35%; animation-delay: 6s; }
-    .timeline-particle:nth-child(4) { width: 6px; height: 6px; left: 45%; animation-delay: 9s; }
-    .timeline-particle:nth-child(5) { width: 3px; height: 3px; left: 55%; animation-delay: 12s; }
-    .timeline-particle:nth-child(6) { width: 7px; height: 7px; left: 65%; animation-delay: 15s; }
-    .timeline-particle:nth-child(7) { width: 4px; height: 4px; left: 75%; animation-delay: 18s; }
-    .timeline-particle:nth-child(8) { width: 5px; height: 5px; left: 85%; animation-delay: 21s; }
-
-    @keyframes timelineFloat {
-        0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-        10% { opacity: 1; }
-        90% { opacity: 1; }
-        100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
-    }
-
-    .glass-container {
-        background: rgba(255, 255, 255, 0.06);
-        backdrop-filter: blur(25px);
-        -webkit-backdrop-filter: blur(25px);
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        border-radius: 32px;
-        box-shadow:
-            0 16px 40px rgba(0, 0, 0, 0.15),
-            0 4px 20px rgba(0, 0, 0, 0.1),
-            inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        position: relative;
-        overflow: hidden;
-        transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-    }
-
-    .glass-container::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
         height: 2px;
-        background: linear-gradient(90deg, transparent, rgba(124, 58, 237, 0.8), transparent);
-        animation: scanLine 3s ease-in-out infinite;
+        background: linear-gradient(90deg, transparent, var(--hist-gold), transparent);
     }
 
-    @keyframes scanLine {
-        0%, 100% { left: -100%; }
-        50% { left: 100%; }
+    .hist-divider::after {
+        content: "";
+        position: absolute;
+        top: 4px;
+        left: 50%;
+        width: 10px;
+        height: 10px;
+        transform: translateX(-50%) rotate(45deg);
+        background: var(--hist-gold);
+        border-radius: 2px;
     }
 
-    .image-container {
+    .hist-subtitle {
+        max-width: 760px;
+        margin: 0 auto;
+        color: var(--hist-muted);
+        font-size: 18px;
+        line-height: 1.72;
+    }
+
+    .hist-card {
+        overflow: hidden;
+        border-radius: 30px;
+        background: #ffffff;
+        border: 1px solid var(--hist-border);
+        box-shadow: var(--hist-shadow);
+    }
+
+    .hist-cover {
         position: relative;
+        padding: 20px 20px 0;
+    }
+
+    .hist-image-frame {
+        position: relative;
+        min-height: 400px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         border-radius: 24px;
         overflow: hidden;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.15);
-        transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        background:
+            linear-gradient(135deg, rgba(6, 27, 54, 0.92), rgba(11, 43, 82, 0.82)),
+            url('{{ asset('images/gedung-sekolah2.png') }}') center / cover no-repeat;
+        border: 1px solid rgba(6, 27, 54, 0.06);
+        isolation: isolate;
     }
 
-    .image-container::after {
-        content: '';
+    .hist-image-frame::before {
+        content: "";
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), transparent, rgba(236, 72, 153, 0.1));
-        opacity: 0;
-        transition: opacity 0.4s ease;
-        pointer-events: none;
+        inset: 0;
+        background:
+            radial-gradient(circle at 16% 22%, rgba(219, 165, 45, 0.22), transparent 30%),
+            linear-gradient(180deg, rgba(6, 27, 54, 0.10), rgba(6, 27, 54, 0.28));
+        z-index: -1;
     }
 
-    .image-container:hover::after {
-        opacity: 1;
+    .hist-image-title {
+        max-width: 760px;
+        padding: 40px;
+        text-align: center;
+        color: #ffffff;
     }
 
-    .image-container:hover {
-        transform: translateY(-4px) scale(1.02);
-        box-shadow:
-            0 20px 40px rgba(0, 0, 0, 0.2),
-            0 8px 20px rgba(0, 0, 0, 0.1);
+    .hist-image-title h2 {
+        margin: 0 0 14px;
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: clamp(32px, 4vw, 54px);
+        line-height: 1.1;
+        font-weight: 700;
+        letter-spacing: -0.8px;
+        text-shadow: 0 14px 34px rgba(0, 0, 0, 0.28);
     }
 
-    .school-image {
-        width: 100%;
-        height: auto;
-        display: block;
-        transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-        filter: brightness(1.1) contrast(1.1) saturate(1.2);
-    }
-
-    .image-container:hover .school-image {
-        transform: scale(1.05);
-        filter: brightness(1.2) contrast(1.2) saturate(1.3);
-    }
-
-    .gradient-title {
-        background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 30%, #e2e8f0 60%, #cbd5e1 100%);
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-size: 300% 300%;
-        animation: gradientMove 4s ease infinite;
-        position: relative;
-    }
-
-    @keyframes gradientMove {
-        0%, 100% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-    }
-
-    .history-content {
-        color: rgba(255, 255, 255, 0.9);
-        line-height: 1.8;
-        font-weight: 400;
-        letter-spacing: 0.01em;
+    .hist-image-title p {
+        margin: 0;
+        color: rgba(255, 255, 255, 0.82);
         font-size: 17px;
+        line-height: 1.7;
     }
 
-    .history-content p {
-        margin-bottom: 20px;
-        opacity: 0;
-        transform: translateY(20px);
-        animation: fadeInUp 0.8s ease-out forwards;
+    .hist-body {
+        padding: 42px 52px 52px;
     }
 
-    .history-content p:nth-child(1) { animation-delay: 0.2s; }
-    .history-content p:nth-child(2) { animation-delay: 0.4s; }
-    .history-content p:nth-child(3) { animation-delay: 0.6s; }
-    .history-content p:nth-child(4) { animation-delay: 0.8s; }
-    .history-content p:nth-child(n+5) { animation-delay: 1s; }
-
-    @keyframes fadeInUp {
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .hist-content {
+        color: #3f4f63;
+        font-size: 17px;
+        line-height: 1.95;
     }
 
-    .decorative-line {
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-        margin: 32px 0;
-        position: relative;
+    .hist-content p {
+        margin: 0 0 1.35rem;
     }
 
-    .decorative-line::before {
-        content: '';
-        position: absolute;
-        top: -2px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 8px;
-        height: 8px;
-        background: linear-gradient(135deg, #7c3aed, #ec4899);
-        border-radius: 50%;
-        box-shadow: 0 0 20px rgba(124, 58, 237, 0.5);
-        animation: pulse 2s ease infinite;
+    .hist-content strong {
+        color: var(--hist-navy);
+        font-weight: 900;
     }
 
-    @keyframes pulse {
-        0%, 100% { transform: translateX(-50%) scale(1); }
-        50% { transform: translateX(-50%) scale(1.2); }
+    .hist-empty {
+        text-align: center;
+        padding: 58px 22px;
+        border-radius: 24px;
+        background: linear-gradient(180deg, #ffffff 0%, #f9fbfd 100%);
+        border: 1px dashed rgba(6, 27, 54, 0.16);
     }
 
-    .loading-shimmer {
-        background: linear-gradient(90deg, rgba(255, 255, 255, 0.05) 25%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.05) 75%);
-        background-size: 200% 100%;
-        animation: shimmer 2.5s infinite;
-        border-radius: 8px;
+    .hist-empty-icon {
+        width: 84px;
+        height: 84px;
+        margin: 0 auto 20px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        color: var(--hist-gold);
+        background: rgba(219, 165, 45, 0.10);
     }
 
-    @keyframes shimmer {
-        0% { background-position: -200% 0; }
-        100% { background-position: 200% 0; }
+    .hist-empty-icon svg {
+        width: 44px;
+        height: 44px;
     }
 
-    .entrance-animation {
-        opacity: 0;
-        transform: translateY(40px);
-        animation: entranceSlide 1s ease-out forwards;
+    .hist-empty-title {
+        margin: 0 0 8px;
+        color: var(--hist-navy);
+        font-size: 26px;
+        font-weight: 900;
     }
 
-    .entrance-animation:nth-child(1) { animation-delay: 0.1s; }
-    .entrance-animation:nth-child(2) { animation-delay: 0.3s; }
-    .entrance-animation:nth-child(3) { animation-delay: 0.5s; }
-
-    @keyframes entranceSlide {
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
+    .hist-empty-text {
+        margin: 0;
+        color: var(--hist-muted);
+        font-size: 16px;
+        line-height: 1.7;
     }
 
-    .floating-icon {
-        animation: floatingIcon 4s ease-in-out infinite;
+    .hist-footer {
+        margin-top: 34px;
+        padding-top: 26px;
+        border-top: 1px solid rgba(6, 27, 54, 0.08);
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 16px;
+        color: var(--hist-muted);
+        font-size: 14px;
+        font-weight: 700;
     }
 
-    @keyframes floatingIcon {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-8px); }
+    .hist-footer span {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
     }
 
-    /* Responsive Design */
+    .hist-footer svg {
+        width: 17px;
+        height: 17px;
+        color: var(--hist-gold);
+    }
+
     @media (max-width: 768px) {
-        .glass-container {
+        .hist-page {
+            padding: 48px 0 70px;
+        }
+
+        .hist-container {
+            width: min(100% - 22px, 1280px);
+        }
+
+        .hist-kicker {
+            font-size: 12px;
+            letter-spacing: 4px;
+        }
+
+        .hist-title {
+            font-size: clamp(38px, 12vw, 54px);
+        }
+
+        .hist-subtitle {
+            font-size: 15.5px;
+            line-height: 1.65;
+        }
+
+        .hist-cover {
+            padding: 14px 14px 0;
+        }
+
+        .hist-image-frame {
+            min-height: 300px;
+            border-radius: 20px;
+        }
+
+        .hist-image-title {
+            padding: 28px 20px;
+        }
+
+        .hist-body {
+            padding: 28px 22px 34px;
+        }
+
+        .hist-content {
+            font-size: 15.8px;
+            line-height: 1.85;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .hist-page {
+            padding-top: 38px;
+        }
+
+        .hist-card {
             border-radius: 24px;
-            margin: 16px;
         }
 
-        .premium-bg {
-            padding-top: 60px;
-            padding-bottom: 60px;
-        }
-
-        .history-content {
-            font-size: 16px;
-        }
-    }
-
-    @media (max-width: 640px) {
-        .glass-container {
-            padding: 24px !important;
-            margin: 12px;
-        }
-
-        .image-container {
-            border-radius: 16px;
-        }
-    }
-
-    /* Enhanced focus states */
-    .glass-container:focus-within {
-        outline: 2px solid rgba(255, 255, 255, 0.3);
-        outline-offset: 4px;
-    }
-
-    /* Print styles */
-    @media print {
-        .premium-bg {
-            background: white !important;
-        }
-
-        .history-content {
-            color: black !important;
-        }
-
-        .gradient-title {
-            -webkit-text-fill-color: black !important;
+        .hist-image-frame {
+            min-height: 250px;
         }
     }
 </style>
+@endpush
 
-<div class="premium-bg min-h-screen py-16 px-4 sm:px-6 lg:px-8">
-    <!-- Animated Timeline Particles -->
-    <div class="timeline-particles">
-        <div class="timeline-particle"></div>
-        <div class="timeline-particle"></div>
-        <div class="timeline-particle"></div>
-        <div class="timeline-particle"></div>
-        <div class="timeline-particle"></div>
-        <div class="timeline-particle"></div>
-        <div class="timeline-particle"></div>
-        <div class="timeline-particle"></div>
-    </div>
-
-    <div class="container mx-auto max-w-6xl relative z-10">
-        <!-- Premium Header Section -->
-        <div class="text-center mb-16 entrance-animation">
-            <div class="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-slate-600/20 to-slate-800/20 backdrop-blur-sm border border-white/10 mb-8 floating-icon">
-                <svg class="w-10 h-10 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+@section('content')
+<section class="hist-page">
+    <div class="hist-container">
+        <div class="hist-header">
+            <div class="hist-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
                 </svg>
             </div>
 
-            <h1 class="text-5xl md:text-6xl lg:text-7xl font-black mb-6 gradient-title leading-tight">
-                Sejarah Sekolah
-            </h1>
+            <p class="hist-kicker">Profil Sekolah</p>
 
-            <p class="text-xl md:text-2xl text-white/70 font-light max-w-3xl mx-auto leading-relaxed">
-                Perjalanan panjang dalam membangun tradisi pendidikan yang berkualitas dan berkarakter
+            <h1 class="hist-title">Sejarah Sekolah</h1>
+
+            <div class="hist-divider"></div>
+
+            <p class="hist-subtitle">
+                Perjalanan SMP Darul Mustofa dalam membangun pendidikan yang berkualitas,
+                berkarakter, dan berlandaskan nilai-nilai islami.
             </p>
         </div>
 
-        <!-- Premium Content Container -->
-        <div class="glass-container p-8 md:p-12 lg:p-16 entrance-animation">
-
-            <!-- Image Section -->
-            <div class="image-container mb-12 entrance-animation">
-                <img src="{{ asset('images/gedung-sekolah2.png') }}"
-                     alt="Sejarah Sekolah"
-                     class="school-image"
-                     loading="lazy">
-            </div>
-
-            <!-- Decorative Separator -->
-            <div class="decorative-line"></div>
-
-            <!-- History Content Section -->
-            <div class="history-content prose prose-lg max-w-none">
-                @if(empty($profile->history) || $profile->history === 'Sejarah sekolah belum diatur.')
-                    <!-- Loading Shimmer Effect -->
-                    <div class="space-y-6 mb-8">
-                        <div class="h-5 loading-shimmer"></div>
-                        <div class="h-5 loading-shimmer" style="width: 95%"></div>
-                        <div class="h-5 loading-shimmer" style="width: 90%"></div>
-                        <div class="h-5 loading-shimmer" style="width: 85%"></div>
-                        <div class="h-5 loading-shimmer" style="width: 92%"></div>
-                        <div class="h-5 loading-shimmer" style="width: 88%"></div>
-                    </div>
-
-                    <div class="text-center py-12">
-                        <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/20 to-orange-600/20 backdrop-blur-sm border border-white/10 mb-6">
-                            <svg class="w-8 h-8 text-amber-400/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
-                            </svg>
-                        </div>
-                        <p class="text-white/70 text-lg italic">
-                            Sejarah sekolah belum diatur.
+        <article class="hist-card">
+            <div class="hist-cover">
+                <div class="hist-image-frame">
+                    <div class="hist-image-title">
+                        <h2>SMP Darul Mustofa</h2>
+                        <p>
+                            Sejarah menjadi pondasi penting dalam menumbuhkan semangat,
+                            identitas, dan arah perkembangan sekolah.
                         </p>
-                        <p class="text-white/50 text-sm mt-2">
-                            Data akan segera ditampilkan setelah diperbarui oleh administrator.
-                        </p>
-                    </div>
-                @else
-                    <!-- Display actual history content -->
-                    <div class="space-y-6">
-                        {!! nl2br(e($profile->history)) !!}
-                    </div>
-                @endif
-            </div>
-
-            <!-- Bottom Decorative Section -->
-            <div class="mt-16 pt-8 border-t border-white/10">
-                <div class="flex items-center justify-center space-x-4 text-white/50 text-sm">
-                    <div class="flex items-center space-x-2">
-                        <div class="w-2 h-2 bg-gradient-to-r from-slate-400 to-slate-600 rounded-full animate-pulse"></div>
-                        <span class="font-medium">Dokumentasi Sejarah</span>
-                    </div>
-                    <div class="w-px h-4 bg-white/20"></div>
-                    <div class="flex items-center space-x-2">
-                        <span class="font-medium">Sistem Informasi Sekolah</span>
-                        <div class="w-2 h-2 bg-gradient-to-r from-slate-600 to-slate-400 rounded-full animate-pulse" style="animation-delay: 0.5s;"></div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Scroll Indicator -->
-        <div class="fixed bottom-8 right-8 opacity-50 hover:opacity-100 transition-opacity duration-300">
-            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm border border-white/20 flex items-center justify-center">
-                <svg class="w-6 h-6 text-white/70 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
-                </svg>
+            <div class="hist-body">
+                @if(empty($profile->history) || $profile->history === 'Sejarah sekolah belum diatur.')
+                    <div class="hist-empty">
+                        <div class="hist-empty-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                            </svg>
+                        </div>
+
+                        <h3 class="hist-empty-title">Sejarah Belum Diatur</h3>
+                        <p class="hist-empty-text">
+                            Data sejarah sekolah akan tampil setelah diperbarui oleh administrator.
+                        </p>
+                    </div>
+                @else
+                    <div class="hist-content">
+                        {!! nl2br(e($profile->history)) !!}
+                    </div>
+                @endif
+
+                <div class="hist-footer">
+                    <span>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10m-11 9h12a2 2 0 002-2V7a2 2 0 00-2-2H6a2 2 0 00-2 2v11a2 2 0 002 2z"></path>
+                        </svg>
+                        Dokumentasi Profil Sekolah
+                    </span>
+
+                    <span>
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13"></path>
+                        </svg>
+                        Sistem Informasi SMP Darul Mustofa
+                    </span>
+                </div>
             </div>
-        </div>
+        </article>
     </div>
-</div>
-
-<!-- Enhanced JavaScript Interactions -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    // Intersection Observer for entrance animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.animationPlayState = 'running';
-                entry.target.classList.add('visible');
-            }
-        });
-    }, observerOptions);
-
-    // Observe all entrance animation elements
-    document.querySelectorAll('.entrance-animation').forEach(el => {
-        observer.observe(el);
-    });
-
-    // Enhanced image loading with fade-in effect
-    const schoolImage = document.querySelector('.school-image');
-    if (schoolImage) {
-        schoolImage.addEventListener('load', function() {
-            this.style.opacity = '0';
-            this.style.transform = 'scale(1.1)';
-            setTimeout(() => {
-                this.style.transition = 'all 0.8s cubic-bezier(0.23, 1, 0.32, 1)';
-                this.style.opacity = '1';
-                this.style.transform = 'scale(1)';
-            }, 100);
-        });
-
-        // Fallback for cached images
-        if (schoolImage.complete) {
-            schoolImage.style.opacity = '1';
-        }
-    }
-
-    // Smooth parallax effect for background
-    let ticking = false;
-    function updateBackground() {
-        const scrolled = window.pageYOffset;
-        const parallax = scrolled * 0.3;
-
-        const bg = document.querySelector('.premium-bg');
-        if (bg) {
-            bg.style.transform = `translate3d(0, ${parallax}px, 0)`;
-        }
-
-        ticking = false;
-    }
-
-    function requestTick() {
-        if (!ticking) {
-            requestAnimationFrame(updateBackground);
-            ticking = true;
-        }
-    }
-
-    // Throttled scroll event
-    window.addEventListener('scroll', requestTick);
-
-    // Enhanced hover effects for glass container
-    const glassContainer = document.querySelector('.glass-container');
-    if (glassContainer) {
-        glassContainer.addEventListener('mouseenter', function(e) {
-            const rect = this.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-
-            this.style.setProperty('--mouse-x', `${x}px`);
-            this.style.setProperty('--mouse-y', `${y}px`);
-        });
-    }
-
-    // Smooth scroll for scroll indicator
-    const scrollIndicator = document.querySelector('.fixed.bottom-8.right-8');
-    if (scrollIndicator) {
-        scrollIndicator.addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    }
-
-    // Progressive content loading animation
-    const historyContent = document.querySelector('.history-content');
-    if (historyContent) {
-        const paragraphs = historyContent.querySelectorAll('p, div');
-        paragraphs.forEach((p, index) => {
-            p.style.animationDelay = `${0.2 + (index * 0.1)}s`;
-        });
-    }
-});
-
-// Optimize performance
-window.addEventListener('load', function() {
-    // Remove loading states
-    document.querySelectorAll('.loading-shimmer').forEach(el => {
-        el.classList.remove('loading-shimmer');
-    });
-});
-</script>
+</section>
 @endsection

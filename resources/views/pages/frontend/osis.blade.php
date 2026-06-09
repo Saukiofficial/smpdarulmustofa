@@ -1,336 +1,750 @@
-
 @extends('layouts.frontend')
 
 @section('title', 'Pengurus OSIS')
 
 @push('styles')
 <style>
-    /* Luxury Background Gradient */
-    .luxury-bg {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-        position: relative;
-        overflow: hidden;
+    :root {
+        --osis-navy: #061b36;
+        --osis-navy-2: #0b2b52;
+        --osis-gold: #dba52d;
+        --osis-gold-2: #f0c45a;
+        --osis-white: #ffffff;
+        --osis-soft: #f7f9fc;
+        --osis-soft-2: #eef3f8;
+        --osis-text: #142844;
+        --osis-muted: #6c7788;
+        --osis-border: rgba(6, 27, 54, 0.08);
+        --osis-shadow: 0 18px 45px rgba(6, 27, 54, 0.08);
+        --osis-shadow-hover: 0 28px 70px rgba(6, 27, 54, 0.16);
     }
 
-    .luxury-bg::before {
-        content: '';
+    .osis-page {
+        position: relative;
+        min-height: 100vh;
+        overflow: hidden;
+        background:
+            radial-gradient(circle at 16% 8%, rgba(219, 165, 45, 0.10), transparent 28%),
+            radial-gradient(circle at 88% 14%, rgba(6, 27, 54, 0.06), transparent 30%),
+            linear-gradient(180deg, #ffffff 0%, #f7f9fc 52%, #ffffff 100%);
+        padding: 72px 0 88px;
+    }
+
+    .osis-page::before,
+    .osis-page::after {
+        content: "";
         position: absolute;
-        top: 0;
+        width: 520px;
+        height: 520px;
+        opacity: 0.38;
+        pointer-events: none;
+        background-image:
+            linear-gradient(rgba(6, 27, 54, 0.055) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(6, 27, 54, 0.055) 1px, transparent 1px);
+        background-size: 34px 34px;
+        mask-image: radial-gradient(circle, #000 0%, transparent 72%);
+        -webkit-mask-image: radial-gradient(circle, #000 0%, transparent 72%);
+    }
+
+    .osis-page::before {
+        left: -190px;
+        top: -120px;
+        transform: rotate(16deg);
+    }
+
+    .osis-page::after {
+        right: -190px;
+        top: 18px;
+        transform: rotate(-12deg);
+    }
+
+    .osis-container {
+        position: relative;
+        z-index: 2;
+        width: min(100% - 36px, 1420px);
+        margin-inline: auto;
+    }
+
+    .osis-header {
+        max-width: 860px;
+        margin: 0 auto 48px;
+        text-align: center;
+    }
+
+    .osis-icon {
+        width: 50px;
+        height: 50px;
+        margin: 0 auto 10px;
+        display: grid;
+        place-items: center;
+        color: var(--osis-gold);
+    }
+
+    .osis-icon svg {
+        width: 46px;
+        height: 46px;
+    }
+
+    .osis-kicker {
+        margin: 0 0 12px;
+        color: var(--osis-gold);
+        font-size: 14px;
+        line-height: 1;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 6px;
+    }
+
+    .osis-title {
+        margin: 0;
+        color: var(--osis-navy);
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: clamp(42px, 5vw, 76px);
+        font-weight: 700;
+        line-height: 1.05;
+        letter-spacing: -1.8px;
+    }
+
+    .osis-divider {
+        width: 112px;
+        height: 18px;
+        margin: 14px auto 12px;
+        position: relative;
+    }
+
+    .osis-divider::before {
+        content: "";
+        position: absolute;
+        top: 8px;
         left: 0;
         right: 0;
-        bottom: 0;
-        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.05"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.05"/><circle cx="75" cy="25" r="1" fill="white" opacity="0.03"/><circle cx="25" cy="75" r="1" fill="white" opacity="0.03"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
-        animation: float 20s ease-in-out infinite;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, var(--osis-gold), transparent);
     }
 
-    @keyframes float {
-        0%, 100% { transform: translateY(0px) rotate(0deg); }
-        50% { transform: translateY(-20px) rotate(1deg); }
-    }
-
-    /* Glassmorphism Cards */
-    .osis-card {
-        background: rgba(255, 255, 255, 0.15);
-        backdrop-filter: blur(20px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        border-radius: 24px;
-        padding: 2rem;
-        text-align: center;
-        box-shadow:
-            0 25px 50px -12px rgba(0, 0, 0, 0.25),
-            0 0 0 1px rgba(255, 255, 255, 0.1),
-            inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overflow: hidden;
-        min-width: 280px;
-    }
-
-    .osis-card::before {
-        content: '';
+    .osis-divider::after {
+        content: "";
         position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-        transition: left 0.6s ease;
+        top: 4px;
+        left: 50%;
+        width: 10px;
+        height: 10px;
+        transform: translateX(-50%) rotate(45deg);
+        background: var(--osis-gold);
+        border-radius: 2px;
     }
 
-    .osis-card:hover::before {
-        left: 100%;
+    .osis-subtitle {
+        max-width: 760px;
+        margin: 0 auto;
+        color: var(--osis-muted);
+        font-size: 18px;
+        line-height: 1.72;
+    }
+
+    .osis-period {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        min-height: 54px;
+        padding: 0 30px;
+        margin: 36px auto 0;
+        border-radius: 999px;
+        color: #ffffff;
+        background: linear-gradient(180deg, #09284d 0%, #061b36 100%);
+        border: 1px solid rgba(219, 165, 45, 0.65);
+        box-shadow: 0 18px 38px rgba(6, 27, 54, 0.20);
+        font-size: 15px;
+        font-weight: 900;
+    }
+
+    .osis-period svg {
+        width: 20px;
+        height: 20px;
+        color: var(--osis-gold-2);
+    }
+
+    .osis-structure {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 28px;
+        margin-top: 46px;
+    }
+
+    .osis-row {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 26px;
+    }
+
+    .osis-card {
+        position: relative;
+        width: min(100%, 310px);
+        overflow: hidden;
+        border-radius: 26px;
+        background: #ffffff;
+        border: 1px solid var(--osis-border);
+        box-shadow: var(--osis-shadow);
+        transition: 0.28s ease;
     }
 
     .osis-card:hover {
-        transform: translateY(-8px) scale(1.02);
-        box-shadow:
-            0 35px 70px -12px rgba(0, 0, 0, 0.3),
-            0 0 0 1px rgba(255, 255, 255, 0.2),
-            inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-9px);
+        box-shadow: var(--osis-shadow-hover);
+        border-color: rgba(219, 165, 45, 0.30);
     }
 
-    /* Premium Photo Styling */
-    .premium-photo {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        margin: 0 auto 1.5rem;
+    .osis-card::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 96px;
+        background:
+            radial-gradient(circle at 20% 18%, rgba(219, 165, 45, 0.20), transparent 28%),
+            linear-gradient(135deg, #09284d 0%, #061b36 100%);
+    }
+
+    .osis-card::after {
+        content: "";
+        position: absolute;
+        inset: auto 0 0 0;
+        height: 5px;
+        background: linear-gradient(90deg, var(--osis-gold), var(--osis-gold-2));
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: 0.28s ease;
+    }
+
+    .osis-card:hover::after {
+        transform: scaleX(1);
+    }
+
+    .osis-card-inner {
+        position: relative;
+        z-index: 2;
+        min-height: 315px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 32px 22px 26px;
+        text-align: center;
+    }
+
+    .osis-photo-wrap {
+        width: 138px;
+        height: 138px;
+        position: relative;
+        margin-bottom: 22px;
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        background: #ffffff;
+        border: 4px solid #ffffff;
+        box-shadow:
+            0 18px 36px rgba(6, 27, 54, 0.18),
+            0 0 0 1px rgba(219, 165, 45, 0.20);
+    }
+
+    .osis-photo-wrap::after {
+        content: "";
+        position: absolute;
+        right: 7px;
+        bottom: 8px;
+        width: 26px;
+        height: 26px;
+        border-radius: 999px;
+        background: linear-gradient(180deg, var(--osis-gold-2), var(--osis-gold));
+        border: 3px solid #ffffff;
+        box-shadow: 0 8px 18px rgba(6, 27, 54, 0.18);
+    }
+
+    .osis-photo {
+        width: 100%;
+        height: 100%;
+        display: block;
+        border-radius: 999px;
         object-fit: cover;
-        border: 4px solid rgba(255, 255, 255, 0.3);
-        box-shadow:
-            0 20px 40px rgba(0, 0, 0, 0.15),
-            inset 0 1px 0 rgba(255, 255, 255, 0.2);
-        transition: all 0.3s ease;
-        position: relative;
+        object-position: center top;
+        background: var(--osis-soft-2);
     }
 
-    .osis-card:hover .premium-photo {
-        transform: scale(1.05);
-        border-color: rgba(255, 255, 255, 0.5);
-        box-shadow:
-            0 25px 50px rgba(0, 0, 0, 0.2),
-            inset 0 1px 0 rgba(255, 255, 255, 0.3);
-    }
-
-    /* Typography */
-    .position-title {
+    .osis-avatar-fallback {
+        width: 100%;
+        height: 100%;
+        border-radius: 999px;
+        display: grid;
+        place-items: center;
+        color: #ffffff;
+        background:
+            radial-gradient(circle at 30% 20%, rgba(219, 165, 45, 0.28), transparent 32%),
+            linear-gradient(135deg, #0b2b52 0%, #061b36 100%);
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: 52px;
+        line-height: 1;
         font-weight: 700;
-        color: rgba(255, 255, 255, 0.9);
-        font-size: 0.8rem;
         text-transform: uppercase;
-        letter-spacing: 2px;
-        margin-bottom: 0.5rem;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     }
 
-    .member-name {
-        font-weight: 600;
-        color: white;
-        font-size: 1.25rem;
-        margin-bottom: 0;
-        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-        line-height: 1.3;
+    .osis-position {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        min-height: 38px;
+        padding: 0 15px;
+        margin-bottom: 14px;
+        border-radius: 999px;
+        color: var(--osis-navy);
+        background: rgba(219, 165, 45, 0.11);
+        border: 1px solid rgba(219, 165, 45, 0.24);
+        font-size: 12px;
+        line-height: 1.35;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.75px;
     }
 
-    /* Luxury Connectors */
-    .line-connector {
-        width: 3px;
-        background: linear-gradient(to bottom,
-            rgba(255, 255, 255, 0),
-            rgba(255, 255, 255, 0.6),
-            rgba(255, 255, 255, 0)
-        );
+    .osis-position svg {
+        width: 15px;
+        height: 15px;
+        color: var(--osis-gold);
+        flex-shrink: 0;
+    }
+
+    .osis-name {
+        margin: 0;
+        color: var(--osis-navy);
+        font-family: Georgia, 'Times New Roman', serif;
+        font-size: 25px;
+        line-height: 1.18;
+        font-weight: 700;
+        letter-spacing: -0.35px;
+    }
+
+    .osis-line {
+        width: 52px;
+        height: 2px;
+        border-radius: 999px;
+        background: var(--osis-gold);
+        margin: 16px auto 0;
+    }
+
+    .osis-connector {
         position: relative;
+        width: 2px;
+        height: 40px;
+        background: linear-gradient(180deg, transparent, rgba(219, 165, 45, 0.95), transparent);
     }
 
-    .line-connector::before,
-    .line-connector::after {
-        content: '';
+    .osis-connector::before,
+    .osis-connector::after {
+        content: "";
         position: absolute;
         left: 50%;
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: var(--osis-gold);
+        box-shadow: 0 0 0 5px rgba(219, 165, 45, 0.13);
         transform: translateX(-50%);
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.8);
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
-    .line-connector::before { top: -6px; }
-    .line-connector::after { bottom: -6px; }
-
-    /* Header Styling */
-    .main-title {
-        background: linear-gradient(135deg, #ffffff, #f8fafc, #ffffff);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        font-size: 3.5rem;
-        font-weight: 800;
-        text-align: center;
-        margin-bottom: 1rem;
-        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        line-height: 1.2;
+    .osis-connector::before {
+        top: 0;
     }
 
-    .subtitle {
-        color: rgba(255, 255, 255, 0.9);
-        font-size: 1.2rem;
-        font-weight: 400;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        letter-spacing: 1px;
+    .osis-connector::after {
+        bottom: 0;
     }
 
-    /* Coordinator Section */
-    .coordinator-card {
-        background: linear-gradient(135deg, #1e3a8a, #3730a3, #7c3aed);
-        border: 2px solid rgba(255, 255, 255, 0.2);
-        color: white;
-        padding: 2rem 3rem;
-        border-radius: 24px;
-        box-shadow:
-            0 25px 50px -12px rgba(0, 0, 0, 0.4),
-            inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    .osis-section-label {
         position: relative;
         overflow: hidden;
-        transition: all 0.4s ease;
+        min-height: 74px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        padding: 0 34px;
+        border-radius: 20px;
+        color: #ffffff;
+        background:
+            radial-gradient(circle at 18% 20%, rgba(219, 165, 45, 0.20), transparent 35%),
+            linear-gradient(135deg, #09284d 0%, #061b36 100%);
+        border: 1px solid rgba(219, 165, 45, 0.68);
+        box-shadow: 0 20px 44px rgba(6, 27, 54, 0.20);
+        font-size: 18px;
+        line-height: 1.3;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-align: center;
     }
 
-    .coordinator-card::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-        animation: shimmer 3s ease-in-out infinite;
+    .osis-section-label svg {
+        width: 25px;
+        height: 25px;
+        color: var(--osis-gold-2);
+        flex-shrink: 0;
     }
 
-    @keyframes shimmer {
-        0%, 100% { transform: rotate(0deg) scale(1); opacity: 0.5; }
-        50% { transform: rotate(180deg) scale(1.1); opacity: 0.8; }
-    }
-
-    .coordinator-title {
-        font-size: 1.5rem;
-        font-weight: 800;
-        letter-spacing: 3px;
-        text-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
-        position: relative;
-        z-index: 1;
-    }
-
-    /* Responsive Grid */
-    .sekbid-grid {
+    .osis-sekbid-grid {
+        width: 100%;
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 2rem;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 26px;
         justify-items: center;
     }
 
-    /* Mobile Responsiveness */
-    @media (max-width: 768px) {
-        .main-title {
-            font-size: 2.5rem;
+    .osis-empty {
+        max-width: 820px;
+        margin: 46px auto 0;
+        padding: 68px 24px;
+        text-align: center;
+        background: #ffffff;
+        border: 1px dashed rgba(6, 27, 54, 0.16);
+        border-radius: 28px;
+        box-shadow: var(--osis-shadow);
+    }
+
+    .osis-empty-icon {
+        width: 84px;
+        height: 84px;
+        margin: 0 auto 20px;
+        display: grid;
+        place-items: center;
+        border-radius: 999px;
+        color: var(--osis-gold);
+        background: rgba(219, 165, 45, 0.10);
+    }
+
+    .osis-empty-icon svg {
+        width: 44px;
+        height: 44px;
+    }
+
+    .osis-empty-title {
+        margin: 0 0 8px;
+        color: var(--osis-navy);
+        font-size: 26px;
+        font-weight: 900;
+    }
+
+    .osis-empty-text {
+        margin: 0;
+        color: var(--osis-muted);
+        font-size: 16px;
+        line-height: 1.7;
+    }
+
+    @media (max-width: 1280px) {
+        .osis-sekbid-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+
+    @media (max-width: 992px) {
+        .osis-sekbid-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
         .osis-card {
-            min-width: 260px;
-            padding: 1.5rem;
+            width: min(100%, 300px);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .osis-page {
+            padding: 48px 0 70px;
         }
 
-        .premium-photo {
-            width: 100px;
-            height: 100px;
+        .osis-container {
+            width: min(100% - 22px, 1420px);
         }
 
-        .sekbid-grid {
+        .osis-kicker {
+            font-size: 12px;
+            letter-spacing: 4px;
+        }
+
+        .osis-title {
+            font-size: clamp(38px, 12vw, 54px);
+        }
+
+        .osis-subtitle {
+            font-size: 15.5px;
+            line-height: 1.65;
+        }
+
+        .osis-period {
+            width: 100%;
+            min-height: 50px;
+        }
+
+        .osis-row {
+            gap: 22px;
+        }
+
+        .osis-card {
+            width: 100%;
+        }
+
+        .osis-sekbid-grid {
             grid-template-columns: 1fr;
+            gap: 22px;
+        }
+
+        .osis-section-label {
+            width: 100%;
+            padding: 0 22px;
+            font-size: 15px;
+            letter-spacing: 1.4px;
         }
     }
 
     @media (max-width: 480px) {
-        .main-title {
-            font-size: 2rem;
+        .osis-page {
+            padding-top: 38px;
         }
 
         .osis-card {
-            min-width: 240px;
-            padding: 1.25rem;
+            border-radius: 22px;
         }
 
-        .coordinator-card {
-            padding: 1.5rem 2rem;
+        .osis-card-inner {
+            min-height: 292px;
+            padding: 28px 18px 24px;
         }
 
-        .coordinator-title {
-            font-size: 1.2rem;
-            letter-spacing: 2px;
+        .osis-photo-wrap {
+            width: 122px;
+            height: 122px;
+            margin-bottom: 20px;
+        }
+
+        .osis-avatar-fallback {
+            font-size: 46px;
+        }
+
+        .osis-position {
+            font-size: 11px;
+            padding: 0 12px;
+        }
+
+        .osis-name {
+            font-size: 22px;
         }
     }
 </style>
 @endpush
 
+@php
+    $leaderMembers = collect()
+        ->merge($osisMembers->where('position', 'Ketua OSIS'))
+        ->merge($osisMembers->where('position', 'Wakil Ketua OSIS'));
+
+    $adminMembers = collect()
+        ->merge($osisMembers->where('position', 'Sekretaris'))
+        ->merge($osisMembers->where('position', 'Wakil Sekretaris'))
+        ->merge($osisMembers->where('position', 'Bendahara'))
+        ->merge($osisMembers->where('position', 'Wakil Bendahara'));
+
+    $sekbidMembers = $osisMembers->filter(fn($m) => str_starts_with($m->position, 'Sekbid'));
+
+    $renderOsisCard = function ($member) {
+        $photoPath = $member->photo_path ?? null;
+        $photoUrl = $photoPath ? asset('storage/' . $photoPath) : null;
+        $initial = strtoupper(substr($member->name ?? 'O', 0, 1));
+    };
+@endphp
+
 @section('content')
-<div class="luxury-bg py-32">
-    <div class="container mx-auto px-6 text-center relative z-10">
-        <h1 class="main-title">Struktur Kepengurusan OSIS</h1>
-        <p class="subtitle max-w-2xl mx-auto">Masa Bakti 2025/2026</p>
-
-        <div class="mt-20 flex flex-col items-center">
-            <!-- Ketua & Wakil -->
-            <div class="flex flex-wrap justify-center gap-8 mb-8">
-                @foreach($osisMembers->where('position', 'Ketua OSIS') as $member)
-                <div class="osis-card">
-                    <img src="{{ asset('storage/' . $member->photo_path) }}" alt="{{ $member->name }}" class="premium-photo">
-                    <h3 class="position-title">{{ $member->position }}</h3>
-                    <p class="member-name">{{ $member->name }}</p>
-                </div>
-                @endforeach
-                @foreach($osisMembers->where('position', 'Wakil Ketua OSIS') as $member)
-                <div class="osis-card">
-                    <img src="{{ asset('storage/' . $member->photo_path) }}" alt="{{ $member->name }}" class="premium-photo">
-                    <h3 class="position-title">{{ $member->position }}</h3>
-                    <p class="member-name">{{ $member->name }}</p>
-                </div>
-                @endforeach
+<section class="osis-page">
+    <div class="osis-container">
+        <div class="osis-header">
+            <div class="osis-icon">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a4 4 0 00-4-4h-1M9 20H4v-2a4 4 0 014-4h1m0-4a4 4 0 118 0 4 4 0 01-8 0z"></path>
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 14l3 3 5-6"></path>
+                </svg>
             </div>
 
-            <div class="h-16 line-connector mb-8"></div>
+            <p class="osis-kicker">Organisasi Siswa</p>
 
-            <!-- Sekretaris & Bendahara -->
-            <div class="flex flex-wrap justify-center gap-8 mb-8">
-                @foreach($osisMembers->where('position', 'Sekretaris') as $member)
-                <div class="osis-card">
-                    <img src="{{ asset('storage/' . $member->photo_path) }}" alt="{{ $member->name }}" class="premium-photo">
-                    <h3 class="position-title">{{ $member->position }}</h3>
-                    <p class="member-name">{{ $member->name }}</p>
-                </div>
-                @endforeach
-                @foreach($osisMembers->where('position', 'Wakil Sekretaris') as $member)
-                <div class="osis-card">
-                    <img src="{{ asset('storage/' . $member->photo_path) }}" alt="{{ $member->name }}" class="premium-photo">
-                    <h3 class="position-title">{{ $member->position }}</h3>
-                    <p class="member-name">{{ $member->name }}</p>
-                </div>
-                @endforeach
-                @foreach($osisMembers->where('position', 'Bendahara') as $member)
-                <div class="osis-card">
-                    <img src="{{ asset('storage/' . $member->photo_path) }}" alt="{{ $member->name }}" class="premium-photo">
-                    <h3 class="position-title">{{ $member->position }}</h3>
-                    <p class="member-name">{{ $member->name }}</p>
-                </div>
-                @endforeach
-                @foreach($osisMembers->where('position', 'Wakil Bendahara') as $member)
-                <div class="osis-card">
-                    <img src="{{ asset('storage/' . $member->photo_path) }}" alt="{{ $member->name }}" class="premium-photo">
-                    <h3 class="position-title">{{ $member->position }}</h3>
-                    <p class="member-name">{{ $member->name }}</p>
-                </div>
-                @endforeach
-            </div>
-            <div class="h-16 line-connector mb-8"></div>
+            <h1 class="osis-title">
+                Struktur Kepengurusan OSIS
+            </h1>
 
-            <!-- Koordinator Seksi Bidang -->
-            <div class="coordinator-card mb-8">
-                <h3 class="coordinator-title">KOORDINATOR SEKSI BIDANG</h3>
-            </div>
+            <div class="osis-divider"></div>
 
-            <div class="h-16 line-connector mb-8"></div>
+            <p class="osis-subtitle">
+                Pengurus OSIS SMP Darul Mustofa yang menjadi wadah kepemimpinan,
+                kreativitas, tanggung jawab, dan kontribusi positif bagi lingkungan sekolah.
+            </p>
 
-            <!-- Seksi Bidang -->
-            <div class="sekbid-grid w-full">
-                @foreach($osisMembers->filter(fn($m) => str_starts_with($m->position, 'Sekbid')) as $member)
-                <div class="osis-card">
-                    <img src="{{ asset('storage/' . $member->photo_path) }}" alt="{{ $member->name }}" class="premium-photo">
-                    <h3 class="position-title">{{ $member->position }}</h3>
-                    <p class="member-name">{{ $member->name }}</p>
-                </div>
-                @endforeach
+            <div class="osis-period">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10m-11 9h12a2 2 0 002-2V7a2 2 0 00-2-2H6a2 2 0 00-2 2v11a2 2 0 002 2z"></path>
+                </svg>
+                Masa Bakti 2025/2026
             </div>
         </div>
+
+        @if($osisMembers->count() > 0)
+            <div class="osis-structure">
+                {{-- Ketua & Wakil --}}
+                @if($leaderMembers->count() > 0)
+                    <div class="osis-row">
+                        @foreach($leaderMembers as $member)
+                            <article class="osis-card">
+                                <div class="osis-card-inner">
+                                    <div class="osis-photo-wrap">
+                                        @if($member->photo_path)
+                                            <img src="{{ asset('storage/' . $member->photo_path) }}"
+                                                 alt="Foto {{ $member->name }}"
+                                                 class="osis-photo"
+                                                 loading="lazy"
+                                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
+
+                                            <div class="osis-avatar-fallback" style="display:none;">
+                                                {{ strtoupper(substr($member->name ?? 'O', 0, 1)) }}
+                                            </div>
+                                        @else
+                                            <div class="osis-avatar-fallback">
+                                                {{ strtoupper(substr($member->name ?? 'O', 0, 1)) }}
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                    <div class="osis-position">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 21h8m-4-4v4m7-17H5v5a7 7 0 0014 0V4z"></path>
+                                        </svg>
+                                        {{ $member->position }}
+                                    </div>
+
+                                    <h2 class="osis-name">{{ $member->name }}</h2>
+                                    <div class="osis-line"></div>
+                                </div>
+                            </article>
+                        @endforeach
+                    </div>
+
+                    <div class="osis-connector"></div>
+                @endif
+
+                {{-- Sekretaris & Bendahara --}}
+                @if($adminMembers->count() > 0)
+                    <div class="osis-row">
+                        @foreach($adminMembers as $member)
+                            <article class="osis-card">
+                                <div class="osis-card-inner">
+                                    <div class="osis-photo-wrap">
+                                        @if($member->photo_path)
+                                            <img src="{{ asset('storage/' . $member->photo_path) }}"
+                                                 alt="Foto {{ $member->name }}"
+                                                 class="osis-photo"
+                                                 loading="lazy"
+                                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
+
+                                            <div class="osis-avatar-fallback" style="display:none;">
+                                                {{ strtoupper(substr($member->name ?? 'O', 0, 1)) }}
+                                            </div>
+                                        @else
+                                            <div class="osis-avatar-fallback">
+                                                {{ strtoupper(substr($member->name ?? 'O', 0, 1)) }}
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                    <div class="osis-position">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6M7 4h10a2 2 0 012 2v14H5V6a2 2 0 012-2z"></path>
+                                        </svg>
+                                        {{ $member->position }}
+                                    </div>
+
+                                    <h2 class="osis-name">{{ $member->name }}</h2>
+                                    <div class="osis-line"></div>
+                                </div>
+                            </article>
+                        @endforeach
+                    </div>
+
+                    @if($sekbidMembers->count() > 0)
+                        <div class="osis-connector"></div>
+                    @endif
+                @endif
+
+                {{-- Koordinator Seksi Bidang --}}
+                @if($sekbidMembers->count() > 0)
+                    <div class="osis-section-label">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                        Koordinator Seksi Bidang
+                    </div>
+
+                    <div class="osis-connector"></div>
+
+                    <div class="osis-sekbid-grid">
+                        @foreach($sekbidMembers as $member)
+                            <article class="osis-card">
+                                <div class="osis-card-inner">
+                                    <div class="osis-photo-wrap">
+                                        @if($member->photo_path)
+                                            <img src="{{ asset('storage/' . $member->photo_path) }}"
+                                                 alt="Foto {{ $member->name }}"
+                                                 class="osis-photo"
+                                                 loading="lazy"
+                                                 onerror="this.style.display='none'; this.nextElementSibling.style.display='grid';">
+
+                                            <div class="osis-avatar-fallback" style="display:none;">
+                                                {{ strtoupper(substr($member->name ?? 'O', 0, 1)) }}
+                                            </div>
+                                        @else
+                                            <div class="osis-avatar-fallback">
+                                                {{ strtoupper(substr($member->name ?? 'O', 0, 1)) }}
+                                            </div>
+                                        @endif
+                                    </div>
+
+                                    <div class="osis-position">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a4 4 0 00-4-4h-1M9 20H4v-2a4 4 0 014-4h1m0-4a4 4 0 118 0 4 4 0 01-8 0z"></path>
+                                        </svg>
+                                        {{ $member->position }}
+                                    </div>
+
+                                    <h2 class="osis-name">{{ $member->name }}</h2>
+                                    <div class="osis-line"></div>
+                                </div>
+                            </article>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+        @else
+            <div class="osis-empty">
+                <div class="osis-empty-icon">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M17 20h5v-2a4 4 0 00-4-4h-1M9 20H4v-2a4 4 0 014-4h1m0-4a4 4 0 118 0 4 4 0 01-8 0z"></path>
+                    </svg>
+                </div>
+
+                <h3 class="osis-empty-title">Data OSIS Belum Tersedia</h3>
+
+                <p class="osis-empty-text">
+                    Data pengurus OSIS sedang dalam proses pembaruan. Silakan kembali lagi nanti
+                    untuk melihat struktur organisasi terbaru.
+                </p>
+            </div>
+        @endif
     </div>
-</div>
+</section>
 @endsection
