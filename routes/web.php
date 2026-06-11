@@ -28,9 +28,7 @@ use App\Http\Controllers\Admin\AcademicCalendarController;
 use App\Http\Controllers\Admin\OsisMemberController;
 use App\Http\Controllers\Admin\UserProfileController;
 
-
 use App\Http\Controllers\ProfileController as BreezeProfileController;
-
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -41,6 +39,7 @@ Route::controller(PageController::class)->group(function () {
         Route::get('/struktur-organisasi', 'organization')->name('organization');
         Route::get('/fasilitas', 'facilities')->name('facilities');
     });
+
     Route::get('/dewan-guru', 'teachers')->name('pages.teachers');
     Route::get('/pengurus-osis', 'osis')->name('pages.osis');
     Route::get('/pengurus-alumni', 'alumniBoard')->name('pages.alumni-board');
@@ -68,17 +67,14 @@ Route::get('/alumni', [AlumniController::class, 'index'])->name('alumni.index');
 Route::get('/kontak', [ContactController::class, 'index'])->name('contact.index');
 Route::post('/kontak', [ContactController::class, 'store'])->name('contact.store');
 
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard.user');
 
 Route::middleware('auth')->group(function () {
-
     Route::get('/profile', [BreezeProfileController::class, 'edit'])->name('profile.edit.user');
     Route::patch('/profile', [BreezeProfileController::class, 'update'])->name('profile.update.user');
     Route::delete('/profile', [BreezeProfileController::class, 'destroy'])->name('profile.destroy.user');
-
 
     Route::prefix('admin')->name('admin.')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -88,8 +84,10 @@ Route::middleware('auth')->group(function () {
 
         Route::resource('/struktur-organisasi', OrganizationalStructureController::class);
         Route::resource('/kalender-akademik', AcademicCalendarController::class);
+
         Route::resource('/ppdb', AdminAdmissionController::class)->only(['index', 'show', 'update', 'destroy']);
-        Route::get('/ppdb/{ppdb}/download-form', [\App\Http\Controllers\Admin\AdmissionController::class, 'downloadForm'])->name('ppdb.download');
+        Route::get('/ppdb/{ppdb}/download-form', [AdminAdmissionController::class, 'downloadForm'])->name('ppdb.download');
+
         Route::resource('/berita', AdminPostController::class)->except('show');
         Route::resource('/galeri', AdminGalleryController::class);
         Route::resource('/fasilitas', AdminFacilityController::class)->except('show');
@@ -102,20 +100,24 @@ Route::middleware('auth')->group(function () {
         Route::resource('/pengurus-osis', OsisMemberController::class);
         Route::resource('/pengurus-alumni', AlumniBoardController::class);
 
-
-        // Rute  Data Siswa
+        /*
+        |--------------------------------------------------------------------------
+        | Data Siswa SMP
+        |--------------------------------------------------------------------------
+        | Untuk website SMP, kelas siswa dibatasi ke Kelas 7, Kelas 8, dan Kelas 9.
+        | Route import/export/template harus diletakkan sebelum resource agar tidak
+        | bentrok dengan route show/edit dari resource.
+        */
         Route::post('/data-siswa/import', [AdminStudentController::class, 'import'])->name('data-siswa.import');
         Route::get('/data-siswa/export', [AdminStudentController::class, 'export'])->name('data-siswa.export');
-        Route::get('/data-siswa/template', [AdminStudentController::class, 'downloadTemplate'])->name('data-siswa.template');
+        Route::get('/data-siswa/template', [AdminStudentController::class, 'template'])->name('data-siswa.template');
         Route::resource('/data-siswa', AdminStudentController::class);
 
         // Rute Profil Admin
         Route::get('/my-profile', [UserProfileController::class, 'edit'])->name('my-profile.edit');
         Route::patch('/my-profile', [UserProfileController::class, 'update'])->name('my-profile.update');
         Route::put('/my-profile/password', [UserProfileController::class, 'updatePassword'])->name('my-profile.password');
-
-
     });
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

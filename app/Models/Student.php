@@ -18,17 +18,11 @@ class Student extends Model
         'address',
     ];
 
-    /**
-     * Relasi One-to-One (inverse) ke model User.
-     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Relasi Many-to-One ke model SchoolClass.
-     */
     public function schoolClass()
     {
         return $this->belongsTo(SchoolClass::class);
