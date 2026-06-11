@@ -16,12 +16,6 @@ use Maatwebsite\Excel\Concerns\WithHeadingRow;
 
 class StudentsImport implements ToCollection, WithHeadingRow
 {
-    private array $allowedClasses = [
-        'Kelas 7',
-        'Kelas 8',
-        'Kelas 9',
-    ];
-
     public function collection(Collection $rows)
     {
         $errors = [];
@@ -36,6 +30,18 @@ class StudentsImport implements ToCollection, WithHeadingRow
             $gender = $this->normalizeGender($row['jenis_kelamin'] ?? '');
             $className = $this->normalizeClass($row['kelas'] ?? '');
             $address = trim((string) ($row['alamat'] ?? ''));
+
+            if (
+                $name === '' &&
+                $email === '' &&
+                $password === '' &&
+                $nisn === '' &&
+                trim((string) ($row['jenis_kelamin'] ?? '')) === '' &&
+                trim((string) ($row['kelas'] ?? '')) === '' &&
+                $address === ''
+            ) {
+                continue;
+            }
 
             if ($name === '') {
                 $errors[] = "Baris {$rowNumber}: nama wajib diisi.";
@@ -97,9 +103,7 @@ class StudentsImport implements ToCollection, WithHeadingRow
                         'user_id' => $user->id,
                     ],
                     [
-                        'nisn' => $nisn !== ''
-                            ? $nisn
-                            : 'NISN-' . Str::upper(Str::random(8)),
+                        'nisn' => $nisn !== '' ? $nisn : 'NISN-' . Str::upper(Str::random(8)),
                         'school_class_id' => $schoolClass->id,
                         'gender' => $gender,
                         'address' => $address,

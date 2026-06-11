@@ -203,6 +203,11 @@ class StudentController extends Controller
         return Excel::download(new StudentsTemplateExport(), 'template-import-siswa-smp.xlsx');
     }
 
+    public function downloadTemplate()
+    {
+        return $this->template();
+    }
+
     public function export(Request $request)
     {
         $this->ensureSmpClasses();
